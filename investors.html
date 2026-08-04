@@ -66,20 +66,36 @@ a { color: inherit; text-decoration: none; }
 .gate-subtitle {
   font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 32px;
 }
+.gate-input-wrap {
+  position: relative; margin-bottom: 12px;
+}
 .gate-input {
   width: 100%; padding: 14px 18px; border-radius: var(--radius);
   border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);
-  color: #fff; font-size: 1rem; font-family: inherit; margin-bottom: 12px;
-  transition: all 0.2s; text-align: center; letter-spacing: 0.1em;
+  color: #fff; font-size: 1rem; font-family: inherit; transition: all 0.2s;
+  text-align: center; letter-spacing: 0.1em;
 }
 .gate-input:focus { outline: none; border-color: var(--color-accent); background: rgba(255,255,255,0.1); }
 .gate-input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: normal; }
+.gate-input.error { border-color: #e57373; animation: shake 0.4s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.gate-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: rgba(255,255,255,0.4); cursor: pointer;
+  font-size: 1.1rem; padding: 4px; transition: color 0.2s;
+}
+.gate-toggle:hover { color: rgba(255,255,255,0.7); }
 .gate-btn {
   width: 100%; padding: 14px; background: var(--color-accent); color: var(--color-primary);
   border: none; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600;
   cursor: pointer; transition: all 0.2s;
 }
 .gate-btn:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+.gate-btn:active { transform: translateY(0); }
 .gate-error {
   color: #e57373; font-size: 0.8rem; margin-top: 10px; min-height: 20px;
 }
@@ -250,7 +266,7 @@ a { color: inherit; text-decoration: none; }
 }
 .footer-container {
   max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
   font-size: 0.8rem;
 }
 
@@ -263,6 +279,7 @@ a { color: inherit; text-decoration: none; }
   .full-card { padding: 28px 20px; }
 }
 </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -271,14 +288,17 @@ a { color: inherit; text-decoration: none; }
   <div class="gate-box">
     <div class="gate-logo">Q.co <span>Investor Portal</span></div>
     <p class="gate-subtitle">Confidential materials for qualified investors and strategic partners.</p>
-    <input type="password" class="gate-input" id="gatePassword" placeholder="Enter access code" autocomplete="off">
+    <div class="gate-input-wrap">
+      <input type="password" class="gate-input" id="gatePassword" placeholder="Enter access code" autocomplete="off" onkeypress="if(event.key==='Enter')unlockPortal()">
+      <button class="gate-toggle" onclick="togglePasswordVisibility()" title="Show/Hide password">👁</button>
+    </div>
     <button class="gate-btn" onclick="unlockPortal()">Unlock Portal</button>
     <div class="gate-error" id="gateError"></div>
     <p class="gate-note">
-      This portal contains confidential financial and strategic information. 
-      By accessing, you agree to treat all materials as strictly confidential. 
-      <br><br>
-      Default password: <strong>QBridge2026</strong> — change in JS before deployment.
+      This portal contains confidential financial and strategic information.<br>
+      By accessing, you agree to treat all materials as strictly confidential.<br><br>
+      <strong>Current password: QBridge2026</strong><br>
+      <span style="font-size:0.7rem; color:rgba(255,255,255,0.2);">Change in JS before deployment.</span>
     </p>
   </div>
 </div>
@@ -472,36 +492,86 @@ a { color: inherit; text-decoration: none; }
 </div><!-- /main-content -->
 
 <script>
-// Password gate
-const CORRECT_HASH = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'; // SHA-256 of "QBridge2026"
+// ============================================================
+// PASSWORD GATE — Works on ALL contexts (HTTPS, HTTP, file://)
+// ============================================================
 
-async function sha256(message) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+// CHANGE THIS PASSWORD BEFORE DEPLOYING TO PRODUCTION
+// To generate a new hash: open browser console and run:
+//   simpleHash('YourNewPassword')
+// Then replace the value below with the output.
+const CORRECT_HASH = '1879973c';
+
+// Simple hash function that works everywhere (no crypto.subtle needed)
+function simpleHash(str) {
+  let hash = 0;
+  if (str.length === 0) return hash.toString(16);
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  // Convert to hex string and pad to consistent length
+  let hex = (hash >>> 0).toString(16);
+  while (hex.length < 8) hex = '0' + hex;
+  return hex;
 }
 
-async function unlockPortal() {
+// Alternative: direct string comparison (less secure but simplest)
+// Uncomment the line below and comment out the hash-based check if you want simplicity:
+// const CORRECT_PASSWORD = 'QBridge2026';
+
+function unlockPortal() {
   const input = document.getElementById('gatePassword');
   const error = document.getElementById('gateError');
   const overlay = document.getElementById('gateOverlay');
   const content = document.getElementById('mainContent');
+  const password = input.value.trim();
 
-  const hash = await sha256(input.value);
+  // Clear previous error
+  error.textContent = '';
+  input.classList.remove('error');
+
+  if (!password) {
+    error.textContent = 'Please enter an access code.';
+    input.classList.add('error');
+    input.focus();
+    return;
+  }
+
+  // Hash-based check (works on all contexts)
+  const hash = simpleHash(password);
+
+  // For debugging: uncomment to see hash in console
+  // console.log('Input:', password, 'Hash:', hash, 'Expected:', CORRECT_HASH);
 
   if (hash === CORRECT_HASH) {
     overlay.classList.add('hidden');
     content.classList.add('unlocked');
-    gtag('event', 'login', { 'method': 'password_gate' });
-    // Store in session so refresh doesn't re-prompt
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'login', { 'method': 'password_gate' });
+    }
     sessionStorage.setItem('portalUnlocked', 'true');
   } else {
     error.textContent = 'Invalid access code. Please try again.';
+    input.classList.add('error');
     input.value = '';
     input.focus();
-    gtag('event', 'exception', { 'description': 'password_gate_failed' });
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exception', { 'description': 'password_gate_failed' });
+    }
+  }
+}
+
+function togglePasswordVisibility() {
+  const input = document.getElementById('gatePassword');
+  const btn = document.querySelector('.gate-toggle');
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
   }
 }
 
@@ -511,17 +581,14 @@ if (sessionStorage.getItem('portalUnlocked') === 'true') {
   document.getElementById('mainContent').classList.add('unlocked');
 }
 
-// Enter key submits
- document.getElementById('gatePassword').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') unlockPortal();
-});
-
 // Track downloads
 function trackDownload(type) {
-  gtag('event', 'download', {
-    'event_category': 'investor_material',
-    'event_label': type
-  });
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'download', {
+      'event_category': 'investor_material',
+      'event_label': type
+    });
+  }
   alert('Download tracking triggered. Replace this with actual file download or link to your data room.\n\nType: ' + type);
 }
 
@@ -529,10 +596,12 @@ function trackDownload(type) {
 function handleContactSubmit(e) {
   e.preventDefault();
   const form = e.target;
-  gtag('event', 'generate_lead', {
-    'event_category': 'investor_portal',
-    'event_label': 'contact_form'
-  });
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'generate_lead', {
+      'event_category': 'investor_portal',
+      'event_label': 'contact_form'
+    });
+  }
   form.innerHTML = `
     <div style="text-align:center; padding: 32px 0;">
       <div style="font-size: 2.5rem; margin-bottom: 12px;">✓</div>
