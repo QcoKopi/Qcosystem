@@ -96,10 +96,18 @@ a { text-decoration:none; color:inherit; }
   border:1px solid var(--border); font-family:var(--font-head); font-size:1.4rem; color:var(--accent-dark);
   text-align:center; padding:40px;
 }
-.dna-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.dna-stat { background:var(--card); border-radius:8px; padding:24px; border:1px solid var(--border); text-align:center; }
-.dna-stat-num { font-family:var(--font-head); font-size:1.8rem; font-weight:600; color:var(--primary); margin-bottom:4px; }
-.dna-stat-label { font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
+.dna-stats-bar {
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:28px;
+  padding:12px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  font-size:0.85rem; color:var(--text-sec);
+}
+.dna-stats-bar span { font-weight:500; }
+.dna-sep { color:var(--accent); font-weight:400; }
+.dna-values-inline {
+  display:flex; gap:20px; flex-wrap:wrap; margin-top:16px;
+  font-size:0.8rem; color:var(--text-muted);
+}
+.dna-values-inline span { display:flex; align-items:center; gap:6px; }
 
 /* ===== PRODUCTS ===== */
 .products-section { background:var(--bg); }
@@ -173,8 +181,8 @@ a { text-decoration:none; color:inherit; }
   .hero-cta { flex-direction:column; align-items:center; }
   .btn { width:100%; max-width:300px; justify-content:center; }
   .section { padding:60px 0; }
-  .dna-values { grid-template-columns:1fr; }
-  .dna-stats { grid-template-columns:1fr 1fr; }
+  .dna-stats-bar { font-size:0.75rem; gap:8px; }
+  .dna-values-inline { gap:12px; font-size:0.75rem; }
 }
 
 .mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
@@ -249,57 +257,28 @@ a { text-decoration:none; color:inherit; }
           Ketika kedai kopi berkembang, kami juga berkembang. Pertumbuhan bersama adalah inti dari 
           setiap hubungan yang kami bangun.
         </div>
-        <div class="dna-values">
-          <div class="dna-value">
-            <div class="dna-value-icon">🤝</div>
-            <h4>Kolaborasi</h4>
-            <p>Bukan transaksi satu arah, tapi partnership saling menguntungkan</p>
-          </div>
-          <div class="dna-value">
-            <div class="dna-value-icon">📚</div>
-            <h4>Pengetahuan</h4>
-            <p>Berbagi insight roasting, brewing, dan tren pasar kopi</p>
-          </div>
-          <div class="dna-value">
-            <div class="dna-value-icon">🎯</div>
-            <h4>Kualitas</h4>
-            <p>Q Grader certified — setiap batch di-cup sebelum dikirim</p>
-          </div>
-          <div class="dna-value">
-            <div class="dna-value-icon">🌱</div>
-            <h4>Berkelanjutan</h4>
-            <p>Hubungan jangka panjang dengan petani dan processor lokal</p>
-          </div>
+        <div class="dna-stats-bar">
+          <span>50+ Kedai Kopi Mitra</span>
+          <span class="dna-sep">|</span>
+          <span>Q Grader & Q Processing Certified</span>
+          <span class="dna-sep">|</span>
+          <span>4+ Tahun Beroperasi</span>
+        </div>
+        <div class="dna-values-inline">
+          <span>🤝 Kolaborasi</span>
+          <span>📚 Pengetahuan</span>
+          <span>🎯 Kualitas</span>
+          <span>🌱 Berkelanjutan</span>
         </div>
       </div>
       <div class="dna-visual">
         <div class="dna-img-card">
           <span>Q.co<br><small style="font-size:0.9rem; font-weight:400; opacity:0.7;">Coffee Lab & Roastery</small></span>
         </div>
-        <div class="dna-stats">
-          <div class="dna-stat">
-            <div class="dna-stat-num">50+</div>
-            <div class="dna-stat-label">Kedai Kopi Mitra</div>
-          </div>
-          <div class="dna-stat">
-            <div class="dna-stat-num">Depok</div>
-            <div class="dna-stat-label">& Sekitar Jabar</div>
-          </div>
-          <div class="dna-stat">
-            <div class="dna-stat-num">Q Grader</div>
-            <div class="dna-stat-label">Certified</div>
-          </div>
-          <div class="dna-stat">
-            <div class="dna-stat-num">4+</div>
-            <div class="dna-stat-label">Tahun Beroperasi</div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- PRODUCTS — Grid 3 kolom -->
 <section class="section products-section" id="products">
   <div class="section-wrap">
     <div class="section-header">
