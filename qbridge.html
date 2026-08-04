@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QBridge — Infrastruktur Kepercayaan Kopi Indonesia</title>
+<meta name="description" content="QBridge: Platform traceability berbasis blockchain dengan verifikasi tiga-lapis untuk processor kopi Indonesia. Diterima di ICC Italia, Oktober 2026.">
+<style>
+:root {
+  --bg: #faf9f6;
+  --bg-warm: #f5f3ee;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --text-sec: #5c5c5c;
+  --text-muted: #9a9a9a;
+  --primary: #2c2c2c;
+  --accent: #b8926a;
+  --accent-light: #e8d5b5;
+  --accent-dark: #8b6f4e;
+  --border: #e8e6e1;
+  --font-head: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-body); background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; }
+a { text-decoration:none; color:inherit; }
+
+/* ===== NAV ===== */
+.nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(250,249,246,0.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-wrap { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:68px; }
+.nav-logo { font-family:var(--font-head); font-size:1.3rem; font-weight:600; }
+.nav-logo span { color:var(--accent); font-weight:400; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { font-size:0.85rem; font-weight:500; color:var(--text-sec); transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a.active { color:var(--accent-dark); font-weight:600; }
+.nav-cta { background:var(--primary); color:#fff; padding:10px 22px; border-radius:100px; font-size:0.8rem; font-weight:600; }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
+
+/* ===== HERO ===== */
+.hero { min-height:85vh; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:68px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
+.hero::before { content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px; background:radial-gradient(circle, rgba(184,146,106,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+.hero-inner { max-width:800px; text-align:center; padding:60px 24px; position:relative; z-index:1; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-dark); background:rgba(184,146,106,0.12); padding:6px 16px; border-radius:100px; margin-bottom:24px; }
+.hero-badge-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.hero h1 { font-family:var(--font-head); font-size:clamp(2.2rem, 5vw, 3.8rem); line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:16px; }
+.hero h1 em { font-style:italic; color:var(--accent-dark); }
+.hero-sub { font-size:clamp(1rem, 2vw, 1.2rem); color:var(--text-sec); max-width:600px; margin:0 auto 36px; line-height:1.7; }
+.hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:100px; font-size:0.9rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none; }
+.btn-pri { background:var(--primary); color:#fff; }
+.btn-pri:hover { background:#3a3a3a; transform:translateY(-2px); }
+.btn-sec { background:transparent; color:var(--text); border:1.5px solid var(--border); }
+.btn-sec:hover { border-color:var(--accent); color:var(--accent-dark); }
+
+/* ===== SECTIONS ===== */
+.section { padding:100px 0; }
+.section-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.section-header { text-align:center; margin-bottom:56px; }
+.section-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-dark); margin-bottom:12px; display:inline-block; background:rgba(184,146,106,0.1); padding:4px 14px; border-radius:100px; }
+.section-title { font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.4rem); font-weight:400; margin-bottom:12px; line-height:1.2; }
+.section-title em { font-style:italic; color:var(--accent-dark); }
+.section-desc { color:var(--text-sec); max-width:560px; margin:0 auto; font-size:1rem; line-height:1.7; }
+
+/* ===== PROBLEM ===== */
+.problem-section { background:var(--bg-warm); }
+.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+.problem-box { background:var(--card); border-radius:var(--radius); padding:40px; border:1px solid var(--border); }
+.problem-box h3 { font-family:var(--font-head); font-size:1.3rem; margin-bottom:20px; }
+.problem-box.prob h3 { color:#8b4040; }
+.problem-box.sol h3 { color:#2d8a4e; }
+.problem-list { list-style:none; }
+.problem-list li { padding:12px 0; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:flex-start; font-size:0.95rem; color:var(--text-sec); }
+.problem-list li:last-child { border-bottom:none; }
+.problem-list.prob li::before { content:'✕'; color:#c44; font-weight:700; flex-shrink:0; margin-top:2px; }
+.problem-list.sol li::before { content:'✓'; color:#2d8a4e; font-weight:700; flex-shrink:0; margin-top:2px; }
+
+/* ===== LAYERS ===== */
+.layers-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.layer-card { background:var(--card); border-radius:var(--radius); padding:40px 32px; border:1px solid var(--border); transition:all 0.3s; position:relative; overflow:hidden; }
+.layer-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.layer-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent); }
+.layer-num { width:40px; height:40px; border-radius:50%; background:var(--bg-warm); border:2px solid var(--accent); display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-size:1rem; font-weight:600; color:var(--accent); margin-bottom:20px; }
+.layer-card h3 { font-family:var(--font-head); font-size:1.2rem; margin-bottom:8px; }
+.layer-role { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent-dark); margin-bottom:16px; }
+.layer-card p { font-size:0.9rem; color:var(--text-sec); line-height:1.6; margin-bottom:16px; }
+.layer-checks { list-style:none; }
+.layer-checks li { font-size:0.85rem; color:var(--text-sec); padding:6px 0; display:flex; align-items:flex-start; gap:8px; border-bottom:1px solid var(--border); }
+.layer-checks li:last-child { border-bottom:none; }
+.layer-checks li::before { content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0; }
+
+/* ===== BADGES ===== */
+.badges-section { background:var(--bg); }
+.badges-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; }
+.badge-card { background:var(--card); border-radius:var(--radius); padding:36px 28px; border:1px solid var(--border); text-align:center; transition:all 0.3s; }
+.badge-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+.badge-icon { font-size:2.5rem; margin-bottom:12px; }
+.badge-card h3 { font-family:var(--font-head); font-size:1.1rem; margin-bottom:6px; }
+.badge-level { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px; }
+.badge-card p { font-size:0.8rem; color:var(--text-sec); line-height:1.5; }
+
+/* ===== ACADEMIC ===== */
+.academic-section { background:var(--primary); color:#fff; padding:80px 0; }
+.academic-wrap { max-width:1200px; margin:0 auto; padding:0 24px; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+.academic-badge { display:inline-flex; align-items:center; gap:8px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-light); background:rgba(184,146,106,0.15); padding:6px 14px; border-radius:100px; margin-bottom:20px; border:1px solid rgba(184,146,106,0.2); }
+.academic-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:16px; }
+.academic-content h2 em { font-style:italic; color:var(--accent-light); }
+.academic-content p { color:rgba(255,255,255,0.7); line-height:1.8; margin-bottom:16px; font-size:0.95rem; }
+.academic-meta { display:flex; gap:24px; flex-wrap:wrap; margin-top:24px; font-size:0.8rem; color:rgba(255,255,255,0.5); }
+.academic-visual { background:rgba(255,255,255,0.04); border-radius:var(--radius); padding:40px; border:1px solid rgba(255,255,255,0.1); text-align:center; }
+.academic-visual h3 { font-family:var(--font-head); font-size:1.3rem; margin-bottom:12px; color:#fff; }
+.academic-visual p { color:rgba(255,255,255,0.6); font-size:0.9rem; line-height:1.6; }
+
+/* ===== CTA ===== */
+.cta-section { background:var(--bg-warm); padding:80px 0; text-align:center; }
+.cta-section h2 { font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.2rem); font-weight:400; margin-bottom:12px; }
+.cta-section p { color:var(--text-sec); max-width:520px; margin:0 auto 32px; font-size:1rem; line-height:1.7; }
+
+/* ===== FOOTER ===== */
+.footer { background:var(--primary); color:rgba(255,255,255,0.55); padding:56px 0 32px; }
+.footer-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+.footer-brand { font-family:var(--font-head); font-size:1.3rem; color:#fff; margin-bottom:12px; }
+.footer-brand span { color:var(--accent-light); }
+.footer-desc { font-size:0.9rem; line-height:1.6; margin-bottom:20px; max-width:320px; }
+.footer-entities { display:flex; flex-direction:column; gap:8px; }
+.footer-entity { font-size:0.75rem; background:rgba(255,255,255,0.05); padding:8px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.08); }
+.footer-entity strong { color:#fff; display:block; font-size:0.8rem; }
+.footer-col h4 { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#fff; margin-bottom:16px; }
+.footer-col a { display:block; font-size:0.85rem; color:rgba(255,255,255,0.55); padding:6px 0; transition:color 0.2s; }
+.footer-col a:hover { color:var(--accent-light); }
+.footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:0.8rem; }
+
+/* ===== MOBILE ===== */
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+  .problem-grid { grid-template-columns:1fr; }
+  .layers-grid { grid-template-columns:1fr; }
+  .badges-grid { grid-template-columns:repeat(2, 1fr); }
+  .academic-wrap { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  .hero-cta { flex-direction:column; align-items:center; }
+  .btn { width:100%; max-width:300px; justify-content:center; }
+  .section { padding:60px 0; }
+}
+
+.mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
+.mobile-menu.active { display:flex; }
+.mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">QBridge</a>
+    <div class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="qlab.html">Q.co Coffee Lab</a>
+      <a href="qbridge.html" class="active">QBridge</a>
+      <a href="qaffiliator.html">QAffiliator</a>
+      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+      <a href="investors.html" class="nav-cta">Investor Portal</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMobile()">☰</button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a>
+  <a href="qlab.html">Q.co Coffee Lab</a>
+  <a href="qbridge.html">QBridge</a>
+  <a href="qaffiliator.html">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+  <a href="investors.html">Investor Portal</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Diterima di ICC Italia, Oktober 2026
+    </div>
+    <h1>Infrastruktur <em>Kepercayaan</em><br>untuk Kopi Indonesia</h1>
+    <p class="hero-sub">
+      QBridge bukan marketplace. Kami adalah penyedia informasi — infrastruktur kepercayaan 
+      yang memverifikasi processor kopi Indonesia melalui tiga lapisan independen, 
+      menciptakan sinyal kepercayaan yang global buyer dapat andalkan.
+    </p>
+    <div class="hero-cta">
+      <a href="#layers" class="btn btn-pri">Kenali Verifikasi Tiga-Lapis →</a>
+      <a href="#waitlist" class="btn btn-sec">Daftar Beta</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM & SOLUTION -->
+<section class="section problem-section" id="problem">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-label">Masalah & Solusi</div>
+      <h2 class="section-title">Rantai Pasok yang <em>Tidak Transparan</em></h2>
+      <p class="section-desc">Indonesia produsen kopi ke-4 terbesar di dunia, namun kurang dari 2% bertransaksi langsung dengan buyer global.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-box prob">
+        <h3>Masalahnya</h3>
+        <ul class="problem-list prob">
+          <li>Petani kehilangan 60% potensi pendapatan karena rantai tengah yang panjang dan tidak transparan</li>
+          <li>Buyer global tidak punya infrastruktur kepercayaan untuk mengevaluasi processor Indonesia</li>
+          <li>Tidak ada platform yang menggabungkan verifikasi administrasi, fisik, DAN kualitas</li>
+          <li>ESG dan welfare scoring hampir tidak ada dalam transaksi kopi Indonesia</li>
+          <li>Buyer mengandalkan jaringan personal, bukan data terverifikasi</li>
+        </ul>
+      </div>
+      <div class="problem-box sol">
+        <h3>Solusinya: QBridge</h3>
+        <ul class="problem-list sol">
+          <li>Verifikasi tiga-lapis: Administrasi → Fisik → Kualitas</li>
+          <li>Blockchain traceability: record immutable dari kebun ke ekspor</li>
+          <li>Welfare scoring: ESG-aligned assessment untuk labor practices dan sustainability</li>
+          <li>Badge system: Bronze → Silver → Gold → Platinum (instant trust signal)</li>
+          <li>Bukan marketplace — informasi terverifikasi, transaksi langsung buyer-processor</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERIFICATION LAYERS -->
+<section class="section" id="layers">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-label">Sistem Verifikasi</div>
+      <h2 class="section-title">Tiga Lapisan, <em>Satu Sinyal Kepercayaan</em></h2>
+      <p class="section-desc">Setiap lapisan diverifikasi oleh pihak independen dengan kompetensi berbeda. Bersama-sama, mereka menciptakan gambaran lengkap tentang kredibilitas sebuah processor.</p>
+    </div>
+    <div class="layers-grid">
+      <div class="layer-card">
+        <div class="layer-num">1</div>
+        <h3>Verifikasi Administrasi</h3>
+        <div class="layer-role">Validator: Dokumen</div>
+        <p>Pemeriksaan keabsahan dokumen legal dan kelengkapan administrasi perusahaan processor.</p>
+        <ul class="layer-checks">
+          <li>NIB (Nomor Induk Berusaha)</li>
+          <li>NPWP & kepatuhan pajak</li>
+          <li>SIUP / TDP</li>
+          <li>Sertifikasi (Organic, Fair Trade, ISO)</li>
+          <li>Legalitas entitas bisnis</li>
+        </ul>
+      </div>
+      <div class="layer-card">
+        <div class="layer-num">2</div>
+        <h3>Verifikasi Fisik & Proses</h3>
+        <div class="layer-role">Validator: Q Processing (CQI)</div>
+        <p>Inspeksi langsung ke fasilitas processing, evaluasi equipment, SOP, dan kondisi mill.</p>
+        <ul class="layer-checks">
+          <li>Pulper, demucilager, huller</li>
+          <li>Suton, size grader, color sorter</li>
+          <li>SOP (Standard Operating Procedure)</li>
+          <li>Semua metode: washed, natural, honey, wet-hulled, anaerobic</li>
+          <li>Kondisi hygiene dan safety mill</li>
+        </ul>
+      </div>
+      <div class="layer-card">
+        <div class="layer-num">3</div>
+        <h3>Verifikasi Kualitas</h3>
+        <div class="layer-role">Validator: Q Grader (CQI)</div>
+        <p>Cupping independen dengan standar CVA (Coffee Value Assessment) dari SCA/CQI.</p>
+        <ul class="layer-checks">
+          <li>CVA scoring: Physical, Descriptive, Affective, Extrinsic</li>
+          <li>Defect count & classification</li>
+          <li>Moisture content & density</li>
+          <li>Screen size analysis</li>
+          <li>Cupping notes & flavor profile</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BADGE SYSTEM -->
+<section class="section badges-section" id="badges">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-label">Badge System</div>
+      <h2 class="section-title">Sinyal Instan untuk <em>Buyer Global</em></h2>
+      <p class="section-desc">Buyer dapat menilai kredibilitas processor dalam satu pandangan. Processor memperoleh badge berdasarkan jumlah verifikasi yang berhasil dilalui.</p>
+    </div>
+    <div class="badges-grid">
+      <div class="badge-card">
+        <div class="badge-icon">🥉</div>
+        <h3>Bronze</h3>
+        <div class="badge-level" style="color:#cd7f32;">1/3 Verifikasi</div>
+        <p>Verifikasi administrasi lulus. Legal entity dan dokumen terverifikasi.</p>
+      </div>
+      <div class="badge-card">
+        <div class="badge-icon">🥈</div>
+        <h3>Silver</h3>
+        <div class="badge-level" style="color:#a0a0a0;">2/3 Verifikasi</div>
+        <p>Administrasi + fisik/proses lulus. Fasilitas dan SOP terverifikasi.</p>
+      </div>
+      <div class="badge-card">
+        <div class="badge-icon">🥇</div>
+        <h3>Gold</h3>
+        <div class="badge-level" style="color:#d4af37;">3/3 Verifikasi</div>
+        <p>Semua tiga lapisan lulus. Administrasi, fisik, DAN kualitas terverifikasi.</p>
+      </div>
+      <div class="badge-card" style="border-color:var(--accent-light);">
+        <div class="badge-icon">💎</div>
+        <h3>Platinum</h3>
+        <div class="badge-level" style="color:#667eea;">3/3 + Welfare ≥ 90</div>
+        <p>Semua verifikasi + praktik kesejahteraan, labor, dan sustainability exceptional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC VALIDATION -->
+<section class="section academic-section" id="academic">
+  <div class="academic-wrap">
+    <div class="academic-content">
+      <div class="academic-badge">🎓 Peer-Reviewed Research</div>
+      <h2><em>Beyond Traceability:</em><br>Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee</h2>
+      <p>
+        Berbeda dengan platform lain yang membangun dulu dan memvalidasi kemudian, QBridge memvalidasi 
+        dulu. Metodologi verifikasi tiga-lapis dan welfare scoring framework kami telah melalui 
+        peer-review dan diterima untuk dipresentasikan di International Coffee Convention, Italia, Oktober 2026.
+      </p>
+      <p>
+        Paper ini mengusulkan konsep <em>digital fairness</em> — distribusi transparan nilai di seluruh 
+        rantai pasok — dan <em>cultural capital</em> — pengakuan pengetahuan pengolahan indigenous 
+        sebagai aset yang dapat diperdagangkan.
+      </p>
+      <div class="academic-meta">
+        <span>📍 International Coffee Convention 2026</span>
+        <span>📅 Oktober 2026, Italia</span>
+        <span>✓ Diterima & Peer-Reviewed</span>
+      </div>
+    </div>
+    <div class="academic-visual">
+      <h3>Validasi Akademik</h3>
+      <p>
+        Metodologi QBridge telah divalidasi oleh komunitas akademik kopi internasional 
+        sebelum platform diluncurkan. Ini bukan sekadar produk — ini adalah 
+        infrastruktur kepercayaan yang didukung oleh riset.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section" id="waitlist">
+  <div class="section-wrap">
+    <h2>Bergabung di <em>Beta QBridge</em></h2>
+    <p>
+      Beta diluncurkan Q4 2026. Daftar sekarang sebagai processor atau buyer untuk mendapatkan 
+      akses awal, verifikasi prioritas, dan kontribusi langsung dalam pengembangan platform.
+    </p>
+    <a href="qbridge-beta.html" class="btn btn-pri">Daftar Beta Waitlist →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">QBridge</div>
+        <p class="footer-desc">Infrastruktur kepercayaan untuk processor kopi Indonesia. Verifikasi tiga-lapis, blockchain traceability, dan welfare scoring.</p>
+        <div class="footer-entities">
+          <div class="footer-entity"><strong>CV Kemari Sukses Makmur</strong>Indonesia · Platform Development</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="index.html">Beranda</a>
+        <a href="qlab.html">Q.co Coffee Lab</a>
+        <a href="qaffiliator.html">QAffiliator</a>
+      </div>
+      <div class="footer-col">
+        <h4>Investor</h4>
+        <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+  <a href="investors.html">Investor Portal</a>
+        <a href="investors.html">Pitch Deck</a>
+        <a href="investors.html">Data Room</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
+        <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 QBridge</span>
+      <span>Part of Q.co Ecosystem</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('active'); }
+</script>
+</body>
+</html>

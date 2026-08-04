@@ -347,6 +347,20 @@ a { color: inherit; text-decoration: none; }
   .section { padding: 60px 0; }
   .abstract-box { padding: 28px 20px; }
 }
+
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; color:var(--text-secondary); }
+.mobile-menu {
+  display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999;
+  background:linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%); padding:80px 24px 24px;
+  flex-direction:column; gap:8px;
+}
+.mobile-menu.active { display:flex; }
+.mobile-menu a { font-size:1.1rem; font-weight:500; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.8); }
+.mobile-menu a:hover { color:#c8a97e; }
+@media (max-width:768px) {
+  .nav-links { display:none !important; }
+  .nav-toggle { display:block !important; }
+}
 </style>
 </head>
 <body>
@@ -356,11 +370,12 @@ a { color: inherit; text-decoration: none; }
   <div class="nav-container">
     <a href="index.html" class="nav-logo">QBridge <span>Beta</span></a>
     <div class="nav-links">
-      <a href="#abstract">Research</a>
-      <a href="#verification">Verification</a>
-      <a href="#value">Why QBridge</a>
-      <a href="#waitlist">Join Beta</a>
-      <a href="index.html" class="nav-cta">Investor Site</a>
+      <a href="index.html">Beranda</a>
+      <a href="qlab.html">Q.co Coffee Lab</a>
+      <a href="qbridge.html">QBridge</a>
+      <a href="qaffiliator.html">QAffiliator</a>
+      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+      <a href="investors.html" class="nav-cta">Investor Portal</a>
     </div>
   </div>
 </nav>
@@ -857,9 +872,13 @@ a { color: inherit; text-decoration: none; }
   <div class="footer-container">
     <div class="footer-brand">QBridge <span>Beta</span></div>
     <div>
-      <span>Part of the Q.co Ecosystem</span> · 
-      <a href="index.html" style="color: var(--color-accent);">Investor Site</a> · 
-      <a href="mailto:beta@qbridge.co" style="color: var(--color-accent);">beta@qbridge.co</a>
+      <a href="index.html" style="color: var(--color-accent);">Beranda</a> · 
+      <a href="qlab.html" style="color: var(--color-accent);">Q.co Coffee Lab</a> · 
+      <a href="qaffiliator.html" style="color: var(--color-accent);">QAffiliator</a> · 
+      <a href="investors.html" style="color: var(--color-accent);">Investor Portal</a> · 
+      <a href="https://blog.qcoid.com/" target="_blank" style="color: var(--color-accent);">Blog</a> · 
+      <a href="https://qbridge-id.com/" target="_blank" style="color: var(--color-accent);">QBridge Live</a> · 
+      <a href="https://affiliate.qcoid.com/" target="_blank" style="color: var(--color-accent);">QAffiliator Live</a>
     </div>
   </div>
 </footer>
@@ -916,6 +935,19 @@ window.addEventListener('scroll', () => {
     nav.style.boxShadow = 'none';
   }
 });
+
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+
 </script>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a>
+  <a href="qlab.html">Q.co Coffee Lab</a>
+  <a href="qbridge.html">QBridge</a>
+  <a href="qaffiliator.html">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+  <a href="investors.html">Investor Portal</a>
+</div>
 </body>
 </html>

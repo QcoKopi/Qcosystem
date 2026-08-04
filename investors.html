@@ -278,8 +278,22 @@ a { color: inherit; text-decoration: none; }
   .gate-box { padding: 40px 24px; }
   .full-card { padding: 28px 20px; }
 }
+
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; color:rgba(255,255,255,0.7); }
+.mobile-menu {
+  display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999;
+  background:linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%); padding:80px 24px 24px;
+  flex-direction:column; gap:8px;
+}
+.mobile-menu.active { display:flex; }
+.mobile-menu a { font-size:1.1rem; font-weight:500; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.8); }
+.mobile-menu a:hover { color:#c8a97e; }
+@media (max-width:768px) {
+  .nav-links { display:none !important; }
+  .nav-toggle { display:block !important; }
+  .nav-back { display:none; }
+}
 </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -310,6 +324,13 @@ a { color: inherit; text-decoration: none; }
 <nav class="nav">
   <div class="nav-container">
     <a href="index.html" class="nav-logo">Q.co <span>Investor Portal</span></a>
+    <div class="nav-links" style="display:flex; gap:28px; align-items:center;">
+      <a href="index.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">Beranda</a>
+      <a href="qlab.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">Q.co Coffee Lab</a>
+      <a href="qbridge.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">QBridge</a>
+      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+      <a href="qaffiliator.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">QAffiliator</a>
+    </div>
     <a href="index.html" class="nav-back">← Back to Public Site</a>
   </div>
 </nav>
@@ -485,7 +506,15 @@ a { color: inherit; text-decoration: none; }
 <footer class="footer">
   <div class="footer-container">
     <span>© 2026 Q.co Ecosystem. Confidential materials.</span>
-    <span>Javanesia International LLC · CV Kemari Sukses Makmur</span>
+    <div>
+      <a href="index.html" style="color:rgba(255,255,255,0.55);">Beranda</a> · 
+      <a href="qlab.html" style="color:rgba(255,255,255,0.55);">Q.co Coffee Lab</a> · 
+      <a href="qbridge.html" style="color:rgba(255,255,255,0.55);">QBridge</a> · 
+      <a href="qaffiliator.html" style="color:rgba(255,255,255,0.55);">QAffiliator</a> · 
+      <a href="https://blog.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);">Blog</a> · 
+      <a href="https://qbridge-id.com/" target="_blank" style="color:rgba(255,255,255,0.55);">QBridge Live</a> · 
+      <a href="https://affiliate.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);">QAffiliator Live</a>
+    </div>
   </div>
 </footer>
 
@@ -613,6 +642,19 @@ function handleContactSubmit(e) {
     </div>
   `;
 }
+
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+
 </script>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a>
+  <a href="qlab.html">Q.co Coffee Lab</a>
+  <a href="qbridge.html">QBridge</a>
+  <a href="qaffiliator.html">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+  <a href="index.html">← Back to Public Site</a>
+</div>
 </body>
 </html>

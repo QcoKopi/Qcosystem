@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q.co Coffee Lab & Roastery — Sahabat Kedai Kopi</title>
+<meta name="description" content="Q.co Coffee Lab & Roastery di Depok, Jawa Barat. Sahabat Kedai Kopi — lebih dari supplier, partner untuk kolaborasi, konsultasi, dan pertumbuhan bersama.">
+<style>
+:root {
+  --bg: #faf9f6;
+  --bg-warm: #f5f3ee;
+  --bg-cream: #f0ebe3;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --text-sec: #5c5c5c;
+  --text-muted: #9a9a9a;
+  --primary: #2c2c2c;
+  --accent: #b8926a;
+  --accent-light: #e8d5b5;
+  --accent-dark: #8b6f4e;
+  --border: #e8e6e1;
+  --font-head: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a { text-decoration:none; color:inherit; }
+
+/* ===== NAV ===== */
+.nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  background:rgba(250,249,246,0.95); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-wrap {
+  max-width:1200px; margin:0 auto; padding:0 24px;
+  display:flex; align-items:center; justify-content:space-between; height:68px;
+}
+.nav-logo { font-family:var(--font-head); font-size:1.3rem; font-weight:600; }
+.nav-logo span { color:var(--accent); font-weight:400; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { font-size:0.85rem; font-weight:500; color:var(--text-sec); transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a.active { color:var(--accent-dark); font-weight:600; }
+.nav-cta { background:var(--primary); color:#fff; padding:10px 22px; border-radius:100px; font-size:0.8rem; font-weight:600; }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height:85vh; display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden; padding-top:68px;
+  background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%);
+}
+.hero::before {
+  content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px;
+  background:radial-gradient(circle, rgba(184,146,106,0.08) 0%, transparent 70%);
+  border-radius:50%; pointer-events:none;
+}
+.hero-inner { max-width:800px; text-align:center; padding:60px 24px; position:relative; z-index:1; }
+.hero-tag {
+  display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.12em; color:var(--accent-dark); background:rgba(184,146,106,0.1);
+  padding:6px 18px; border-radius:100px; margin-bottom:24px;
+}
+.hero h1 {
+  font-family:var(--font-head); font-size:clamp(2.5rem, 5vw, 4rem);
+  line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:16px;
+}
+.hero h1 em { font-style:italic; color:var(--accent-dark); }
+.hero-sub {
+  font-size:clamp(1.05rem, 2vw, 1.25rem); color:var(--text-sec); max-width:600px;
+  margin:0 auto 36px; line-height:1.7;
+}
+.hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px; padding:14px 28px;
+  border-radius:100px; font-size:0.9rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none;
+}
+.btn-pri { background:var(--primary); color:#fff; }
+.btn-pri:hover { background:#3a3a3a; transform:translateY(-2px); }
+.btn-sec { background:transparent; color:var(--text); border:1.5px solid var(--border); }
+.btn-sec:hover { border-color:var(--accent); color:var(--accent-dark); }
+
+/* ===== SECTIONS ===== */
+.section { padding:100px 0; }
+.section-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.section-header { text-align:center; margin-bottom:56px; }
+.section-label {
+  font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em;
+  color:var(--accent-dark); margin-bottom:12px; display:inline-block;
+  background:rgba(184,146,106,0.1); padding:4px 14px; border-radius:100px;
+}
+.section-title {
+  font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.4rem); font-weight:400;
+  margin-bottom:12px; line-height:1.2;
+}
+.section-desc { color:var(--text-sec); max-width:560px; margin:0 auto; font-size:1rem; line-height:1.7; }
+
+/* ===== DNA / PHILOSOPHY ===== */
+.dna-section { background:var(--bg-warm); }
+.dna-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+.dna-visual {
+  background:linear-gradient(135deg, var(--accent-light), rgba(184,146,106,0.15));
+  border-radius:var(--radius); min-height:420px; display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); position:relative; overflow:hidden;
+}
+.dna-visual::before {
+  content:'Q.co'; font-family:var(--font-head); font-size:4rem; color:var(--accent-dark); opacity:0.15;
+  position:absolute; bottom:20px; right:30px;
+}
+.dna-visual-text {
+  font-family:var(--font-head); font-size:1.8rem; color:var(--accent-dark); text-align:center; padding:40px;
+  line-height:1.4;
+}
+.dna-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:20px; }
+.dna-content h2 em { font-style:italic; color:var(--accent-dark); }
+.dna-content p { color:var(--text-sec); line-height:1.8; margin-bottom:20px; font-size:1rem; }
+.dna-quote {
+  border-left:3px solid var(--accent); padding-left:24px; font-family:var(--font-head);
+  font-size:1.15rem; color:var(--text-sec); font-style:italic; line-height:1.6; margin-top:28px;
+}
+.dna-values { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+.dna-value {
+  background:var(--card); border-radius:8px; padding:20px; border:1px solid var(--border);
+  transition:all 0.3s;
+}
+.dna-value:hover { transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.dna-value-icon { font-size:1.5rem; margin-bottom:8px; }
+.dna-value h4 { font-size:0.9rem; font-weight:600; margin-bottom:4px; }
+.dna-value p { font-size:0.8rem; color:var(--text-muted); margin:0; line-height:1.5; }
+
+/* ===== PRODUCTS ===== */
+.products-section { background:var(--bg); }
+.products-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.product-card {
+  background:var(--card); border-radius:var(--radius); overflow:hidden;
+  border:1px solid var(--border); transition:all 0.35s;
+}
+.product-card:hover { transform:translateY(-6px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.product-img {
+  height:220px; background:linear-gradient(135deg, var(--accent-light), var(--bg-cream));
+  display:flex; align-items:center; justify-content:center; font-size:3rem;
+  border-bottom:1px solid var(--border);
+}
+.product-info { padding:28px; }
+.product-tag {
+  font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em;
+  color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:3px 10px; border-radius:100px;
+  display:inline-block; margin-bottom:10px;
+}
+.product-info h3 { font-family:var(--font-head); font-size:1.15rem; margin-bottom:8px; }
+.product-info p { font-size:0.85rem; color:var(--text-sec); line-height:1.6; margin-bottom:16px; }
+.product-meta { display:flex; gap:16px; font-size:0.75rem; color:var(--text-muted); }
+
+/* ===== SERVICES / PARTNERSHIP ===== */
+.services-section { background:var(--bg-warm); }
+.services-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:24px; }
+.service-card {
+  background:var(--card); border-radius:var(--radius); padding:40px; border:1px solid var(--border);
+  transition:all 0.3s;
+}
+.service-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.service-card h3 { font-family:var(--font-head); font-size:1.2rem; margin-bottom:12px; display:flex; align-items:center; gap:12px; }
+.service-card h3 span { font-size:1.8rem; }
+.service-card p { font-size:0.9rem; color:var(--text-sec); line-height:1.7; margin-bottom:20px; }
+.service-list { list-style:none; }
+.service-list li {
+  font-size:0.85rem; color:var(--text-sec); padding:8px 0; border-bottom:1px solid var(--border);
+  display:flex; align-items:flex-start; gap:10px;
+}
+.service-list li:last-child { border-bottom:none; }
+.service-list li::before { content:'→'; color:var(--accent); font-weight:700; flex-shrink:0; }
+
+/* ===== TESTIMONIALS ===== */
+.testi-section { background:var(--bg); }
+.testi-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.testi-card {
+  background:var(--card); border-radius:var(--radius); padding:36px; border:1px solid var(--border);
+  position:relative;
+}
+.testi-card::before {
+  content:'"'; font-family:var(--font-head); font-size:4rem; color:var(--accent-light);
+  position:absolute; top:16px; left:24px; line-height:1;
+}
+.testi-text {
+  font-family:var(--font-head); font-size:1.05rem; color:var(--text-sec); font-style:italic;
+  line-height:1.7; margin-bottom:24px; padding-top:20px; position:relative; z-index:1;
+}
+.testi-author { display:flex; align-items:center; gap:14px; }
+.testi-avatar {
+  width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--accent-light), var(--accent));
+  display:flex; align-items:center; justify-content:center; font-family:var(--font-head);
+  font-size:1rem; color:#fff; font-weight:600; flex-shrink:0;
+}
+.testi-name { font-size:0.9rem; font-weight:600; }
+.testi-role { font-size:0.75rem; color:var(--text-muted); }
+
+/* ===== CTA ===== */
+.cta-section {
+  background:var(--primary); color:#fff; padding:100px 0; text-align:center;
+}
+.cta-section h2 { font-family:var(--font-head); font-size:clamp(1.8rem, 3vw, 2.6rem); font-weight:400; margin-bottom:16px; }
+.cta-section p { color:rgba(255,255,255,0.7); max-width:520px; margin:0 auto 36px; font-size:1.05rem; line-height:1.7; }
+.cta-btn {
+  display:inline-flex; align-items:center; gap:10px; padding:16px 36px;
+  background:var(--accent); color:var(--primary); border-radius:100px;
+  font-size:1rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none;
+}
+.cta-btn:hover { background:var(--accent-light); transform:translateY(-2px); }
+
+/* ===== FOOTER ===== */
+.footer { background:var(--primary); color:rgba(255,255,255,0.55); padding:56px 0 32px; }
+.footer-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+.footer-brand { font-family:var(--font-head); font-size:1.3rem; color:#fff; margin-bottom:12px; }
+.footer-brand span { color:var(--accent-light); }
+.footer-desc { font-size:0.9rem; line-height:1.6; margin-bottom:20px; max-width:320px; }
+.footer-entities { display:flex; flex-direction:column; gap:8px; }
+.footer-entity { font-size:0.75rem; background:rgba(255,255,255,0.05); padding:8px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.08); }
+.footer-entity strong { color:#fff; display:block; font-size:0.8rem; }
+.footer-col h4 { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#fff; margin-bottom:16px; }
+.footer-col a { display:block; font-size:0.85rem; color:rgba(255,255,255,0.55); padding:6px 0; transition:color 0.2s; }
+.footer-col a:hover { color:var(--accent-light); }
+.footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:0.8rem; }
+
+/* ===== MOBILE ===== */
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+  .dna-grid { grid-template-columns:1fr; gap:40px; }
+  .products-grid { grid-template-columns:1fr; }
+  .services-grid { grid-template-columns:1fr; }
+  .testi-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  .hero-cta { flex-direction:column; align-items:center; }
+  .btn { width:100%; max-width:300px; justify-content:center; }
+  .section { padding:60px 0; }
+}
+
+.mobile-menu {
+  display:none; position:fixed; top:68px; left:0; right:0; bottom:0;
+  background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px;
+}
+.mobile-menu.active { display:flex; }
+.mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">Q.co <span>Coffee Lab</span></a>
+    <div class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="qlab.html" class="active">Q.co Coffee Lab</a>
+      <a href="qbridge.html">QBridge</a>
+      <a href="qaffiliator.html">QAffiliator</a>
+      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+      <a href="investors.html" class="nav-cta">Investor Portal</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMobile()">☰</button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a>
+  <a href="qlab.html">Q.co Coffee Lab</a>
+  <a href="qbridge.html">QBridge</a>
+  <a href="qaffiliator.html">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+  <a href="investors.html">Investor Portal</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Depok, Jawa Barat</div>
+    <h1>Q.co <em>Coffee Lab</em><br>& Roastery</h1>
+    <p class="hero-sub">
+      Lebih dari sekadar supplier roasted beans. Kami adalah <strong>Sahabat Kedai Kopi</strong> — 
+      partner yang tumbuh bersama, berbagi pengetahuan, dan berkolaborasi untuk menciptakan 
+      pengalaman kopi terbaik di setiap cangkir.
+    </p>
+    <div class="hero-cta">
+      <a href="#products" class="btn btn-pri">Lihat Produk Kami →</a>
+      <a href="#partnership" class="btn btn-sec">Jadi Sahabat Kedai Kopi</a>
+    </div>
+  </div>
+</section>
+
+<!-- DNA / PHILOSOPHY -->
+<section class="section dna-section" id="tentang">
+  <div class="section-wrap">
+    <div class="dna-grid">
+      <div class="dna-visual">
+        <div class="dna-visual-text">
+          "Kopi terbaik<br>lahir dari<br>kolaborasi,<br>bukan kompetisi."
+        </div>
+      </div>
+      <div class="dna-content">
+        <div class="section-label">DNA Kami</div>
+        <h2>Kenapa Kami <em>Bukan Sekadar Supplier</em></h2>
+        <p>
+          Q.co lahir dari pengalaman bertahun-tahun di ekosistem kopi Indonesia — dari kebun petani 
+          di pegunungan, meja cupping di mill, hingga pameran internasional di Amerika Serikat. 
+          Kami memahami bahwa kopi yang luar biasa tidak hanya tentang biji yang bagus, tetapi juga 
+          tentang <strong>hubungan yang kuat</strong> antara setiap aktor dalam rantai pasok.
+        </p>
+        <p>
+          Kami memposisikan diri sebagai <strong>Sahabat Kedai Kopi</strong> — bukan vendor yang hanya 
+          mengirim beans dan invoice. Kami berkolaborasi dalam menyusun menu, mengembangkan roasting 
+          profile yang sesuai dengan karakter kedai, memberikan training barista, dan berbagi insight 
+          pasar kopi terkini.
+        </p>
+        <div class="dna-quote">
+          "Ketika kedai kopi berkembang, kami juga berkembang. Pertumbuhan bersama adalah inti dari 
+          setiap hubungan yang kami bangun."
+        </div>
+        <div class="dna-values">
+          <div class="dna-value">
+            <div class="dna-value-icon">🤝</div>
+            <h4>Kolaborasi</h4>
+            <p>Bukan transaksi satu arah, tapi partnership saling menguntungkan</p>
+          </div>
+          <div class="dna-value">
+            <div class="dna-value-icon">📚</div>
+            <h4>Pengetahuan</h4>
+            <p>Berbagi insight roasting, brewing, dan tren pasar kopi</p>
+          </div>
+          <div class="dna-value">
+            <div class="dna-value-icon">🎯</div>
+            <h4>Kualitas</h4>
+            <p>Q Grader certified — setiap batch di-cup sebelum dikirim</p>
+          </div>
+          <div class="dna-value">
+            <div class="dna-value-icon">🌱</div>
+            <h4>Berkelanjutan</h4>
+            <p>Hubungan jangka panjang dengan petani dan processor lokal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section products-section" id="products">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-label">Produk Kami</div>
+      <h2 class="section-title">Roasted Beans, Dari Hati ke Cangkir</h2>
+      <p class="section-desc">
+        Setiap batch di-roast dengan presisi, di-cup oleh Q Grader bersertifikat, dan disesuaikan 
+        dengan profil rasa yang Anda inginkan. Dari single origin hingga house blend signature.
+      </p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img">☕</div>
+        <div class="product-info">
+          <span class="product-tag">Single Origin</span>
+          <h3>Arabika Gayo</h3>
+          <p>Full-washed Arabika dari dataran tinggi Gayo, Aceh. Profil rasa: dark chocolate, herbal, spicy, clean aftertaste.</p>
+          <div class="product-meta">
+            <span>☕ Medium Roast</span>
+            <span>📍 Aceh</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">☕</div>
+        <div class="product-info">
+          <span class="product-tag">Single Origin</span>
+          <h3>Arabika Toraja</h3>
+          <p>Dari Sulawesi Selatan. Profil rasa: caramel, nutty, fruity acidity, syrupy body. Cocok untuk espresso dan milk-based.</p>
+          <div class="product-meta">
+            <span>☕ Medium-Dark</span>
+            <span>📍 Sulawesi</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">☕</div>
+        <div class="product-info">
+          <span class="product-tag">House Blend</span>
+          <h3>Q.co Signature Blend</h3>
+          <p>Blend khas kami yang diracik untuk balance sempurna antara acidity, body, dan sweetness. Ideal untuk all-day brewing.</p>
+          <div class="product-meta">
+            <span>☕ Medium Roast</span>
+            <span>🎯 Best Seller</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">☕</div>
+        <div class="product-info">
+          <span class="product-tag">Single Origin</span>
+          <h3>Arabika Flores</h3>
+          <p>Dari Manggarai, NTT. Profil rasa: floral, citrus, honey sweetness, light body. Sempurna untuk pour-over dan filter.</p>
+          <div class="product-meta">
+            <span>☕ Light-Medium</span>
+            <span>📍 Flores</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">☕</div>
+        <div class="product-info">
+          <span class="product-tag">Single Origin</span>
+          <h3>Robusta Lampung</h3>
+          <p>Robusta premium dari Lampung. Profil rasa: bold, earthy, dark chocolate, heavy body. Pilihan untuk espresso yang kuat.</p>
+          <div class="product-meta">
+            <span>☕ Dark Roast</span>
+            <span>📍 Lampung</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">☕</div>
+        <div class="product-info">
+          <span class="product-tag">Custom</span>
+          <h3>Custom Roast Profile</h3>
+          <p>Butuh roasting profile khusus untuk karakter kedai Anda? Kami bisa custom roast berdasarkan permintaan — konsultasi gratis.</p>
+          <div class="product-meta">
+            <span>🔥 Custom Roast</span>
+            <span>💬 Konsultasi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES / PARTNERSHIP -->
+<section class="section services-section" id="partnership">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-label">Layanan & Kolaborasi</div>
+      <h2 class="section-title">Sahabat Kedai Kopi — <em>Bukan Sekadar Supplier</em></h2>
+      <p class="section-desc">
+        Kami percaya bahwa hubungan terbaik adalah yang saling menguntungkan. 
+        Inilah cara kami mendampingi kedai kopi mitra kami.
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3><span>🎯</span> Konsultasi Menu & Profil Rasa</h3>
+        <p>
+          Setiap kedai memiliki karakter unik — dari demografi pelanggan hingga konsep interior. 
+          Kami membantu menyusun menu kopi yang sesuai dengan identitas kedai Anda, termasuk 
+          rekomendasi roasting profile dan brewing method yang optimal.
+        </p>
+        <ul class="service-list">
+          <li>Analisis karakter kedai dan target pasar</li>
+          <li>Rekomendasi beans dan roast profile</li>
+          <li>Penyusunan menu kopi (espresso-based, manual brew, signature)</li>
+          <li>Tasting session dan cupping bersama</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3><span>📚</span> Training & Knowledge Sharing</h3>
+        <p>
+          Kualitas kopi di cangkir tidak hanya ditentukan oleh beans, tapi juga oleh barista. 
+          Kami menyediakan training program untuk tim barista kedai mitra — dari teknik dasar 
+          hingga advanced brewing.
+        </p>
+        <ul class="service-list">
+          <li>Espresso extraction dan milk texturing</li>
+          <li>Manual brewing (V60, Chemex, French Press, Aeropress)</li>
+          <li>Cupping dan sensory evaluation</li>
+          <li>Latte art fundamentals</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3><span>🔄</span> Supply Chain Transparan</h3>
+        <p>
+          Kami bangga dengan rantai pasok kami. Setiap beans yang kami roast berasal dari 
+          petani dan processor yang kami kenal secara personal — banyak dari mereka adalah 
+          mitra jangka panjang yang telah bekerja sama bertahun-tahun.
+        </p>
+        <ul class="service-list">
+          <li>Traceability dari kebun ke roastery</li>
+          <li>Informasi origin, varietas, dan proses pengolahan</li>
+          <li>Hubungan langsung dengan petani dan processor</li>
+          <li>Praktik berkelanjutan dan fair pricing</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3><span>🤝</span> Program Sahabat Kedai Kopi</h3>
+        <p>
+          Program eksklusif untuk kedai kopi yang ingin berkembang bersama kami. 
+          Dapatkan akses ke produk terbaru, harga khusus, event kolaborasi, dan 
+          komunitas kedai kopi yang saling mendukung.
+        </p>
+        <ul class="service-list">
+          <li>Harga khusus untuk mitra setia</li>
+          <li>Akses prioritas ke limited edition beans</li>
+          <li>Undangan event cupping dan cupping competition</li>
+          <li>Kolaborasi marketing dan social media</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testi-section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-label">Testimoni</div>
+      <h2 class="section-title">Kata Mereka, <em>Sahabat Kami</em></h2>
+      <p class="section-desc">Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-text">
+          Q.co bukan sekadar supplier — mereka benar-benar partner. Dari konsultasi menu 
+          sampai training barista, mereka selalu hadir. Beans-nya konsisten dan 
+          roasting profile-nya pas untuk karakter kedai kami.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">AR</div>
+          <div>
+            <div class="testi-name">Andi Raharjo</div>
+            <div class="testi-role">Owner, Kopi Nusantara — Depok</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-text">
+          Saya suka transparansi Q.co. Mereka selalu cerita dari mana beans-nya, 
+          prosesnya gimana, dan kenapa profil rasanya seperti itu. Pelanggan kami 
+          appreciate cerita di balik setiap cangkir.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">DS</div>
+          <div>
+            <div class="testi-name">Dewi Sartika</div>
+            <div class="testi-role">Founder, Brew & Bloom — Bogor</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-text">
+          Dari awal buka kedai, Q.co sudah dampingi kami. Custom roast profile 
+          untuk signature drink kami, training tim barista, dan selalu responsif. 
+          Sahabat Kedai Kopi memang bukan cuma tagline — mereka buktiin.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">RF</div>
+          <div>
+            <div class="testi-name">Rizky Fadillah</div>
+            <div class="testi-role">Co-Founder, Kopi Tiga Saudara — Tangerang</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-wrap">
+    <h2>Jadi <em>Sahabat Kedai Kopi</em> Kami</h2>
+    <p>
+      Apakah Anda pemilik kedai kopi, barista, atau pecinta kopi yang ingin berkolaborasi? 
+      Kami siap mendampingi perjalanan kopi Anda — dari beans selection hingga cangkir terakhir.
+    </p>
+    <a href="mailto:hello@qco.coffee" class="cta-btn">Hubungi Kami →</a>
+    <p style="margin-top:24px; font-size:0.85rem; color:rgba(255,255,255,0.4);">
+      atau DM kami di Instagram <a href="https://instagram.com/qkopi.co" target="_blank" style="color:var(--accent-light);">@qkopi.co</a>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Q.co <span>Coffee Lab</span></div>
+        <p class="footer-desc">Sahabat Kedai Kopi — Roastery & Coffee Lab di Depok, Jawa Barat. Lebih dari supplier, partner untuk kolaborasi.</p>
+        <div class="footer-entities">
+          <div class="footer-entity"><strong>CV Kemari Sukses Makmur</strong>Depok, Jawa Barat, Indonesia</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="index.html">Beranda</a>
+        <a href="qbridge.html">QBridge</a>
+        <a href="qaffiliator.html">QAffiliator</a>
+      </div>
+      <div class="footer-col">
+        <h4>Produk</h4>
+        <a href="#products">Single Origin</a>
+        <a href="#products">House Blend</a>
+        <a href="#products">Custom Roast</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
+        <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+        <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
+        <a href="investors.html">Investor Relations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Q.co Coffee Lab & Roastery</span>
+      <span>Depok, Jawa Barat, Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+</script>
+</body>
+</html>
