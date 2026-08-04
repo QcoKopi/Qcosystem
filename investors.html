@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Portal | Q.co Ecosystem</title>
+<meta name="description" content="Confidential investor materials for Q.co Ecosystem — Q.co Coffee Lab, QBridge, and QAffiliator.">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+<style>
+:root {
+  --color-bg: #f8f7f4;
+  --color-bg-warm: #f0efe9;
+  --color-card: #ffffff;
+  --color-text: #1f1f1f;
+  --color-text-secondary: #5a5a5a;
+  --color-text-muted: #8a8a8a;
+  --color-primary: #2c2c2c;
+  --color-accent: #c8a97e;
+  --color-accent-light: #e8d5b5;
+  --color-border: #e8e6e1;
+  --font-heading: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+  --radius: 8px;
+  --radius-lg: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* Password Gate Overlay */
+.gate-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.6s, visibility 0.6s;
+}
+.gate-overlay.hidden {
+  opacity: 0; visibility: hidden; pointer-events: none;
+}
+.gate-box {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg); padding: 56px 48px; max-width: 440px; width: 90%;
+  text-align: center; backdrop-filter: blur(8px);
+}
+.gate-logo {
+  font-family: var(--font-heading); font-size: 1.5rem; color: #fff; margin-bottom: 8px;
+}
+.gate-logo span { color: var(--color-accent); }
+.gate-subtitle {
+  font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 32px;
+}
+.gate-input {
+  width: 100%; padding: 14px 18px; border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);
+  color: #fff; font-size: 1rem; font-family: inherit; margin-bottom: 12px;
+  transition: all 0.2s; text-align: center; letter-spacing: 0.1em;
+}
+.gate-input:focus { outline: none; border-color: var(--color-accent); background: rgba(255,255,255,0.1); }
+.gate-input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: normal; }
+.gate-btn {
+  width: 100%; padding: 14px; background: var(--color-accent); color: var(--color-primary);
+  border: none; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.gate-btn:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+.gate-error {
+  color: #e57373; font-size: 0.8rem; margin-top: 10px; min-height: 20px;
+}
+.gate-note {
+  margin-top: 24px; font-size: 0.75rem; color: rgba(255,255,255,0.3);
+  line-height: 1.5;
+}
+
+/* Main Content (Hidden until unlocked) */
+.main-content {
+  opacity: 0; transition: opacity 0.6s; pointer-events: none;
+}
+.main-content.unlocked {
+  opacity: 1; pointer-events: all;
+}
+
+/* Nav */
+.nav {
+  background: var(--color-card); border-bottom: 1px solid var(--color-border);
+}
+.nav-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.nav-logo {
+  font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;
+  color: var(--color-primary);
+}
+.nav-logo span { color: var(--color-accent); }
+.nav-back {
+  font-size: 0.875rem; color: var(--color-text-secondary); font-weight: 500;
+  display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+}
+.nav-back:hover { color: var(--color-text); }
+
+/* Hero */
+.portal-hero {
+  background: linear-gradient(135deg, #f8f7f4 0%, #f0efe9 100%);
+  padding: 80px 0 60px;
+}
+.portal-hero-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+}
+.portal-hero-label {
+  font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--color-accent); margin-bottom: 12px;
+}
+.portal-hero h1 {
+  font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400; color: var(--color-primary); margin-bottom: 12px; line-height: 1.15;
+}
+.portal-hero p {
+  font-size: 1.1rem; color: var(--color-text-secondary); max-width: 600px;
+}
+
+/* Cards Grid */
+.section {
+  padding: 60px 0;
+}
+.section-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+}
+.cards-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+}
+.card {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 36px;
+  border: 1px solid var(--color-border); transition: all 0.3s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--color-accent-light); }
+.card-icon {
+  width: 48px; height: 48px; border-radius: var(--radius); background: var(--color-bg-warm);
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  margin-bottom: 20px; border: 1px solid var(--color-border);
+}
+.card h3 {
+  font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 8px; color: var(--color-primary);
+}
+.card p {
+  font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: 20px; line-height: 1.5;
+}
+.card-action {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.875rem; font-weight: 600; color: var(--color-primary);
+  transition: gap 0.2s; cursor: pointer;
+}
+.card-action:hover { gap: 10px; color: var(--color-accent); }
+.card-meta {
+  margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border);
+  font-size: 0.75rem; color: var(--color-text-muted); display: flex; gap: 16px; flex-wrap: wrap;
+}
+
+/* Full-width sections */
+.full-card {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 40px;
+  border: 1px solid var(--color-border); margin-bottom: 24px;
+}
+.full-card h3 {
+  font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 20px; color: var(--color-primary);
+}
+.highlight-list {
+  list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.highlight-list li {
+  display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem;
+  color: var(--color-text-secondary); padding: 10px; background: var(--color-bg-warm);
+  border-radius: var(--radius); border: 1px solid var(--color-border);
+}
+.highlight-list li::before {
+  content: '✓'; color: var(--color-accent); font-weight: 700; flex-shrink: 0; margin-top: 2px;
+}
+
+/* Contact Section */
+.contact-section {
+  background: var(--color-primary); color: #fff; padding: 80px 0;
+}
+.contact-section h2 {
+  font-family: var(--font-heading); font-size: 2rem; margin-bottom: 12px;
+}
+.contact-section p {
+  color: rgba(255,255,255,0.7); margin-bottom: 32px; max-width: 500px;
+}
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+.contact-info {
+  display: flex; flex-direction: column; gap: 20px;
+}
+.contact-item {
+  display: flex; align-items: center; gap: 14px;
+}
+.contact-item-icon {
+  width: 40px; height: 40px; border-radius: var(--radius);
+  background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;
+}
+.contact-item-text strong { display: block; color: #fff; font-size: 0.9rem; }
+.contact-item-text span { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+.contact-form {
+  background: rgba(255,255,255,0.05); border-radius: var(--radius-lg); padding: 32px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.form-group { margin-bottom: 14px; }
+.form-group label {
+  display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 5px;
+  color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.04em;
+}
+.form-group input, .form-group textarea {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08);
+  color: #fff; font-size: 0.9rem; font-family: inherit; transition: all 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--color-accent); background: rgba(255,255,255,0.12);
+}
+.form-group input::placeholder { color: rgba(255,255,255,0.4); }
+.form-submit {
+  width: 100%; padding: 12px; background: var(--color-accent); color: var(--color-primary);
+  border: none; border-radius: var(--radius); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.form-submit:hover { background: var(--color-accent-light); }
+
+/* Footer */
+.footer {
+  background: var(--color-primary); color: rgba(255,255,255,0.5);
+  padding: 32px 0; border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  font-size: 0.8rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .highlight-list { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .gate-box { padding: 40px 24px; }
+  .full-card { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Password Gate -->
+<div class="gate-overlay" id="gateOverlay">
+  <div class="gate-box">
+    <div class="gate-logo">Q.co <span>Investor Portal</span></div>
+    <p class="gate-subtitle">Confidential materials for qualified investors and strategic partners.</p>
+    <input type="password" class="gate-input" id="gatePassword" placeholder="Enter access code" autocomplete="off">
+    <button class="gate-btn" onclick="unlockPortal()">Unlock Portal</button>
+    <div class="gate-error" id="gateError"></div>
+    <p class="gate-note">
+      This portal contains confidential financial and strategic information. 
+      By accessing, you agree to treat all materials as strictly confidential. 
+      <br><br>
+      Default password: <strong>QBridge2026</strong> — change in JS before deployment.
+    </p>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">Q.co <span>Investor Portal</span></a>
+    <a href="index.html" class="nav-back">← Back to Public Site</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="portal-hero">
+  <div class="portal-hero-container">
+    <div class="portal-hero-label">Confidential — Do Not Distribute</div>
+    <h1>Q.co Ecosystem Investor Materials</h1>
+    <p>Pre-Seed / Seed fundraising documentation, financial highlights, and due diligence resources. Updated August 2026.</p>
+  </div>
+</section>
+
+<!-- Quick Highlights -->
+<section class="section" style="padding-top: 40px;">
+  <div class="section-container">
+    <div class="full-card">
+      <h3>Investment Highlights</h3>
+      <ul class="highlight-list">
+        <li>Revenue-generating roastery (Q.co Lab) operational since 20XX</li>
+        <li>4 years US market intelligence via SCE/WOC exhibitions</li>
+        <li>KBRI Washington trade partnership (2024–2026)</li>
+        <li>QBridge research accepted at ICC Italy, October 2026</li>
+        <li>3-layer verification system (Admin → Q Processing → Q Grader)</li>
+        <li>Dual-entity structure: Javanesia International LLC (US) + CV Kemari Sukses Makmur (ID)</li>
+        <li>Proprietary 5-system digital infrastructure (QFinance, QSales, QTask, QBridge, QAffiliator)</li>
+        <li>Q Grader & Q Processing (QP1/QP2, all methods) certified founder</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Resource Cards -->
+<section class="section" style="padding-top: 0;">
+  <div class="section-container">
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Pitch Deck</h3>
+        <p>Comprehensive investor presentation covering problem, solution, traction, market, team, and financial projections.</p>
+        <span class="card-action" onclick="trackDownload('deck')">Download PDF →</span>
+        <div class="card-meta">
+          <span>Last updated: Aug 2026</span>
+          <span>~24 slides</span>
+          <span>Password-protected</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h3>Financial Highlights</h3>
+        <p>Q.co Lab revenue trends, unit economics, projected P&L for QBridge and QAffiliator post-launch, and use of funds breakdown.</p>
+        <span class="card-action" onclick="trackDownload('financials')">Download PDF →</span>
+        <div class="card-meta">
+          <span>From QFinance system</span>
+          <span>Quarterly updates</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📄</div>
+        <h3>Cap Table & Entity Structure</h3>
+        <p>Ownership structure, Javanesia International LLC (US) and CV Kemari Sukses Makmur (ID) legal documentation, and governance framework.</p>
+        <span class="card-action" onclick="trackDownload('captable')">Download PDF →</span>
+        <div class="card-meta">
+          <span>Confidential</span>
+          <span>NDA required for full version</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔬</div>
+        <h3>ICC Italy 2026 Paper</h3>
+        <p>Peer-reviewed research abstract and full paper: "Beyond Traceability: Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee."</p>
+        <span class="card-action" onclick="trackDownload('paper')">Download PDF →</span>
+        <div class="card-meta">
+          <span>Accepted for presentation</span>
+          <span>Oct 2026, Italy</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🏛️</div>
+        <h3>Data Room</h3>
+        <p>Due diligence documents: legal entity certificates, Q.co Lab financials, QBridge technical architecture, QAffiliator system docs, and partnership agreements.</p>
+        <span class="card-action" onclick="alert('Data room access requires NDA. Contact investor@qco.coffee')">Request Access →</span>
+        <div class="card-meta">
+          <span>NDA required</span>
+          <span>Google Drive / Notion</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🎥</div>
+        <h3>Product Demo & Walkthrough</h3>
+        <p>Screen recordings of QBridge verification dashboard, QAffiliator AI bot in action, and QFinance integrated reporting. 12-minute overview.</p>
+        <span class="card-action" onclick="trackDownload('demo')">Watch Video →</span>
+        <div class="card-meta">
+          <span>12 min</span>
+          <span>Loom / YouTube unlisted</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Contact / Schedule -->
+<section class="contact-section">
+  <div class="section-container">
+    <div class="contact-grid">
+      <div>
+        <h2>Schedule a Briefing</h2>
+        <p>Ready to discuss the opportunity? Book a confidential call or send us a message.</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div class="contact-item-text">
+              <strong>investor@qco.coffee</strong>
+              <span>Primary investor relations</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📅</div>
+            <div class="contact-item-text">
+              <strong>Calendly / Cal.com</strong>
+              <span>Book a 30-min intro call</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text">
+              <strong>Depok, Jawa Barat, Indonesia</strong>
+              <span>Q.co Coffee Lab HQ</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🇺🇸</div>
+            <div class="contact-item-text">
+              <strong>Javanesia International LLC</strong>
+              <span>US market intelligence entity</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@firm.com" required>
+          </div>
+          <div class="form-group">
+            <label>Firm</label>
+            <input type="text" name="firm" placeholder="VC Firm, Angel, Strategic...">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" rows="3" placeholder="What would you like to discuss?"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <span>© 2026 Q.co Ecosystem. Confidential materials.</span>
+    <span>Javanesia International LLC · CV Kemari Sukses Makmur</span>
+  </div>
+</footer>
+
+</div><!-- /main-content -->
+
+<script>
+// Password gate
+const CORRECT_HASH = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'; // SHA-256 of "QBridge2026"
+
+async function sha256(message) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function unlockPortal() {
+  const input = document.getElementById('gatePassword');
+  const error = document.getElementById('gateError');
+  const overlay = document.getElementById('gateOverlay');
+  const content = document.getElementById('mainContent');
+
+  const hash = await sha256(input.value);
+
+  if (hash === CORRECT_HASH) {
+    overlay.classList.add('hidden');
+    content.classList.add('unlocked');
+    gtag('event', 'login', { 'method': 'password_gate' });
+    // Store in session so refresh doesn't re-prompt
+    sessionStorage.setItem('portalUnlocked', 'true');
+  } else {
+    error.textContent = 'Invalid access code. Please try again.';
+    input.value = '';
+    input.focus();
+    gtag('event', 'exception', { 'description': 'password_gate_failed' });
+  }
+}
+
+// Check if already unlocked this session
+if (sessionStorage.getItem('portalUnlocked') === 'true') {
+  document.getElementById('gateOverlay').classList.add('hidden');
+  document.getElementById('mainContent').classList.add('unlocked');
+}
+
+// Enter key submits
+ document.getElementById('gatePassword').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') unlockPortal();
+});
+
+// Track downloads
+function trackDownload(type) {
+  gtag('event', 'download', {
+    'event_category': 'investor_material',
+    'event_label': type
+  });
+  alert('Download tracking triggered. Replace this with actual file download or link to your data room.\n\nType: ' + type);
+}
+
+// Contact form
+function handleContactSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  gtag('event', 'generate_lead', {
+    'event_category': 'investor_portal',
+    'event_label': 'contact_form'
+  });
+  form.innerHTML = `
+    <div style="text-align:center; padding: 32px 0;">
+      <div style="font-size: 2.5rem; margin-bottom: 12px;">✓</div>
+      <h3 style="font-family: var(--font-heading); margin-bottom: 8px; color: #fff;">Message Sent</h3>
+      <p style="color: rgba(255,255,255,0.7);">We will respond within 24 hours.</p>
+      <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 16px;">
+        Connect this form to your GAS backend or email service.
+      </p>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>

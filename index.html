@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q.co Ecosystem | Indonesia's Coffee Infrastructure for Global Markets</title>
+<meta name="description" content="Q.co Coffee Lab, QBridge, and QAffiliator — building research-validated, diplomatically endorsed coffee infrastructure from Indonesia to global markets.">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
+</script>
+<style>
+:root {
+  --color-bg: #f8f7f4;
+  --color-bg-warm: #f0efe9;
+  --color-card: #ffffff;
+  --color-text: #1f1f1f;
+  --color-text-secondary: #5a5a5a;
+  --color-text-muted: #8a8a8a;
+  --color-primary: #2c2c2c;
+  --color-accent: #c8a97e;
+  --color-accent-light: #e8d5b5;
+  --color-border: #e8e6e1;
+  --color-live: #2d8a4e;
+  --color-beta: #c9a227;
+  --font-heading: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+  --radius: 8px;
+  --radius-lg: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* Navigation */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(248,247,244,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+.nav-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.nav-logo {
+  font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;
+  letter-spacing: -0.02em; color: var(--color-primary);
+}
+.nav-logo span { color: var(--color-accent); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 0.875rem; font-weight: 500; color: var(--color-text-secondary);
+  transition: color 0.2s; position: relative;
+}
+.nav-links a:hover { color: var(--color-text); }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+  background: var(--color-accent); transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  background: var(--color-primary); color: #fff; padding: 8px 20px;
+  border-radius: var(--radius); font-size: 0.875rem; font-weight: 500;
+  transition: all 0.2s; border: none; cursor: pointer;
+}
+.nav-cta:hover { background: #3a3a3a; transform: translateY(-1px); }
+.nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #f8f7f4 0%, #f0efe9 50%, #e8e4dc 100%);
+}
+.hero::before {
+  content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,169,126,0.12) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -30%; left: -10%; width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(200,169,126,0.08) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero-container {
+  max-width: 1200px; margin: 0 auto; padding: 120px 24px 80px;
+  position: relative; z-index: 1; width: 100%;
+}
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(200,169,126,0.15); color: var(--color-accent);
+  padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 24px;
+}
+.hero-label-dot {
+  width: 6px; height: 6px; background: var(--color-accent); border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.hero h1 {
+  font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1; font-weight: 400; color: var(--color-primary);
+  max-width: 800px; margin-bottom: 24px; letter-spacing: -0.02em;
+}
+.hero h1 em {
+  font-style: italic; color: var(--color-accent);
+}
+.hero-sub {
+  font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--color-text-secondary);
+  max-width: 640px; margin-bottom: 40px; line-height: 1.5;
+}
+.hero-ctas {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--radius); font-size: 0.95rem;
+  font-weight: 500; transition: all 0.25s; cursor: pointer; border: none;
+}
+.btn-primary {
+  background: var(--color-primary); color: #fff;
+  box-shadow: 0 4px 16px rgba(44,44,44,0.2);
+}
+.btn-primary:hover {
+  background: #3a3a3a; transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(44,44,44,0.25);
+}
+.btn-secondary {
+  background: transparent; color: var(--color-text);
+  border: 1.5px solid var(--color-border);
+}
+.btn-secondary:hover {
+  border-color: var(--color-accent); color: var(--color-accent);
+  transform: translateY(-2px);
+}
+.hero-proof {
+  margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--color-border);
+  display: flex; gap: 40px; flex-wrap: wrap; align-items: center;
+}
+.hero-proof-item {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.hero-proof-number {
+  font-family: var(--font-heading); font-size: 1.75rem; font-weight: 600;
+  color: var(--color-primary); line-height: 1;
+}
+.hero-proof-label {
+  font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Credential Bar */
+.credentials {
+  background: var(--color-card); border-bottom: 1px solid var(--color-border);
+  padding: 32px 0;
+}
+.credentials-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 48px; flex-wrap: wrap; justify-content: center; align-items: center;
+}
+.credential-item {
+  display: flex; align-items: center; gap: 12px; opacity: 0.7; transition: opacity 0.3s;
+}
+.credential-item:hover { opacity: 1; }
+.credential-icon {
+  width: 40px; height: 40px; border-radius: var(--radius); background: var(--color-bg-warm);
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  border: 1px solid var(--color-border);
+}
+.credential-text { font-size: 0.8rem; font-weight: 500; color: var(--color-text-secondary); }
+.credential-text strong { display: block; color: var(--color-text); font-size: 0.85rem; }
+
+/* Section Base */
+.section {
+  padding: 100px 0; position: relative;
+}
+.section-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+}
+.section-header {
+  max-width: 640px; margin-bottom: 56px;
+}
+.section-label {
+  font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--color-accent); margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-heading); font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400; line-height: 1.2; color: var(--color-primary); margin-bottom: 16px;
+}
+.section-desc {
+  font-size: 1.05rem; color: var(--color-text-secondary); line-height: 1.6;
+}
+
+/* Ecosystem */
+.ecosystem-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.ecosystem-card {
+  background: var(--color-card); border-radius: var(--radius-lg);
+  padding: 40px 32px; border: 1px solid var(--color-border);
+  transition: all 0.3s; position: relative; overflow: hidden;
+}
+.ecosystem-card:hover {
+  transform: translateY(-4px); box-shadow: var(--shadow-lg);
+  border-color: var(--color-accent-light);
+}
+.ecosystem-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.ecosystem-card.live::before { background: var(--color-live); }
+.ecosystem-card.beta::before { background: var(--color-beta); }
+.ecosystem-card.beta2::before { background: #8b7bb5; }
+.ecosystem-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; padding: 4px 10px; border-radius: 100px; margin-bottom: 20px;
+}
+.ecosystem-status.live { background: rgba(45,138,78,0.1); color: var(--color-live); }
+.ecosystem-status.beta { background: rgba(201,162,39,0.1); color: var(--color-beta); }
+.ecosystem-status.beta2 { background: rgba(139,123,181,0.1); color: #8b7bb5; }
+.ecosystem-status-dot { width: 5px; height: 5px; border-radius: 50%; }
+.ecosystem-status-dot.live { background: var(--color-live); }
+.ecosystem-status-dot.beta { background: var(--color-beta); }
+.ecosystem-status-dot.beta2 { background: #8b7bb5; }
+.ecosystem-card h3 {
+  font-family: var(--font-heading); font-size: 1.4rem; font-weight: 500;
+  margin-bottom: 12px; color: var(--color-primary);
+}
+.ecosystem-card p {
+  font-size: 0.95rem; color: var(--color-text-secondary); margin-bottom: 24px;
+}
+.ecosystem-metrics {
+  display: flex; gap: 24px; padding-top: 20px; border-top: 1px solid var(--color-border);
+}
+.ecosystem-metric { display: flex; flex-direction: column; }
+.ecosystem-metric-value {
+  font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;
+  color: var(--color-primary);
+}
+.ecosystem-metric-label {
+  font-size: 0.7rem; color: var(--color-text-muted); text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Problem & Solution */
+.problem-solution {
+  background: var(--color-bg-warm);
+}
+.ps-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+.problem-box, .solution-box {
+  background: var(--color-card); border-radius: var(--radius-lg);
+  padding: 40px; border: 1px solid var(--color-border);
+}
+.problem-box h3, .solution-box h3 {
+  font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 20px;
+}
+.problem-box h3 { color: #8b4040; }
+.solution-box h3 { color: var(--color-live); }
+.problem-list, .solution-list { list-style: none; }
+.problem-list li, .solution-list li {
+  padding: 12px 0; border-bottom: 1px solid var(--color-border);
+  display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+.problem-list li:last-child, .solution-list li:last-child { border-bottom: none; }
+.problem-list li::before {
+  content: '✕'; color: #c44; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+}
+.solution-list li::before {
+  content: '✓'; color: var(--color-live); font-weight: 700; flex-shrink: 0; margin-top: 2px;
+}
+
+/* Traction */
+.traction-metrics {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 48px;
+}
+.traction-card {
+  background: var(--color-card); border-radius: var(--radius); padding: 28px;
+  border: 1px solid var(--color-border); text-align: center;
+  transition: all 0.3s;
+}
+.traction-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.traction-card-value {
+  font-family: var(--font-heading); font-size: 2rem; font-weight: 600;
+  color: var(--color-primary); margin-bottom: 4px;
+}
+.traction-card-label {
+  font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.traction-card-trend {
+  font-size: 0.8rem; color: var(--color-live); font-weight: 600; margin-top: 8px;
+}
+.traction-chart-placeholder {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 40px;
+  border: 1px solid var(--color-border); text-align: center;
+}
+.traction-chart-placeholder p {
+  color: var(--color-text-muted); font-size: 0.9rem;
+}
+.traction-note {
+  margin-top: 16px; font-size: 0.8rem; color: var(--color-text-muted);
+  text-align: center; font-style: italic;
+}
+
+/* Team */
+.team-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+.team-founder {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 40px;
+  border: 1px solid var(--color-border); grid-column: 1 / -1;
+  display: grid; grid-template-columns: 160px 1fr; gap: 32px; align-items: start;
+}
+.team-founder-photo {
+  width: 160px; height: 160px; border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-heading); font-size: 3rem; color: #fff;
+  flex-shrink: 0;
+}
+.team-founder-info h3 {
+  font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 4px;
+}
+.team-founder-role {
+  font-size: 0.9rem; color: var(--color-accent); font-weight: 600; margin-bottom: 16px;
+}
+.team-founder-bio {
+  font-size: 0.95rem; color: var(--color-text-secondary); margin-bottom: 20px;
+}
+.team-credentials {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.team-cred {
+  background: var(--color-bg-warm); border: 1px solid var(--color-border);
+  padding: 4px 12px; border-radius: 100px; font-size: 0.75rem;
+  color: var(--color-text-secondary); font-weight: 500;
+}
+.team-hire {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 32px;
+  border: 1px solid var(--color-border); border-style: dashed;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; gap: 12px;
+}
+.team-hire-icon {
+  width: 48px; height: 48px; border-radius: 50%; background: var(--color-bg-warm);
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+}
+.team-hire h4 { font-family: var(--font-heading); font-size: 1.1rem; }
+.team-hire p { font-size: 0.85rem; color: var(--color-text-muted); }
+
+/* Market */
+.market-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px;
+}
+.market-stat {
+  background: var(--color-card); border-radius: var(--radius); padding: 32px;
+  border: 1px solid var(--color-border);
+}
+.market-stat-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--color-text-muted); margin-bottom: 8px;
+}
+.market-stat-value {
+  font-family: var(--font-heading); font-size: 1.8rem; font-weight: 600;
+  color: var(--color-primary); margin-bottom: 8px;
+}
+.market-stat-desc { font-size: 0.85rem; color: var(--color-text-secondary); }
+
+/* Roadmap */
+.roadmap {
+  position: relative; padding-left: 32px;
+}
+.roadmap::before {
+  content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px;
+  background: var(--color-border);
+}
+.roadmap-item {
+  position: relative; padding-bottom: 40px;
+}
+.roadmap-item:last-child { padding-bottom: 0; }
+.roadmap-dot {
+  position: absolute; left: -32px; top: 4px; width: 14px; height: 14px;
+  border-radius: 50%; border: 2px solid var(--color-border); background: var(--color-bg);
+  transition: all 0.3s;
+}
+.roadmap-item.completed .roadmap-dot {
+  background: var(--color-live); border-color: var(--color-live);
+}
+.roadmap-item.current .roadmap-dot {
+  background: var(--color-accent); border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(200,169,126,0.2);
+}
+.roadmap-date {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 4px;
+}
+.roadmap-title {
+  font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 6px;
+}
+.roadmap-desc { font-size: 0.9rem; color: var(--color-text-secondary); }
+
+/* Investment */
+.investment {
+  background: var(--color-primary); color: #fff;
+}
+.investment .section-label { color: var(--color-accent-light); }
+.investment .section-title { color: #fff; }
+.investment .section-desc { color: rgba(255,255,255,0.7); }
+.investment-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+}
+.investment-fund {
+  background: rgba(255,255,255,0.05); border-radius: var(--radius-lg);
+  padding: 40px; border: 1px solid rgba(255,255,255,0.1);
+}
+.investment-fund h3 {
+  font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 24px;
+}
+.fund-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.fund-item:last-child { border-bottom: none; }
+.fund-item-label { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+.fund-item-value { font-weight: 600; }
+.investment-form {
+  background: rgba(255,255,255,0.05); border-radius: var(--radius-lg);
+  padding: 40px; border: 1px solid rgba(255,255,255,0.1);
+}
+.investment-form h3 {
+  font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 8px;
+}
+.investment-form p {
+  font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 24px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px;
+  color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.04em;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 12px 16px; border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08);
+  color: #fff; font-size: 0.95rem; font-family: inherit;
+  transition: all 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--color-accent); background: rgba(255,255,255,0.12);
+}
+.form-group input::placeholder { color: rgba(255,255,255,0.4); }
+.form-submit {
+  width: 100%; padding: 14px; background: var(--color-accent); color: var(--color-primary);
+  border: none; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; margin-top: 8px;
+}
+.form-submit:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+
+/* Footer */
+.footer {
+  background: var(--color-primary); color: rgba(255,255,255,0.6);
+  padding: 64px 0 32px; border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;
+}
+.footer-brand {
+  font-family: var(--font-heading); font-size: 1.5rem; color: #fff; margin-bottom: 12px;
+}
+.footer-brand span { color: var(--color-accent); }
+.footer-desc { font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; }
+.footer-entities {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.footer-entity {
+  font-size: 0.8rem; background: rgba(255,255,255,0.05); padding: 8px 12px;
+  border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.1);
+}
+.footer-entity strong { color: #fff; display: block; font-size: 0.85rem; }
+.footer-col h4 {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #fff; margin-bottom: 16px;
+}
+.footer-col a {
+  display: block; font-size: 0.85rem; color: rgba(255,255,255,0.6);
+  padding: 6px 0; transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--color-accent); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  font-size: 0.8rem;
+}
+
+/* Scroll Animations */
+.reveal {
+  opacity: 0; transform: translateY(30px); transition: all 0.8s ease;
+}
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: block; }
+  .hero-container { padding: 100px 20px 60px; }
+  .hero-proof { gap: 24px; }
+  .ecosystem-grid { grid-template-columns: 1fr; }
+  .ps-grid { grid-template-columns: 1fr; }
+  .traction-metrics { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: 1fr; }
+  .team-founder { grid-template-columns: 1fr; text-align: center; }
+  .team-founder-photo { margin: 0 auto; }
+  .market-stats { grid-template-columns: 1fr; }
+  .investment-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .section { padding: 60px 0; }
+  .credentials-container { gap: 24px; }
+}
+@media (max-width: 480px) {
+  .traction-metrics { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-ctas { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+  background: var(--color-bg); z-index: 999; padding: 24px;
+  flex-direction: column; gap: 16px;
+}
+.mobile-menu.active { display: flex; }
+.mobile-menu a {
+  font-size: 1.1rem; font-weight: 500; padding: 12px 0; border-bottom: 1px solid var(--color-border);
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">Q.co <span>Ecosystem</span></a>
+    <div class="nav-links">
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#problem">Problem</a>
+      <a href="#traction">Traction</a>
+      <a href="#team">Team</a>
+      <a href="#market">Market</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="investors.html" class="nav-cta">Investor Portal</a>
+    </div>
+    <button class="nav-mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#ecosystem" onclick="toggleMobileMenu()">Ecosystem</a>
+  <a href="#problem" onclick="toggleMobileMenu()">Problem</a>
+  <a href="#traction" onclick="toggleMobileMenu()">Traction</a>
+  <a href="#team" onclick="toggleMobileMenu()">Team</a>
+  <a href="#market" onclick="toggleMobileMenu()">Market</a>
+  <a href="#roadmap" onclick="toggleMobileMenu()">Roadmap</a>
+  <a href="investors.html">Investor Portal</a>
+  <a href="qbridge-beta.html">QBridge Beta</a>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-label">
+      <span class="hero-label-dot"></span>
+      Research-Validated · Diplomatically Endorsed · Market-Tested
+    </div>
+    <h1>Building <em>Indonesia's Coffee Infrastructure</em> for Global Markets</h1>
+    <p class="hero-sub">
+      From verified supply chains to AI-powered distribution. Three integrated platforms. 
+      One mission. Connecting Indonesian processors to the world with trust, transparency, and traceability.
+    </p>
+    <div class="hero-ctas">
+      <a href="#investment" class="btn btn-primary" onclick="gtag('event','click',{'event_category':'cta','event_label':'hero_request_briefing'})">
+        Request Investor Briefing
+      </a>
+      <a href="qbridge-beta.html" class="btn btn-secondary" onclick="gtag('event','click',{'event_category':'cta','event_label':'hero_join_beta'})">
+        Join QBridge Beta
+      </a>
+    </div>
+    <div class="hero-proof">
+      <div class="hero-proof-item">
+        <span class="hero-proof-number">4+</span>
+        <span class="hero-proof-label">Years US Market Intelligence</span>
+      </div>
+      <div class="hero-proof-item">
+        <span class="hero-proof-number">50+</span>
+        <span class="hero-proof-label">Coffee Shops Served</span>
+      </div>
+      <div class="hero-proof-item">
+        <span class="hero-proof-number">ICC</span>
+        <span class="hero-proof-label">Italy 2026 Paper Accepted</span>
+      </div>
+      <div class="hero-proof-item">
+        <span class="hero-proof-number">3-Layer</span>
+        <span class="hero-proof-label">Verification System</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Credentials -->
+<section class="credentials">
+  <div class="credentials-container">
+    <div class="credential-item">
+      <div class="credential-icon">🏆</div>
+      <div class="credential-text"><strong>Q Grader</strong>CQI Certified</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-icon">⚙️</div>
+      <div class="credential-text"><strong>Q Processing</strong>QP1/QP2 — All Methods</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-icon">🏛️</div>
+      <div class="credential-text"><strong>KBRI Washington</strong>Trade Partner 2024-2026</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-icon">🌍</div>
+      <div class="credential-text"><strong>SCE / WOC</strong>Exhibitor 2022-2026</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-icon">📜</div>
+      <div class="credential-text"><strong>ICC Italy 2026</strong>Paper Accepted</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-icon">🇺🇸</div>
+      <div class="credential-text"><strong>Javanesia International LLC</strong>US Entity</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-icon">🇮🇩</div>
+      <div class="credential-text"><strong>CV Kemari Sukses Makmur</strong>Indonesia Operations</div>
+    </div>
+  </div>
+</section>
+
+<!-- Ecosystem -->
+<section class="section" id="ecosystem">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">The Ecosystem</div>
+      <h2 class="section-title">Three Platforms. One Flywheel.</h2>
+      <p class="section-desc">
+        Q.co Coffee Lab validates demand and generates cash flow today. 
+        QBridge is research-validated and launching Q4 2026. QAffiliator is in beta, 
+        integrated with Lab operations. Together, they create a closed-loop ecosystem 
+        that gets stronger with every transaction.
+      </p>
+    </div>
+    <div class="ecosystem-grid">
+      <div class="ecosystem-card live reveal">
+        <div class="ecosystem-status live"><span class="ecosystem-status-dot live"></span>Live & Revenue-Generating</div>
+        <h3>Q.co Coffee Lab</h3>
+        <p>Operational roastery supplying 50+ coffee shops in Greater Depok and surrounding areas. The revenue engine, R&D lab, and real-world validator for the entire ecosystem.</p>
+        <div class="ecosystem-metrics">
+          <div class="ecosystem-metric">
+            <span class="ecosystem-metric-value">50+</span>
+            <span class="ecosystem-metric-label">Active Clients</span>
+          </div>
+          <div class="ecosystem-metric">
+            <span class="ecosystem-metric-value">Monthly</span>
+            <span class="ecosystem-metric-label">Recurring Revenue</span>
+          </div>
+        </div>
+      </div>
+      <div class="ecosystem-card beta reveal">
+        <div class="ecosystem-status beta"><span class="ecosystem-status-dot beta"></span>Launching Q4 2026</div>
+        <h3>QBridge</h3>
+        <p>Blockchain traceability platform with 3-layer verification for Indonesian coffee processors. Not a marketplace — a trust infrastructure connecting verified processors to global buyers.</p>
+        <div class="ecosystem-metrics">
+          <div class="ecosystem-metric">
+            <span class="ecosystem-metric-value">3-Layer</span>
+            <span class="ecosystem-metric-label">Verification</span>
+          </div>
+          <div class="ecosystem-metric">
+            <span class="ecosystem-metric-value">ICC 2026</span>
+            <span class="ecosystem-metric-label">Paper Accepted</span>
+          </div>
+        </div>
+      </div>
+      <div class="ecosystem-card beta2 reveal">
+        <div class="ecosystem-status beta2"><span class="ecosystem-status-dot beta2"></span>In Beta</div>
+        <h3>QAffiliator</h3>
+        <p>AI-powered distribution network with WhatsApp bot, automated payment, shipping, and commission. End-to-end tested and integrated with Q.co Lab operations.</p>
+        <div class="ecosystem-metrics">
+          <div class="ecosystem-metric">
+            <span class="ecosystem-metric-value">AI Bot</span>
+            <span class="ecosystem-metric-label">Claude-Powered</span>
+          </div>
+          <div class="ecosystem-metric">
+            <span class="ecosystem-metric-value">Auto</span>
+            <span class="ecosystem-metric-label">Payment→Ship→Commission</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Problem & Solution -->
+<section class="section problem-solution" id="problem">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">The Opportunity</div>
+      <h2 class="section-title">A Fragmented Market. A Verified Solution.</h2>
+    </div>
+    <div class="ps-grid">
+      <div class="problem-box reveal">
+        <h3>The Problem</h3>
+        <ul class="problem-list">
+          <li>Indonesian farmers lose 60% of potential income to opaque middlemen</li>
+          <li>Global buyers pay 3x markup for traceable specialty coffee</li>
+          <li>No trust infrastructure exists for Indonesian processors — buyers rely on personal networks, not verified data</li>
+          <li>4th largest producer globally, yet &lt;2% direct trade penetration</li>
+          <li>ESG-minded buyers cannot verify farmer welfare or processing standards</li>
+        </ul>
+      </div>
+      <div class="solution-box reveal">
+        <h3>The QBridge Solution</h3>
+        <ul class="solution-list">
+          <li><strong>Layer 1 — Admin:</strong> NIB, NPWP, legal entity, certifications verified</li>
+          <li><strong>Layer 2 — Physical:</strong> Q Processing (QP1/QP2) facility inspection, equipment, SOP</li>
+          <li><strong>Layer 3 — Quality:</strong> Q Grader cupping with CVA scoring, defect analysis, moisture/density</li>
+          <li><strong>Blockchain Traceability:</strong> Immutable records from farm to export</li>
+          <li><strong>Welfare Scoring:</strong> ESG-aligned farmer and labor practice assessment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Traction -->
+<section class="section" id="traction">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Traction</div>
+      <h2 class="section-title">Real Operations. Real Revenue. Real Validation.</h2>
+      <p class="section-desc">
+        Q.co Coffee Lab generates cash flow today. These metrics are pulled from our 
+        integrated QFinance system and updated periodically. QBridge and QAffiliator 
+        metrics reflect pre-launch validation and beta testing.
+      </p>
+    </div>
+    <div class="traction-metrics reveal">
+      <div class="traction-card">
+        <div class="traction-card-value">Rp [X]M</div>
+        <div class="traction-card-label">Monthly Revenue (Q.co Lab)</div>
+        <div class="traction-card-trend">↑ From QFinance</div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-card-value">50+</div>
+        <div class="traction-card-label">Active Coffee Shop Clients</div>
+        <div class="traction-card-trend">Greater Depok Area</div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-card-value">[X]%</div>
+        <div class="traction-card-label">Repeat Order Rate</div>
+        <div class="traction-card-trend">From QSales CRM</div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-card-value">[X]</div>
+        <div class="traction-card-label">SKUs / Roast Profiles</div>
+        <div class="traction-card-trend">From QFinance Inventory</div>
+      </div>
+    </div>
+    <div class="traction-chart-placeholder reveal">
+      <p>📊 Revenue Trend Chart — Integrate with QFinance API for live data</p>
+      <p style="font-size:0.8rem; margin-top:8px;">Placeholder: Replace with Chart.js or embedded Google Sheets chart</p>
+    </div>
+    <p class="traction-note reveal">
+      * Metrics marked with [X] are placeholders. Connect to QFinance Google Sheets via API 
+      or manually update before investor presentations. QBridge and QAffiliator metrics 
+      will populate post-launch.
+    </p>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="section" id="team">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">The Team</div>
+      <h2 class="section-title">Operators, Not Theorists.</h2>
+      <p class="section-desc">
+        Four years of US market immersion. Diplomatic trade partnerships. 
+        Academic peer review. And a roastery that serves customers every day.
+      </p>
+    </div>
+    <div class="team-grid">
+      <div class="team-founder reveal">
+        <div class="team-founder-photo">GS</div>
+        <div class="team-founder-info">
+          <h3>Ganjar Satyanagara</h3>
+          <div class="team-founder-role">Founder & CEO — Q.co Ecosystem</div>
+          <p class="team-founder-bio">
+            CQI-certified Q Grader and Q Processing professional (QP1/QP2, all methods: washed, natural, honey, wet-hulled, anaerobic). 
+            Assistant to the Trade Attaché at KBRI Washington (2024–2026), supporting Indonesian coffee trade 
+            preparation for World Expositions. SCE/WOC exhibitor in the United States (2022–2026). 
+            Researcher with paper accepted at the International Coffee Convention, Italy, October 2026. 
+            Operator of Q.co Coffee Lab in Depok, Jawa Barat, serving 50+ coffee shops.
+          </p>
+          <div class="team-credentials">
+            <span class="team-cred">Q Grader (CQI)</span>
+            <span class="team-cred">Q Processing QP1/QP2</span>
+            <span class="team-cred">KBRI Washington</span>
+            <span class="team-cred">SCE/WOC 2022-2026</span>
+            <span class="team-cred">ICC Italy 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-hire reveal">
+        <div class="team-hire-icon">+</div>
+        <h4>Head of QBridge</h4>
+        <p>Processor onboarding, verification operations, and global buyer relations. Hiring Q4 2026.</p>
+      </div>
+      <div class="team-hire reveal">
+        <div class="team-hire-icon">+</div>
+        <h4>Head of QAffiliator</h4>
+        <p>Affiliate growth, AI optimization, and B2C distribution scaling. Hiring Q4 2026.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Market -->
+<section class="section" id="market">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Market Opportunity</div>
+      <h2 class="section-title">Global Specialty Coffee. Indonesian Potential.</h2>
+    </div>
+    <div class="market-stats reveal">
+      <div class="market-stat">
+        <div class="market-stat-label">Total Addressable Market</div>
+        <div class="market-stat-value">$[XX] B</div>
+        <div class="market-stat-desc">Global specialty coffee market, growing 8-10% annually</div>
+      </div>
+      <div class="market-stat">
+        <div class="market-stat-label">Serviceable Addressable Market</div>
+        <div class="market-stat-value">$[X] B</div>
+        <div class="market-stat-desc">Direct-trade Indonesian coffee to global buyers</div>
+      </div>
+      <div class="market-stat">
+        <div class="market-stat-label">Serviceable Obtainable Market</div>
+        <div class="market-stat-value">$[XXX] M</div>
+        <div class="market-stat-desc">QBridge + QAffiliator addressable in 3 years</div>
+      </div>
+    </div>
+    <div class="section-header reveal" style="margin-top:48px;">
+      <h2 class="section-title" style="font-size:1.6rem;">Why Now?</h2>
+    </div>
+    <div class="ps-grid reveal">
+      <div class="problem-box" style="border-left:3px solid var(--color-accent);">
+        <ul class="solution-list">
+          <li>Post-pandemic demand for supply chain transparency at all-time high</li>
+          <li>ESG investing boom — buyers need verified welfare and sustainability data</li>
+          <li>Indonesia coffee renaissance: specialty grade growth, new processing methods</li>
+          <li>AI enabling low-cost B2C distribution at scale (QAffiliator model)</li>
+        </ul>
+      </div>
+      <div class="solution-box" style="border-left:3px solid var(--color-live);">
+        <ul class="solution-list">
+          <li>US market intelligence: 4 years of SCE/WOC exhibitions inform global product-market fit</li>
+          <li>Diplomatic network: KBRI Washington opens doors to government and institutional buyers</li>
+          <li>Academic validation: ICC Italy 2026 peer review validates methodology before launch</li>
+          <li>Revenue proof: Q.co Lab cash flow de-risks platform development</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section class="section" id="roadmap">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Roadmap</div>
+      <h2 class="section-title">From Lab to Global Infrastructure.</h2>
+    </div>
+    <div class="roadmap reveal">
+      <div class="roadmap-item completed">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-date">2022 — 2024</div>
+        <div class="roadmap-title">Q.co Coffee Lab Established</div>
+        <div class="roadmap-desc">Roastery operations in Depok, Jawa Barat. US market research via SCE/WOC exhibitions. Supply chain validation.</div>
+      </div>
+      <div class="roadmap-item completed">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-date">2024 — 2026</div>
+        <div class="roadmap-title">Diplomatic & Academic Validation</div>
+        <div class="roadmap-desc">KBRI Washington trade attaché partnership. Javanesia International LLC (US). QBridge research, paper submission, and acceptance at ICC Italy 2026.</div>
+      </div>
+      <div class="roadmap-item current">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-date">2026 Q1 — Q3</div>
+        <div class="roadmap-title">Platform Development & Beta Testing</div>
+        <div class="roadmap-desc">QBridge built and in testing. QAffiliator end-to-end automation validated. CV Kemari Sukses Makmur operational scale-up.</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-date">2026 Q4</div>
+        <div class="roadmap-title">ICC Italy Presentation & QBridge Beta Launch</div>
+        <div class="roadmap-desc">Present peer-reviewed research at International Coffee Convention, Italy. Open QBridge beta to verified processors and global buyers.</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-date">2027 Q1</div>
+        <div class="roadmap-title">QAffiliator Public Launch</div>
+        <div class="roadmap-desc">Scale AI-powered distribution. Onboard 100+ processors to QBridge. First verified processor transactions.</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-date">2027 Q4</div>
+        <div class="roadmap-title">Series A Preparation</div>
+        <div class="roadmap-desc">Target: X processors verified, Y GMV, Z% month-over-month growth. Expand to European and Asia-Pacific buyers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Investment -->
+<section class="section investment" id="investment">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Investment Thesis</div>
+      <h2 class="section-title">Join the Infrastructure Layer.</h2>
+      <p class="section-desc">
+        We are raising Pre-Seed / Seed funding to scale from a validated lab operation 
+        to a global trust infrastructure for Indonesian coffee.
+      </p>
+    </div>
+    <div class="investment-grid">
+      <div class="investment-fund reveal">
+        <h3>Use of Funds</h3>
+        <div class="fund-item">
+          <span class="fund-item-label">QBridge Beta Launch & Processor Onboarding</span>
+          <span class="fund-item-value">40%</span>
+        </div>
+        <div class="fund-item">
+          <span class="fund-item-label">QAffiliator AI Scaling & Affiliate Acquisition</span>
+          <span class="fund-item-value">25%</span>
+        </div>
+        <div class="fund-item">
+          <span class="fund-item-label">Q.co Lab Capacity Expansion & Certification</span>
+          <span class="fund-item-value">20%</span>
+        </div>
+        <div class="fund-item">
+          <span class="fund-item-label">Team & Operations (Key Hires)</span>
+          <span class="fund-item-value">15%</span>
+        </div>
+        <div class="fund-item" style="border-top:2px solid rgba(255,255,255,0.2); margin-top:8px; padding-top:16px;">
+          <span class="fund-item-label">Stage</span>
+          <span class="fund-item-value">Pre-Seed / Seed</span>
+        </div>
+        <div class="fund-item">
+          <span class="fund-item-label">Runway</span>
+          <span class="fund-item-value">18 Months</span>
+        </div>
+      </div>
+      <div class="investment-form reveal">
+        <h3>Request Investor Briefing</h3>
+        <p>Schedule a confidential briefing or receive our investor deck.</p>
+        <form id="investorForm" onsubmit="handleInvestorSubmit(event)">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@firm.com" required>
+          </div>
+          <div class="form-group">
+            <label>Firm / Organization</label>
+            <input type="text" name="firm" placeholder="VC Firm, Angel, Strategic...">
+          </div>
+          <div class="form-group">
+            <label>Interest</label>
+            <select name="interest">
+              <option>Full Investor Briefing</option>
+              <option>Receive Pitch Deck</option>
+              <option>Schedule a Call</option>
+              <option>QBridge Beta Access</option>
+            </select>
+          </div>
+          <button type="submit" class="form-submit">Submit Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="section-container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Q.co <span>Ecosystem</span></div>
+        <p class="footer-desc">
+          Building Indonesia's coffee infrastructure for global markets. 
+          Verified supply chains. AI-powered distribution. Research-backed trust.
+        </p>
+        <div class="footer-entities">
+          <div class="footer-entity">
+            <strong>Javanesia International LLC</strong>
+            United States · Market Intelligence & Trade Representation
+          </div>
+          <div class="footer-entity">
+            <strong>CV Kemari Sukses Makmur</strong>
+            Indonesia · Operations, Roastery & Platform Development
+          </div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platforms</h4>
+        <a href="#ecosystem">Q.co Coffee Lab</a>
+        <a href="qbridge-beta.html">QBridge</a>
+        <a href="#ecosystem">QAffiliator</a>
+        <a href="#ecosystem">QFinance</a>
+        <a href="#ecosystem">QSales</a>
+      </div>
+      <div class="footer-col">
+        <h4>Investors</h4>
+        <a href="investors.html">Investor Portal</a>
+        <a href="#investment">Request Briefing</a>
+        <a href="investors.html">Pitch Deck</a>
+        <a href="investors.html">Data Room</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:investor@qco.coffee">investor@qco.coffee</a>
+        <a href="#" onclick="alert('LinkedIn profile link — update before launch')">LinkedIn</a>
+        <a href="qbridge-beta.html">QBridge Beta</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Q.co Ecosystem. All rights reserved.</span>
+      <span>Legal entities: Javanesia International LLC · CV Kemari Sukses Makmur</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+
+// Scroll reveal
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Navbar scroll effect
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  const currentScroll = window.pageYOffset;
+  if (currentScroll > 100) {
+    nav.style.boxShadow = '0 2px 16px rgba(0,0,0,0.06)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+  lastScroll = currentScroll;
+});
+
+// Form handler
+function handleInvestorSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+
+  // Track event
+  gtag('event', 'generate_lead', {
+    'event_category': 'investor',
+    'event_label': data.get('interest')
+  });
+
+  // TODO: Connect to your GAS backend or Google Form
+  // For now, show confirmation
+  form.innerHTML = `
+    <div style="text-align:center; padding: 40px 0;">
+      <div style="font-size: 3rem; margin-bottom: 16px;">✓</div>
+      <h3 style="font-family: var(--font-heading); margin-bottom: 8px;">Request Received</h3>
+      <p style="color: rgba(255,255,255,0.7);">We will contact you within 24 hours.</p>
+      <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 16px;">
+        Note: Connect this form to your GAS backend by replacing handleInvestorSubmit().
+      </p>
+    </div>
+  `;
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href === '#') return;
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>

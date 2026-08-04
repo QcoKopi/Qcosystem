@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QBridge Beta — Verified Indonesian Coffee Processors for Global Buyers</title>
+<meta name="description" content="Join the QBridge beta. Blockchain traceability, 3-layer verification, and welfare scoring for Indonesian coffee processors. Research accepted at ICC Italy 2026.">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+<style>
+:root {
+  --color-bg: #f8f7f4;
+  --color-bg-warm: #f0efe9;
+  --color-card: #ffffff;
+  --color-text: #1f1f1f;
+  --color-text-secondary: #5a5a5a;
+  --color-text-muted: #8a8a8a;
+  --color-primary: #2c2c2c;
+  --color-accent: #c8a97e;
+  --color-accent-light: #e8d5b5;
+  --color-border: #e8e6e1;
+  --color-live: #2d8a4e;
+  --font-heading: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+  --radius: 8px;
+  --radius-lg: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* Nav */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(248,247,244,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+.nav-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.nav-logo {
+  font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;
+  color: var(--color-primary);
+}
+.nav-logo span { color: var(--color-accent); }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  font-size: 0.875rem; font-weight: 500; color: var(--color-text-secondary); transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--color-text); }
+.nav-cta {
+  background: var(--color-primary); color: #fff; padding: 8px 20px;
+  border-radius: var(--radius); font-size: 0.875rem; font-weight: 500; transition: all 0.2s;
+}
+.nav-cta:hover { background: #3a3a3a; }
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #f8f7f4 0%, #f0efe9 50%, #e8e4dc 100%);
+  padding-top: 64px;
+}
+.hero::before {
+  content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,169,126,0.12) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero-container {
+  max-width: 1200px; margin: 0 auto; padding: 80px 24px;
+  position: relative; z-index: 1; width: 100%;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(200,169,126,0.15); color: var(--color-accent);
+  padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.5rem);
+  line-height: 1.1; font-weight: 400; color: var(--color-primary);
+  max-width: 700px; margin-bottom: 20px; letter-spacing: -0.02em;
+}
+.hero h1 em { font-style: italic; color: var(--color-accent); }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem); color: var(--color-text-secondary);
+  max-width: 560px; margin-bottom: 36px; line-height: 1.5;
+}
+.hero-cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--radius); font-size: 0.95rem;
+  font-weight: 500; transition: all 0.25s; cursor: pointer; border: none;
+}
+.btn-primary {
+  background: var(--color-primary); color: #fff;
+  box-shadow: 0 4px 16px rgba(44,44,44,0.2);
+}
+.btn-primary:hover { background: #3a3a3a; transform: translateY(-2px); }
+.btn-secondary {
+  background: transparent; color: var(--color-text); border: 1.5px solid var(--color-border);
+}
+.btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-2px); }
+
+/* Academic Proof Banner */
+.academic-banner {
+  background: var(--color-primary); color: #fff; padding: 40px 0;
+}
+.academic-banner-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.academic-badge {
+  background: rgba(200,169,126,0.2); border: 1px solid rgba(200,169,126,0.3);
+  padding: 8px 16px; border-radius: var(--radius); font-size: 0.75rem;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-accent-light); flex-shrink: 0;
+}
+.academic-text {
+  font-family: var(--font-heading); font-size: 1.15rem; flex: 1;
+}
+.academic-text em { color: var(--color-accent-light); font-style: italic; }
+.academic-date {
+  font-size: 0.85rem; color: rgba(255,255,255,0.6); flex-shrink: 0;
+}
+
+/* Section Base */
+.section { padding: 100px 0; position: relative; }
+.section-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+}
+.section-header { max-width: 640px; margin-bottom: 56px; }
+.section-label {
+  font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--color-accent); margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-heading); font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400; line-height: 1.2; color: var(--color-primary); margin-bottom: 16px;
+}
+.section-desc {
+  font-size: 1.05rem; color: var(--color-text-secondary); line-height: 1.6;
+}
+
+/* Abstract Preview */
+.abstract-box {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 48px;
+  border: 1px solid var(--color-border); position: relative;
+}
+.abstract-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.abstract-meta {
+  display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 24px;
+  font-size: 0.8rem; color: var(--color-text-muted);
+}
+.abstract-meta span { display: flex; align-items: center; gap: 6px; }
+.abstract-title {
+  font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 20px;
+  color: var(--color-primary); line-height: 1.3;
+}
+.abstract-body {
+  font-size: 1rem; color: var(--color-text-secondary); line-height: 1.8;
+  margin-bottom: 24px;
+}
+.abstract-body p { margin-bottom: 16px; }
+.abstract-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.875rem; font-weight: 600; color: var(--color-primary);
+  transition: gap 0.2s; cursor: pointer;
+}
+.abstract-cta:hover { gap: 12px; color: var(--color-accent); }
+
+/* Verification Layers */
+.layers-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.layer-card {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 40px 32px;
+  border: 1px solid var(--color-border); transition: all 0.3s; position: relative;
+}
+.layer-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--color-accent-light); }
+.layer-number {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--color-bg-warm);
+  border: 2px solid var(--color-accent); display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; color: var(--color-accent);
+  margin-bottom: 20px;
+}
+.layer-card h3 {
+  font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 8px; color: var(--color-primary);
+}
+.layer-card .role {
+  font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--color-accent); margin-bottom: 16px;
+}
+.layer-card p {
+  font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 16px;
+}
+.layer-checks { list-style: none; }
+.layer-checks li {
+  font-size: 0.85rem; color: var(--color-text-secondary); padding: 6px 0;
+  display: flex; align-items: flex-start; gap: 8px; border-bottom: 1px solid var(--color-border);
+}
+.layer-checks li:last-child { border-bottom: none; }
+.layer-checks li::before { content: '✓'; color: var(--color-live); font-weight: 700; flex-shrink: 0; }
+
+/* Value Props */
+.value-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+.value-card {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 40px;
+  border: 1px solid var(--color-border); transition: all 0.3s;
+}
+.value-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.value-card-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.value-icon {
+  width: 48px; height: 48px; border-radius: var(--radius); background: var(--color-bg-warm);
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  border: 1px solid var(--color-border); flex-shrink: 0;
+}
+.value-card h3 {
+  font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-primary);
+}
+.value-card p {
+  font-size: 0.95rem; color: var(--color-text-secondary); margin-bottom: 20px; line-height: 1.6;
+}
+.value-list { list-style: none; }
+.value-list li {
+  padding: 10px 0; border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem; color: var(--color-text-secondary); display: flex; align-items: flex-start; gap: 10px;
+}
+.value-list li:last-child { border-bottom: none; }
+.value-list li::before { content: '→'; color: var(--color-accent); font-weight: 700; flex-shrink: 0; }
+
+/* Waitlist Forms */
+.waitlist-section {
+  background: var(--color-bg-warm);
+}
+.waitlist-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+.waitlist-card {
+  background: var(--color-card); border-radius: var(--radius-lg); padding: 40px;
+  border: 1px solid var(--color-border);
+}
+.waitlist-card h3 {
+  font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 8px; color: var(--color-primary);
+}
+.waitlist-card .subtitle {
+  font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 24px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 6px;
+  color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 12px 14px; border-radius: var(--radius);
+  border: 1px solid var(--color-border); background: var(--color-bg);
+  color: var(--color-text); font-size: 0.95rem; font-family: inherit; transition: all 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--color-accent); background: var(--color-card);
+  box-shadow: 0 0 0 3px rgba(200,169,126,0.1);
+}
+.form-group input::placeholder { color: var(--color-text-muted); }
+.form-submit {
+  width: 100%; padding: 14px; background: var(--color-primary); color: #fff;
+  border: none; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; margin-top: 4px;
+}
+.form-submit:hover { background: #3a3a3a; transform: translateY(-1px); }
+.form-note {
+  font-size: 0.75rem; color: var(--color-text-muted); margin-top: 12px; line-height: 1.5;
+}
+
+/* FAQ */
+.faq-item {
+  background: var(--color-card); border-radius: var(--radius); padding: 24px 28px;
+  border: 1px solid var(--color-border); margin-bottom: 12px; cursor: pointer;
+  transition: all 0.2s;
+}
+.faq-item:hover { border-color: var(--color-accent-light); }
+.faq-question {
+  font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-primary);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.faq-toggle {
+  font-size: 1.25rem; color: var(--color-accent); transition: transform 0.3s; flex-shrink: 0;
+}
+.faq-item.active .faq-toggle { transform: rotate(45deg); }
+.faq-answer {
+  max-height: 0; overflow: hidden; transition: max-height 0.3s, padding 0.3s;
+  font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;
+}
+.faq-item.active .faq-answer {
+  max-height: 300px; padding-top: 16px;
+}
+
+/* Footer */
+.footer {
+  background: var(--color-primary); color: rgba(255,255,255,0.6); padding: 48px 0 32px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  font-size: 0.85rem;
+}
+.footer-brand { font-family: var(--font-heading); font-size: 1.25rem; color: #fff; }
+.footer-brand span { color: var(--color-accent); }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero-container { padding: 60px 20px 40px; }
+  .layers-grid { grid-template-columns: 1fr; }
+  .value-grid { grid-template-columns: 1fr; }
+  .waitlist-grid { grid-template-columns: 1fr; }
+  .academic-banner-container { flex-direction: column; text-align: center; gap: 16px; }
+  .section { padding: 60px 0; }
+  .abstract-box { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">QBridge <span>Beta</span></a>
+    <div class="nav-links">
+      <a href="#abstract">Research</a>
+      <a href="#verification">Verification</a>
+      <a href="#value">Why QBridge</a>
+      <a href="#waitlist">Join Beta</a>
+      <a href="index.html" class="nav-cta">Investor Site</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-badge">🎓 Research Accepted at ICC Italy 2026</div>
+    <h1>Verified Indonesian Coffee. <em>Trusted by Global Buyers.</em></h1>
+    <p class="hero-sub">
+      QBridge is a blockchain traceability platform with 3-layer verification 
+      for Indonesian coffee processors. Not a marketplace — a trust infrastructure 
+      connecting verified mills to the world.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#waitlist" class="btn btn-primary" onclick="gtag('event','click',{'event_category':'cta','event_label':'beta_join_waitlist'})">
+        Join the Beta Waitlist
+      </a>
+      <a href="#abstract" class="btn btn-secondary">
+        Read the Research
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Academic Banner -->
+<section class="academic-banner">
+  <div class="academic-banner-container">
+    <div class="academic-badge">Peer-Reviewed</div>
+    <div class="academic-text">
+      <em>Beyond Traceability: Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee</em>
+    </div>
+    <div class="academic-date">International Coffee Convention · Italy · October 2026</div>
+  </div>
+</section>
+
+<!-- Abstract Preview -->
+<section class="section" id="abstract">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Academic Validation</div>
+      <h2 class="section-title">Research That Precedes the Product.</h2>
+      <p class="section-desc">
+        Unlike most platforms that build first and validate later, QBridge's 
+        3-layer verification methodology and welfare scoring framework have been 
+        peer-reviewed and accepted for presentation at the International Coffee Convention, Italy.
+      </p>
+    </div>
+    <div class="abstract-box reveal">
+      <div class="abstract-meta">
+        <span>📍 International Coffee Convention 2026, Italy</span>
+        <span>📅 October 2026</span>
+        <span>✓ Peer-Reviewed & Accepted</span>
+      </div>
+      <h3 class="abstract-title">Beyond Traceability: Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee</h3>
+      <div class="abstract-body">
+        <p>
+          <strong>Abstract:</strong> This paper presents a novel framework for trust infrastructure 
+          in Indonesian coffee supply chains. Drawing on four years of market intelligence from 
+          US specialty coffee exhibitions (SCE/WOC 2022–2026) and diplomatic trade partnerships 
+          (KBRI Washington, 2024–2026), we propose a three-layer verification system that moves 
+          beyond traditional traceability to incorporate <em>digital fairness</em> — the transparent 
+          distribution of value across supply chain actors — and <em>cultural capital</em> — the 
+          recognition of indigenous processing knowledge as a tradable asset.
+        </p>
+        <p>
+          The QBridge model combines administrative verification (legal entity, certifications), 
+          physical processing validation (Q Processing standards, equipment inspection, SOP compliance), 
+          and independent quality assessment (Q Grader cupping with CVA scoring). A welfare scoring 
+          component evaluates labor practices, farmer relationships, and sustainability metrics, 
+          creating a composite trust signal for global buyers.
+        </p>
+        <p>
+          We argue that trust in agricultural commodities cannot be reduced to geographic tracking 
+          alone. Instead, it requires the integration of institutional verification, technical competence, 
+          and ethical governance — what we term a "trust infrastructure" layer. This framework has been 
+          validated through field research with Indonesian processors and buyer interviews across 
+          North American and European markets.
+        </p>
+      </div>
+      <span class="abstract-cta" onclick="gtag('event','download',{'event_category':'paper','event_label':'abstract'}); alert('Full paper available upon request. Contact: investor@qco.coffee')">
+        Request Full Paper →
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- Verification Layers -->
+<section class="section" id="verification" style="background: var(--color-bg-warm);">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">The System</div>
+      <h2 class="section-title">Three Layers. One Trust Signal.</h2>
+      <p class="section-desc">
+        No other platform verifies Indonesian coffee processors across administrative, 
+        technical, and quality dimensions simultaneously. Each layer is independent. 
+        Together, they create a composite badge that global buyers can trust.
+      </p>
+    </div>
+    <div class="layers-grid">
+      <div class="layer-card reveal">
+        <div class="layer-number">1</div>
+        <h3>Administrative Verification</h3>
+        <div class="role">Validator: Document Reviewer</div>
+        <p>Legal entity verification, business registration, tax compliance, and certification audit.</p>
+        <ul class="layer-checks">
+          <li>NIB (Nomor Induk Berusaha) validation</li>
+          <li>NPWP & tax compliance check</li>
+          <li>SIUP/TDP verification</li>
+          <li>Organic, Fair Trade, ISO certification audit</li>
+          <li>Business address & contact verification</li>
+        </ul>
+      </div>
+      <div class="layer-card reveal">
+        <div class="layer-number">2</div>
+        <h3>Physical & Process Validation</h3>
+        <div class="role">Validator: Q Processing Certified</div>
+        <p>On-site facility inspection, equipment audit, SOP evaluation, and processing method verification.</p>
+        <ul class="layer-checks">
+          <li>Pulper, demucilager, huller inspection</li>
+          <li>Suton, size grader, color sorter audit</li>
+          <li>SOP (Standard Operating Procedure) review</li>
+          <li>All methods: washed, natural, honey, wet-hulled, anaerobic</li>
+          <li>Mill condition & hygiene assessment</li>
+        </ul>
+      </div>
+      <div class="layer-card reveal">
+        <div class="layer-number">3</div>
+        <h3>Quality Assessment</h3>
+        <div class="role">Validator: Q Grader (CQI)</div>
+        <p>Independent cupping with CVA (Coffee Value Assessment) scoring, defect analysis, and physical grading.</p>
+        <ul class="layer-checks">
+          <li>CVA scoring: Physical, Descriptive, Affective, Extrinsic</li>
+          <li>Defect count & classification</li>
+          <li>Moisture content measurement</li>
+          <li>Density & screen size analysis</li>
+          <li>Cupping notes & flavor profile documentation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Value Propositions -->
+<section class="section" id="value">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Value Proposition</div>
+      <h2 class="section-title">Built for Two Audiences.</h2>
+    </div>
+    <div class="value-grid">
+      <div class="value-card reveal">
+        <div class="value-card-header">
+          <div class="value-icon">🏭</div>
+          <h3>For Indonesian Processors</h3>
+        </div>
+        <p>
+          Get verified. Get discovered. Get fair prices. QBridge connects your mill 
+          to global buyers who value transparency and quality — not just the lowest price.
+        </p>
+        <ul class="value-list">
+          <li>Verified badge increases buyer trust and pricing power</li>
+          <li>Blockchain traceability proves origin and process integrity</li>
+          <li>Welfare scoring highlights ethical practices as a competitive advantage</li>
+          <li>Direct access to US, European, and Asia-Pacific buyers</li>
+          <li>No marketplace fees — QBridge is an information provider, not a trader</li>
+          <li>Community access: training, networking, and market intelligence</li>
+        </ul>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-card-header">
+          <div class="value-icon">🌍</div>
+          <h3>For Global Buyers</h3>
+        </div>
+        <p>
+          Stop guessing. Start verifying. QBridge provides the due diligence 
+          infrastructure you need to source Indonesian coffee with confidence.
+        </p>
+        <ul class="value-list">
+          <li>3-layer verification replaces unreliable personal networks</li>
+          <li>Blockchain records provide immutable traceability from farm to export</li>
+          <li>CVA scores from independent Q Graders, not seller claims</li>
+          <li>Welfare scoring aligns with ESG and sustainability mandates</li>
+          <li>Badge system (Bronze → Platinum) enables instant risk assessment</li>
+          <li>Direct contact with verified processors — no intermediary markup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Badge System -->
+<section class="section" style="background: var(--color-bg-warm);">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Badge System</div>
+      <h2 class="section-title">Instant Trust Signals.</h2>
+      <p class="section-desc">
+        Buyers can assess processor credibility at a glance. Processors earn badges 
+        by passing verification layers — with Platinum requiring verified welfare excellence.
+      </p>
+    </div>
+    <div class="layers-grid" style="margin-top: 40px;">
+      <div class="layer-card reveal" style="text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">🥉</div>
+        <h3>Bronze</h3>
+        <div class="role" style="color: #cd7f32;">1/3 Verifications</div>
+        <p style="font-size: 0.85rem;">Administrative verification passed. Legal entity and certifications confirmed.</p>
+      </div>
+      <div class="layer-card reveal" style="text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">🥈</div>
+        <h3>Silver</h3>
+        <div class="role" style="color: #a0a0a0;">2/3 Verifications</div>
+        <p style="font-size: 0.85rem;">Administrative + Physical processing validation passed. Facility and SOP verified.</p>
+      </div>
+      <div class="layer-card reveal" style="text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">🥇</div>
+        <h3>Gold</h3>
+        <div class="role" style="color: #d4af37;">3/3 Verifications</div>
+        <p style="font-size: 0.85rem;">All three layers passed. Administrative, physical, and quality assessment verified.</p>
+      </div>
+      <div class="layer-card reveal" style="text-align: center; border-color: var(--color-accent-light);">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">💎</div>
+        <h3>Platinum</h3>
+        <div class="role" style="color: #667eea;">3/3 + Welfare ≥ 90</div>
+        <p style="font-size: 0.85rem;">All verifications passed + exceptional welfare, labor, and sustainability practices.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Waitlist Forms -->
+<section class="section waitlist-section" id="waitlist">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">Join the Beta</div>
+      <h2 class="section-title">Be Among the First.</h2>
+      <p class="section-desc">
+        QBridge beta launches Q4 2026. Sign up as a processor or buyer to get early access, 
+        priority verification, and direct input into platform features.
+      </p>
+    </div>
+    <div class="waitlist-grid">
+
+      <div class="waitlist-card reveal">
+        <h3>🏭 Processor Waitlist</h3>
+        <p class="subtitle">Indonesian coffee processors seeking global buyer access</p>
+        <form id="processorForm" onsubmit="handleWaitlistSubmit(event, 'processor')">
+          <div class="form-group">
+            <label>Mill / Company Name</label>
+            <input type="text" name="company" placeholder="PT / CV / Mill Name" required>
+          </div>
+          <div class="form-group">
+            <label>Contact Person</label>
+            <input type="text" name="name" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="email@company.com" required>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp</label>
+            <input type="tel" name="whatsapp" placeholder="+62..." required>
+          </div>
+          <div class="form-group">
+            <label>Location (Province)</label>
+            <select name="province" required>
+              <option value="">Select province...</option>
+              <option>Aceh</option>
+              <option>North Sumatra</option>
+              <option>West Sumatra</option>
+              <option>South Sumatra</option>
+              <option>Lampung</option>
+              <option>Bengkulu</option>
+              <option>Jambi</option>
+              <option>Riau</option>
+              <option>West Java</option>
+              <option>Central Java</option>
+              <option>East Java</option>
+              <option>Bali</option>
+              <option>West Nusa Tenggara</option>
+              <option>East Nusa Tenggara</option>
+              <option>South Sulawesi</option>
+              <option>North Sulawesi</option>
+              <option>Gorontalo</option>
+              <option>Southeast Sulawesi</option>
+              <option>Central Sulawesi</option>
+              <option>West Sulawesi</option>
+              <option>Maluku</option>
+              <option>North Maluku</option>
+              <option>Papua</option>
+              <option>West Papua</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Processing Methods (check all that apply)</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="methods" value="washed" style="width: auto;"> Washed
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="methods" value="natural" style="width: auto;"> Natural
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="methods" value="honey" style="width: auto;"> Honey
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="methods" value="wet-hulled" style="width: auto;"> Wet-Hulled
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="methods" value="anaerobic" style="width: auto;"> Anaerobic
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">Join Processor Waitlist</button>
+          <p class="form-note">
+            By joining, you agree to be contacted for beta onboarding and verification scheduling. 
+            No fees for beta participants.
+          </p>
+        </form>
+      </div>
+
+      <div class="waitlist-card reveal">
+        <h3>🌍 Buyer Waitlist</h3>
+        <p class="subtitle">Global roasters, importers, and traders seeking verified Indonesian coffee</p>
+        <form id="buyerForm" onsubmit="handleWaitlistSubmit(event, 'buyer')">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" name="company" placeholder="Roastery / Importer / Trader" required>
+          </div>
+          <div class="form-group">
+            <label>Contact Person</label>
+            <input type="text" name="name" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="email@company.com" required>
+          </div>
+          <div class="form-group">
+            <label>Country</label>
+            <select name="country" required>
+              <option value="">Select country...</option>
+              <option>United States</option>
+              <option>Italy</option>
+              <option>Germany</option>
+              <option>Netherlands</option>
+              <option>Japan</option>
+              <option>South Korea</option>
+              <option>Australia</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Malaysia</option>
+              <option>Singapore</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Company Type</label>
+            <select name="type" required>
+              <option value="">Select type...</option>
+              <option>Roastery (Specialty)</option>
+              <option>Roastery (Commercial)</option>
+              <option>Green Bean Importer</option>
+              <option>Trader / Broker</option>
+              <option>Coffee Shop / Chain</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Annual Green Bean Volume (bags/60kg)</label>
+            <select name="volume">
+              <option value="">Select range...</option>
+              <option>&lt; 100 bags</option>
+              <option>100 - 500 bags</option>
+              <option>500 - 2,000 bags</option>
+              <option>2,000 - 10,000 bags</option>
+              <option>&gt; 10,000 bags</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Interest Areas</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="interests" value="arabica" style="width: auto;"> Arabica
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="interests" value="robusta" style="width: auto;"> Robusta
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="interests" value="specialty" style="width: auto;"> Specialty Grade
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="interests" value="organic" style="width: auto;"> Organic
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 400; text-transform: none; cursor: pointer;">
+                <input type="checkbox" name="interests" value="fairtrade" style="width: auto;"> Fair Trade
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">Join Buyer Waitlist</button>
+          <p class="form-note">
+            Beta buyers get early access to verified processor profiles, sample coordination, 
+            and direct negotiation tools. No platform fees during beta.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Common Questions.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>Is QBridge a marketplace? Do you handle transactions?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          No. QBridge is an information provider — a trust infrastructure layer. We verify processors 
+          and make their profiles available to buyers. All transactions, negotiations, and contracts 
+          happen directly between the buyer and processor. We do not take commissions on trade.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>What does verification cost for processors?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          Beta participants join free of charge. Post-launch, verification fees will be structured 
+          to cover validator costs (Q Processing inspection, Q Grader cupping) without creating 
+          a barrier for small and medium processors. Detailed pricing will be published before public launch.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>How is blockchain traceability implemented?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          Each verified batch receives a unique blockchain record documenting origin, processing 
+          method, quality scores, and chain of custody. Buyers can scan a QR code on the processor 
+          profile to verify batch authenticity. The system is designed for transparency, not speculation — 
+          we use a permissioned ledger optimized for supply chain integrity.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>What is the welfare scoring system?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          Welfare scoring evaluates labor practices (no child labor, no forced labor), worker safety, 
+          environmental stewardship, and farmer-supplier relationships. A score ≥ 90 is required for 
+          Platinum badge status. This aligns with ESG investing criteria and buyer sustainability mandates.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>When will the beta launch?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          Q4 2026, following the International Coffee Convention in Italy (October 2026) where our 
+          research methodology will be presented. Waitlist members will be onboarded in batches starting 
+          November 2026.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>Can I invest in QBridge?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          QBridge is part of the Q.co Ecosystem, which is currently raising Pre-Seed / Seed funding. 
+          If you are an accredited investor or VC interested in the infrastructure opportunity, 
+          please visit our <a href="investors.html" style="color: var(--color-accent); text-decoration: underline;">Investor Portal</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">QBridge <span>Beta</span></div>
+    <div>
+      <span>Part of the Q.co Ecosystem</span> · 
+      <a href="index.html" style="color: var(--color-accent);">Investor Site</a> · 
+      <a href="mailto:beta@qbridge.co" style="color: var(--color-accent);">beta@qbridge.co</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// FAQ toggle
+function toggleFaq(item) {
+  const allItems = document.querySelectorAll('.faq-item');
+  allItems.forEach(i => {
+    if (i !== item) i.classList.remove('active');
+  });
+  item.classList.toggle('active');
+}
+
+// Waitlist form handler
+function handleWaitlistSubmit(e, type) {
+  e.preventDefault();
+  const form = e.target;
+  gtag('event', 'generate_lead', {
+    'event_category': 'qbridge_beta',
+    'event_label': type + '_waitlist'
+  });
+  form.innerHTML = `
+    <div style="text-align:center; padding: 40px 0;">
+      <div style="font-size: 3rem; margin-bottom: 16px;">✓</div>
+      <h3 style="font-family: var(--font-heading); margin-bottom: 8px; color: var(--color-primary);">You're on the List</h3>
+      <p style="color: var(--color-text-secondary);">We will contact you before the Q4 2026 beta launch.</p>
+      <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-top: 16px;">
+        Connect this form to your GAS backend or Google Form for production use.
+      </p>
+    </div>
+  `;
+}
+
+// Navbar scroll
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  if (window.pageYOffset > 100) {
+    nav.style.boxShadow = '0 2px 16px rgba(0,0,0,0.06)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+});
+</script>
+</body>
+</html>
