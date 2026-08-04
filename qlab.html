@@ -26,25 +26,12 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
+body { font-family:var(--font-body); background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; }
 a { text-decoration:none; color:inherit; }
 
 /* ===== NAV ===== */
-.nav {
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  background:rgba(250,249,246,0.95); backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-}
-.nav-wrap {
-  max-width:1200px; margin:0 auto; padding:0 24px;
-  display:flex; align-items:center; justify-content:space-between; height:68px;
-}
+.nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(250,249,246,0.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-wrap { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:68px; }
 .nav-logo { font-family:var(--font-head); font-size:1.3rem; font-weight:600; }
 .nav-logo span { color:var(--accent); font-weight:400; }
 .nav-links { display:flex; gap:28px; align-items:center; }
@@ -55,36 +42,23 @@ a { text-decoration:none; color:inherit; }
 .nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
 
 /* ===== HERO ===== */
-.hero {
-  min-height:85vh; display:flex; align-items:center; justify-content:center;
-  position:relative; overflow:hidden; padding-top:68px;
-  background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%);
-}
-.hero::before {
-  content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px;
-  background:radial-gradient(circle, rgba(184,146,106,0.08) 0%, transparent 70%);
-  border-radius:50%; pointer-events:none;
-}
+.hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:68px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
+.hero::before { content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px; background:radial-gradient(circle, rgba(184,146,106,0.08) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+.hero::after { content:''; position:absolute; bottom:-15%; left:-10%; width:500px; height:500px; background:radial-gradient(circle, rgba(184,146,106,0.06) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
 .hero-inner { max-width:800px; text-align:center; padding:60px 24px; position:relative; z-index:1; }
-.hero-tag {
-  display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:0.12em; color:var(--accent-dark); background:rgba(184,146,106,0.1);
-  padding:6px 18px; border-radius:100px; margin-bottom:24px;
-}
-.hero h1 {
-  font-family:var(--font-head); font-size:clamp(2.5rem, 5vw, 4rem);
-  line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:16px;
-}
+.hero-tag { display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:6px 18px; border-radius:100px; margin-bottom:28px; }
+.hero h1 { font-family:var(--font-head); font-size:clamp(2.5rem, 5vw, 4rem); line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:20px; letter-spacing:-0.02em; }
 .hero h1 em { font-style:italic; color:var(--accent-dark); }
-.hero-sub {
-  font-size:clamp(1.05rem, 2vw, 1.25rem); color:var(--text-sec); max-width:600px;
-  margin:0 auto 36px; line-height:1.7;
+.hero-tagline {
+  font-family:var(--font-head); font-size:clamp(1.3rem, 2.5vw, 1.8rem); font-style:italic;
+  color:var(--accent-dark); line-height:1.5; max-width:640px; margin:0 auto 40px;
+  position:relative; padding:0 20px;
 }
+.hero-tagline::before { content:'"'; position:absolute; left:-8px; top:-12px; font-size:3rem; color:var(--accent-light); opacity:0.6; font-family:var(--font-head); }
+.hero-tagline::after { content:'"'; position:absolute; right:-8px; bottom:-24px; font-size:3rem; color:var(--accent-light); opacity:0.6; font-family:var(--font-head); }
+.hero-desc { font-size:clamp(1rem, 1.8vw, 1.15rem); color:var(--text-sec); max-width:560px; margin:0 auto 36px; line-height:1.7; }
 .hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-.btn {
-  display:inline-flex; align-items:center; gap:8px; padding:14px 28px;
-  border-radius:100px; font-size:0.9rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none;
-}
+.btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:100px; font-size:0.9rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none; }
 .btn-pri { background:var(--primary); color:#fff; }
 .btn-pri:hover { background:#3a3a3a; transform:translateY(-2px); }
 .btn-sec { background:transparent; color:var(--text); border:1.5px solid var(--border); }
@@ -94,34 +68,15 @@ a { text-decoration:none; color:inherit; }
 .section { padding:100px 0; }
 .section-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
 .section-header { text-align:center; margin-bottom:56px; }
-.section-label {
-  font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em;
-  color:var(--accent-dark); margin-bottom:12px; display:inline-block;
-  background:rgba(184,146,106,0.1); padding:4px 14px; border-radius:100px;
-}
-.section-title {
-  font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.4rem); font-weight:400;
-  margin-bottom:12px; line-height:1.2;
-}
+.section-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-dark); margin-bottom:12px; display:inline-block; background:rgba(184,146,106,0.1); padding:4px 14px; border-radius:100px; }
+.section-title { font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.4rem); font-weight:400; margin-bottom:12px; line-height:1.2; }
+.section-title em { font-style:italic; color:var(--accent-dark); }
 .section-desc { color:var(--text-sec); max-width:560px; margin:0 auto; font-size:1rem; line-height:1.7; }
 
 /* ===== DNA / PHILOSOPHY ===== */
 .dna-section { background:var(--bg-warm); }
 .dna-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
-.dna-visual {
-  background:linear-gradient(135deg, var(--accent-light), rgba(184,146,106,0.15));
-  border-radius:var(--radius); min-height:420px; display:flex; align-items:center; justify-content:center;
-  border:1px solid var(--border); position:relative; overflow:hidden;
-}
-.dna-visual::before {
-  content:'Q.co'; font-family:var(--font-head); font-size:4rem; color:var(--accent-dark); opacity:0.15;
-  position:absolute; bottom:20px; right:30px;
-}
-.dna-visual-text {
-  font-family:var(--font-head); font-size:1.8rem; color:var(--accent-dark); text-align:center; padding:40px;
-  line-height:1.4;
-}
-.dna-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:20px; }
+.dna-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:20px; line-height:1.3; }
 .dna-content h2 em { font-style:italic; color:var(--accent-dark); }
 .dna-content p { color:var(--text-sec); line-height:1.8; margin-bottom:20px; font-size:1rem; }
 .dna-quote {
@@ -129,92 +84,64 @@ a { text-decoration:none; color:inherit; }
   font-size:1.15rem; color:var(--text-sec); font-style:italic; line-height:1.6; margin-top:28px;
 }
 .dna-values { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
-.dna-value {
-  background:var(--card); border-radius:8px; padding:20px; border:1px solid var(--border);
-  transition:all 0.3s;
-}
+.dna-value { background:var(--card); border-radius:8px; padding:20px; border:1px solid var(--border); transition:all 0.3s; }
 .dna-value:hover { transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent-light); }
 .dna-value-icon { font-size:1.5rem; margin-bottom:8px; }
 .dna-value h4 { font-size:0.9rem; font-weight:600; margin-bottom:4px; }
 .dna-value p { font-size:0.8rem; color:var(--text-muted); margin:0; line-height:1.5; }
+.dna-visual { display:flex; flex-direction:column; gap:24px; }
+.dna-img-card {
+  background:linear-gradient(135deg, var(--accent-light), rgba(184,146,106,0.15));
+  border-radius:var(--radius); min-height:200px; display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); font-family:var(--font-head); font-size:1.4rem; color:var(--accent-dark);
+  text-align:center; padding:40px;
+}
+.dna-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.dna-stat { background:var(--card); border-radius:8px; padding:24px; border:1px solid var(--border); text-align:center; }
+.dna-stat-num { font-family:var(--font-head); font-size:1.8rem; font-weight:600; color:var(--primary); margin-bottom:4px; }
+.dna-stat-label { font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
 
 /* ===== PRODUCTS ===== */
 .products-section { background:var(--bg); }
 .products-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
-.product-card {
-  background:var(--card); border-radius:var(--radius); overflow:hidden;
-  border:1px solid var(--border); transition:all 0.35s;
-}
+.product-card { background:var(--card); border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); transition:all 0.35s; }
 .product-card:hover { transform:translateY(-6px); box-shadow:var(--shadow); border-color:var(--accent-light); }
-.product-img {
-  height:220px; background:linear-gradient(135deg, var(--accent-light), var(--bg-cream));
-  display:flex; align-items:center; justify-content:center; font-size:3rem;
-  border-bottom:1px solid var(--border);
-}
+.product-img { height:200px; background:linear-gradient(135deg, var(--accent-light), var(--bg-cream)); display:flex; align-items:center; justify-content:center; font-size:2.5rem; border-bottom:1px solid var(--border); }
 .product-info { padding:28px; }
-.product-tag {
-  font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em;
-  color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:3px 10px; border-radius:100px;
-  display:inline-block; margin-bottom:10px;
-}
+.product-tag { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:3px 10px; border-radius:100px; display:inline-block; margin-bottom:10px; }
 .product-info h3 { font-family:var(--font-head); font-size:1.15rem; margin-bottom:8px; }
 .product-info p { font-size:0.85rem; color:var(--text-sec); line-height:1.6; margin-bottom:16px; }
 .product-meta { display:flex; gap:16px; font-size:0.75rem; color:var(--text-muted); }
 
-/* ===== SERVICES / PARTNERSHIP ===== */
+/* ===== SERVICES ===== */
 .services-section { background:var(--bg-warm); }
 .services-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:24px; }
-.service-card {
-  background:var(--card); border-radius:var(--radius); padding:40px; border:1px solid var(--border);
-  transition:all 0.3s;
-}
+.service-card { background:var(--card); border-radius:var(--radius); padding:40px; border:1px solid var(--border); transition:all 0.3s; }
 .service-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent-light); }
 .service-card h3 { font-family:var(--font-head); font-size:1.2rem; margin-bottom:12px; display:flex; align-items:center; gap:12px; }
 .service-card h3 span { font-size:1.8rem; }
 .service-card p { font-size:0.9rem; color:var(--text-sec); line-height:1.7; margin-bottom:20px; }
 .service-list { list-style:none; }
-.service-list li {
-  font-size:0.85rem; color:var(--text-sec); padding:8px 0; border-bottom:1px solid var(--border);
-  display:flex; align-items:flex-start; gap:10px;
-}
+.service-list li { font-size:0.85rem; color:var(--text-sec); padding:8px 0; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:10px; }
 .service-list li:last-child { border-bottom:none; }
 .service-list li::before { content:'→'; color:var(--accent); font-weight:700; flex-shrink:0; }
 
 /* ===== TESTIMONIALS ===== */
 .testi-section { background:var(--bg); }
 .testi-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
-.testi-card {
-  background:var(--card); border-radius:var(--radius); padding:36px; border:1px solid var(--border);
-  position:relative;
-}
-.testi-card::before {
-  content:'"'; font-family:var(--font-head); font-size:4rem; color:var(--accent-light);
-  position:absolute; top:16px; left:24px; line-height:1;
-}
-.testi-text {
-  font-family:var(--font-head); font-size:1.05rem; color:var(--text-sec); font-style:italic;
-  line-height:1.7; margin-bottom:24px; padding-top:20px; position:relative; z-index:1;
-}
+.testi-card { background:var(--card); border-radius:var(--radius); padding:36px; border:1px solid var(--border); position:relative; }
+.testi-card::before { content:'"'; font-family:var(--font-head); font-size:4rem; color:var(--accent-light); position:absolute; top:16px; left:24px; line-height:1; }
+.testi-text { font-family:var(--font-head); font-size:1.05rem; color:var(--text-sec); font-style:italic; line-height:1.7; margin-bottom:24px; padding-top:20px; position:relative; z-index:1; }
 .testi-author { display:flex; align-items:center; gap:14px; }
-.testi-avatar {
-  width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--accent-light), var(--accent));
-  display:flex; align-items:center; justify-content:center; font-family:var(--font-head);
-  font-size:1rem; color:#fff; font-weight:600; flex-shrink:0;
-}
+.testi-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--accent-light), var(--accent)); display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-size:1rem; color:#fff; font-weight:600; flex-shrink:0; }
 .testi-name { font-size:0.9rem; font-weight:600; }
 .testi-role { font-size:0.75rem; color:var(--text-muted); }
 
 /* ===== CTA ===== */
-.cta-section {
-  background:var(--primary); color:#fff; padding:100px 0; text-align:center;
-}
+.cta-section { background:var(--primary); color:#fff; padding:100px 0; text-align:center; }
 .cta-section h2 { font-family:var(--font-head); font-size:clamp(1.8rem, 3vw, 2.6rem); font-weight:400; margin-bottom:16px; }
 .cta-section p { color:rgba(255,255,255,0.7); max-width:520px; margin:0 auto 36px; font-size:1.05rem; line-height:1.7; }
-.cta-btn {
-  display:inline-flex; align-items:center; gap:10px; padding:16px 36px;
-  background:var(--accent); color:var(--primary); border-radius:100px;
-  font-size:1rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none;
-}
+.cta-btn { display:inline-flex; align-items:center; gap:10px; padding:16px 36px; background:var(--accent); color:var(--primary); border-radius:100px; font-size:1rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none; }
 .cta-btn:hover { background:var(--accent-light); transform:translateY(-2px); }
 
 /* ===== FOOTER ===== */
@@ -236,6 +163,8 @@ a { text-decoration:none; color:inherit; }
 @media (max-width:768px) {
   .nav-links { display:none; }
   .nav-toggle { display:block; }
+  .hero-tagline::before { left:0; top:-8px; font-size:2rem; }
+  .hero-tagline::after { right:0; bottom:-16px; font-size:2rem; }
   .dna-grid { grid-template-columns:1fr; gap:40px; }
   .products-grid { grid-template-columns:1fr; }
   .services-grid { grid-template-columns:1fr; }
@@ -244,15 +173,15 @@ a { text-decoration:none; color:inherit; }
   .hero-cta { flex-direction:column; align-items:center; }
   .btn { width:100%; max-width:300px; justify-content:center; }
   .section { padding:60px 0; }
+  .dna-values { grid-template-columns:1fr; }
+  .dna-stats { grid-template-columns:1fr 1fr; }
 }
 
-.mobile-menu {
-  display:none; position:fixed; top:68px; left:0; right:0; bottom:0;
-  background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px;
-}
+.mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
 .mobile-menu.active { display:flex; }
 .mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
 </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -265,8 +194,6 @@ a { text-decoration:none; color:inherit; }
       <a href="qbridge.html">QBridge</a>
       <a href="qaffiliator.html">QAffiliator</a>
       <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
-        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
       <a href="investors.html" class="nav-cta">Investor Portal</a>
     </div>
     <button class="nav-toggle" onclick="toggleMobile()">☰</button>
@@ -278,39 +205,33 @@ a { text-decoration:none; color:inherit; }
   <a href="qbridge.html">QBridge</a>
   <a href="qaffiliator.html">QAffiliator</a>
   <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
-        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
   <a href="investors.html">Investor Portal</a>
 </div>
 
-<!-- HERO -->
-<section class="hero">
+<!-- HERO — Tagline sebagai headline utama -->
+<section class="hero" id="top">
   <div class="hero-inner">
     <div class="hero-tag">Depok, Jawa Barat</div>
     <h1>Q.co <em>Coffee Lab</em><br>& Roastery</h1>
-    <p class="hero-sub">
+    <p class="hero-tagline">Kopi terbaik lahir dari kolaborasi, bukan kompetisi.</p>
+    <p class="hero-desc">
       Lebih dari sekadar supplier roasted beans. Kami adalah <strong>Sahabat Kedai Kopi</strong> — 
       partner yang tumbuh bersama, berbagi pengetahuan, dan berkolaborasi untuk menciptakan 
       pengalaman kopi terbaik di setiap cangkir.
     </p>
     <div class="hero-cta">
-      <a href="#products" class="btn btn-pri">Lihat Produk Kami →</a>
-      <a href="#partnership" class="btn btn-sec">Jadi Sahabat Kedai Kopi</a>
+      <a href="#tentang" class="btn btn-pri">Kenali Q.co →</a>
+      <a href="https://instagram.com/qkopi.co" target="_blank" class="btn btn-sec">@qkopi.co</a>
     </div>
   </div>
 </section>
 
-<!-- DNA / PHILOSOPHY -->
+<!-- DNA — Clean, tidak berantakan, tanpa placeholder besar -->
 <section class="section dna-section" id="tentang">
   <div class="section-wrap">
     <div class="dna-grid">
-      <div class="dna-visual">
-        <div class="dna-visual-text">
-          "Kopi terbaik<br>lahir dari<br>kolaborasi,<br>bukan kompetisi."
-        </div>
-      </div>
       <div class="dna-content">
-        <div class="section-label">DNA Kami</div>
+        <div class="section-label">Siapa Kami</div>
         <h2>Kenapa Kami <em>Bukan Sekadar Supplier</em></h2>
         <p>
           Q.co lahir dari pengalaman bertahun-tahun di ekosistem kopi Indonesia — dari kebun petani 
@@ -325,8 +246,8 @@ a { text-decoration:none; color:inherit; }
           pasar kopi terkini.
         </p>
         <div class="dna-quote">
-          "Ketika kedai kopi berkembang, kami juga berkembang. Pertumbuhan bersama adalah inti dari 
-          setiap hubungan yang kami bangun."
+          Ketika kedai kopi berkembang, kami juga berkembang. Pertumbuhan bersama adalah inti dari 
+          setiap hubungan yang kami bangun.
         </div>
         <div class="dna-values">
           <div class="dna-value">
@@ -351,16 +272,39 @@ a { text-decoration:none; color:inherit; }
           </div>
         </div>
       </div>
+      <div class="dna-visual">
+        <div class="dna-img-card">
+          <span>Q.co<br><small style="font-size:0.9rem; font-weight:400; opacity:0.7;">Coffee Lab & Roastery</small></span>
+        </div>
+        <div class="dna-stats">
+          <div class="dna-stat">
+            <div class="dna-stat-num">50+</div>
+            <div class="dna-stat-label">Kedai Kopi Mitra</div>
+          </div>
+          <div class="dna-stat">
+            <div class="dna-stat-num">Depok</div>
+            <div class="dna-stat-label">& Sekitar Jabar</div>
+          </div>
+          <div class="dna-stat">
+            <div class="dna-stat-num">Q Grader</div>
+            <div class="dna-stat-label">Certified</div>
+          </div>
+          <div class="dna-stat">
+            <div class="dna-stat-num">4+</div>
+            <div class="dna-stat-label">Tahun Beroperasi</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PRODUCTS -->
+<!-- PRODUCTS — Grid 3 kolom -->
 <section class="section products-section" id="products">
   <div class="section-wrap">
     <div class="section-header">
       <div class="section-label">Produk Kami</div>
-      <h2 class="section-title">Roasted Beans, Dari Hati ke Cangkir</h2>
+      <h2 class="section-title">Roasted Beans, <em>Dari Hati ke Cangkir</em></h2>
       <p class="section-desc">
         Setiap batch di-roast dengan presisi, di-cup oleh Q Grader bersertifikat, dan disesuaikan 
         dengan profil rasa yang Anda inginkan. Dari single origin hingga house blend signature.
@@ -443,7 +387,7 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
-<!-- SERVICES / PARTNERSHIP -->
+<!-- SERVICES — 2 kolom, lebih clean -->
 <section class="section services-section" id="partnership">
   <div class="section-wrap">
     <div class="section-header">
@@ -459,8 +403,7 @@ a { text-decoration:none; color:inherit; }
         <h3><span>🎯</span> Konsultasi Menu & Profil Rasa</h3>
         <p>
           Setiap kedai memiliki karakter unik — dari demografi pelanggan hingga konsep interior. 
-          Kami membantu menyusun menu kopi yang sesuai dengan identitas kedai Anda, termasuk 
-          rekomendasi roasting profile dan brewing method yang optimal.
+          Kami membantu menyusun menu kopi yang sesuai dengan identitas kedai Anda.
         </p>
         <ul class="service-list">
           <li>Analisis karakter kedai dan target pasar</li>
@@ -473,8 +416,7 @@ a { text-decoration:none; color:inherit; }
         <h3><span>📚</span> Training & Knowledge Sharing</h3>
         <p>
           Kualitas kopi di cangkir tidak hanya ditentukan oleh beans, tapi juga oleh barista. 
-          Kami menyediakan training program untuk tim barista kedai mitra — dari teknik dasar 
-          hingga advanced brewing.
+          Kami menyediakan training program untuk tim barista kedai mitra.
         </p>
         <ul class="service-list">
           <li>Espresso extraction dan milk texturing</li>
@@ -487,8 +429,7 @@ a { text-decoration:none; color:inherit; }
         <h3><span>🔄</span> Supply Chain Transparan</h3>
         <p>
           Kami bangga dengan rantai pasok kami. Setiap beans yang kami roast berasal dari 
-          petani dan processor yang kami kenal secara personal — banyak dari mereka adalah 
-          mitra jangka panjang yang telah bekerja sama bertahun-tahun.
+          petani dan processor yang kami kenal secara personal.
         </p>
         <ul class="service-list">
           <li>Traceability dari kebun ke roastery</li>
@@ -501,8 +442,7 @@ a { text-decoration:none; color:inherit; }
         <h3><span>🤝</span> Program Sahabat Kedai Kopi</h3>
         <p>
           Program eksklusif untuk kedai kopi yang ingin berkembang bersama kami. 
-          Dapatkan akses ke produk terbaru, harga khusus, event kolaborasi, dan 
-          komunitas kedai kopi yang saling mendukung.
+          Dapatkan akses ke produk terbaru, harga khusus, dan komunitas kedai kopi.
         </p>
         <ul class="service-list">
           <li>Harga khusus untuk mitra setia</li>
@@ -515,7 +455,7 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- TESTIMONIALS — 3 kolom -->
 <section class="section testi-section">
   <div class="section-wrap">
     <div class="section-header">
@@ -570,7 +510,7 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
-<!-- CTA -->
+<!-- CTA — Full width, menarik -->
 <section class="cta-section">
   <div class="section-wrap">
     <h2>Jadi <em>Sahabat Kedai Kopi</em> Kami</h2>
@@ -611,10 +551,10 @@ a { text-decoration:none; color:inherit; }
       <div class="footer-col">
         <h4>Kontak</h4>
         <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
+        <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
         <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
         <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
         <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
-        <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
         <a href="investors.html">Investor Relations</a>
       </div>
     </div>
@@ -626,9 +566,7 @@ a { text-decoration:none; color:inherit; }
 </footer>
 
 <script>
-function toggleMobile() {
-  document.getElementById('mobileMenu').classList.toggle('active');
-}
+function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('active'); }
 </script>
 </body>
 </html>
