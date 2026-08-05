@@ -150,6 +150,44 @@ a { text-decoration:none; color:inherit; }
 .mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
 .mobile-menu.active { display:flex; }
 .mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+/* Language Switcher */
+.lang-switch {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.75rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; cursor:pointer; transition:all 0.2s;
+}
+.lang-switch span {
+  padding:4px 10px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.lang-switch span:not(.active):hover { color:var(--text); }
+
+/* Investor CTA - subtle, not black */
+.nav-cta {
+  font-size:0.8rem; font-weight:600; color:var(--accent-dark);
+  padding:8px 18px; border-radius:100px;
+  border:1.5px solid var(--accent-light); background:transparent;
+  transition:all 0.25s; cursor:pointer;
+}
+.nav-cta:hover {
+  background:var(--accent-light); color:var(--primary); border-color:var(--accent);
+}
+
+.lang-switch-mobile {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.8rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; margin-bottom:16px; width:fit-content;
+}
+.lang-switch-mobile span {
+  padding:5px 12px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch-mobile span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
 </style>
 </head>
 <body>
@@ -186,9 +224,9 @@ a { text-decoration:none; color:inherit; }
   <div class="hero-inner">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
-      Terintegrasi dengan Q.co Coffee Lab
+      <span data-id="Terintegrasi dengan Q.co Coffee Lab" data-en="Integrated with Q.co Coffee Lab">Terintegrasi dengan Q.co Coffee Lab</span>
     </div>
-    <h1>Distribusi Kopi,<br><em>Didorong AI</em></h1>
+    <h1 data-id="Distribusi Kopi, Didorong AI" data-en="Coffee Distribution, Powered by AI">Distribusi Kopi,<br><em>Didorong AI</em></h1>
     <p class="hero-sub">
       QAffiliator adalah jaringan distribusi berbasis AI yang mengubah cara kopi Indonesia 
       sampai ke meja konsumen. Chatbot WhatsApp, pembayaran otomatis, pengiriman terintegrasi, 
@@ -205,8 +243,8 @@ a { text-decoration:none; color:inherit; }
 <section class="section" id="features">
   <div class="section-wrap">
     <div class="section-header">
-      <div class="section-label">Fitur Utama</div>
-      <h2 class="section-title">Satu Platform, <em>Semua Terotomatisasi</em></h2>
+      <div class="section-label" data-id="Fitur Utama" data-en="Key Features">Fitur Utama</div>
+      <h2 class="section-title" data-id="Satu Platform, Semua Terotomatisasi" data-en="One Platform, Fully Automated">Satu Platform, <em>Semua Terotomatisasi</em></h2>
       <p class="section-desc">Dari pesanan pertama hingga komisi terakhir — tidak ada proses manual di tengah jalan.</p>
     </div>
     <div class="features-grid">
@@ -248,8 +286,8 @@ a { text-decoration:none; color:inherit; }
 <section class="section flow-section" id="flow">
   <div class="section-wrap">
     <div class="section-header">
-      <div class="section-label">Alur Pemesanan</div>
-      <h2 class="section-title">Dari Chat ke <em>Komisi</em>, Tanpa Sentuh Manual</h2>
+      <div class="section-label" data-id="Alur Pemesanan" data-en="Order Flow">Alur Pemesanan</div>
+      <h2 class="section-title" data-id="Dari Chat ke Komisi, Tanpa Sentuh Manual" data-en="From Chat to Commission, Zero Manual Touch">Dari Chat ke <em>Komisi</em>, Tanpa Sentuh Manual</h2>
       <p class="section-desc">Setiap langkah terhubung. Tidak ada duplikasi data, tidak ada campur tangan admin di setiap transaksi.</p>
     </div>
     <div class="flow-steps">
@@ -362,13 +400,13 @@ a { text-decoration:none; color:inherit; }
         </div>
       </div>
       <div class="footer-col">
-        <h4>Platform</h4>
+        <h4 data-id="Platform" data-en="Platforms">Platform</h4>
         <a href="index.html">Beranda</a>
         <a href="qlab.html">Q.co Coffee Lab</a>
         <a href="qbridge.html">QBridge</a>
       </div>
       <div class="footer-col">
-        <h4>Investor</h4>
+        <h4 data-id="Investor" data-en="Investors">Investor</h4>
         <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
         <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
         <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
@@ -377,7 +415,7 @@ a { text-decoration:none; color:inherit; }
         <a href="investors.html">Data Room</a>
       </div>
       <div class="footer-col">
-        <h4>Kontak</h4>
+        <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
         <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
         <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
       </div>
@@ -391,6 +429,37 @@ a { text-decoration:none; color:inherit; }
 
 <script>
 function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('active'); }
+</script>
+<script>
+// ===== LANGUAGE SWITCHER =====
+let currentLang = localStorage.getItem('qco-lang') || 'id';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('qco-lang', lang);
+  document.querySelectorAll('[data-id][data-en]').forEach(el => {
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = el.getAttribute('data-' + lang);
+    } else {
+      el.textContent = el.getAttribute('data-' + lang);
+    }
+  });
+  document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
+    el.classList.toggle('active', lang === 'id');
+  });
+  document.querySelectorAll('#lang-en, #lang-en-m').forEach(el => {
+    el.classList.toggle('active', lang === 'en');
+  });
+  document.documentElement.lang = lang === 'id' ? 'id' : 'en';
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'id' ? 'en' : 'id');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang(currentLang);
+});
 </script>
 </body>
 </html>

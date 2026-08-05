@@ -361,6 +361,44 @@ a { color: inherit; text-decoration: none; }
   .nav-links { display:none !important; }
   .nav-toggle { display:block !important; }
 }
+/* Language Switcher */
+.lang-switch {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.75rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; cursor:pointer; transition:all 0.2s;
+}
+.lang-switch span {
+  padding:4px 10px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.lang-switch span:not(.active):hover { color:var(--text); }
+
+/* Investor CTA - subtle, not black */
+.nav-cta {
+  font-size:0.8rem; font-weight:600; color:var(--accent-dark);
+  padding:8px 18px; border-radius:100px;
+  border:1.5px solid var(--accent-light); background:transparent;
+  transition:all 0.25s; cursor:pointer;
+}
+.nav-cta:hover {
+  background:var(--accent-light); color:var(--primary); border-color:var(--accent);
+}
+
+.lang-switch-mobile {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.8rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; margin-bottom:16px; width:fit-content;
+}
+.lang-switch-mobile span {
+  padding:5px 12px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch-mobile span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
 </style>
 </head>
 <body>
@@ -384,7 +422,7 @@ a { color: inherit; text-decoration: none; }
 <section class="hero">
   <div class="hero-container">
     <div class="hero-badge">🎓 Research Accepted at ICC Italy 2026</div>
-    <h1>Verified Indonesian Coffee. <em>Trusted by Global Buyers.</em></h1>
+    <h1 data-id="Verified Indonesian Coffee. Trusted by Global Buyers." data-en="Verified Indonesian Coffee. Trusted by Global Buyers.">Verified Indonesian Coffee. <em>Trusted by Global Buyers.</em></h1>
     <p class="hero-sub">
       QBridge is a blockchain traceability platform with 3-layer verification 
       for Indonesian coffee processors. Not a marketplace — a trust infrastructure 
@@ -940,6 +978,37 @@ function toggleMobile() {
   document.getElementById('mobileMenu').classList.toggle('active');
 }
 
+</script>
+<script>
+// ===== LANGUAGE SWITCHER =====
+let currentLang = localStorage.getItem('qco-lang') || 'id';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('qco-lang', lang);
+  document.querySelectorAll('[data-id][data-en]').forEach(el => {
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = el.getAttribute('data-' + lang);
+    } else {
+      el.textContent = el.getAttribute('data-' + lang);
+    }
+  });
+  document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
+    el.classList.toggle('active', lang === 'id');
+  });
+  document.querySelectorAll('#lang-en, #lang-en-m').forEach(el => {
+    el.classList.toggle('active', lang === 'en');
+  });
+  document.documentElement.lang = lang === 'id' ? 'id' : 'en';
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'id' ? 'en' : 'id');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang(currentLang);
+});
 </script>
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Beranda</a>

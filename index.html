@@ -48,7 +48,7 @@ a { text-decoration:none; color:inherit; }
   font-family:var(--font-head); font-size:1.4rem; font-weight:600; letter-spacing:-0.02em;
 }
 .nav-logo span { color:var(--accent); font-weight:400; }
-.nav-links { display:flex; gap:32px; align-items:center; }
+.nav-links { display:flex; gap:28px; align-items:center; }
 .nav-links a {
   font-size:0.85rem; font-weight:500; color:var(--text-sec); transition:color 0.2s; position:relative;
 }
@@ -58,11 +58,33 @@ a { text-decoration:none; color:inherit; }
   background:var(--accent); transition:width 0.3s;
 }
 .nav-links a:hover::after { width:100%; }
+
+/* Investor CTA - subtle, not black */
 .nav-cta {
-  background:var(--primary); color:#fff; padding:10px 22px; border-radius:100px;
-  font-size:0.8rem; font-weight:600; transition:all 0.2s;
+  font-size:0.8rem; font-weight:600; color:var(--accent-dark);
+  padding:8px 18px; border-radius:100px;
+  border:1.5px solid var(--accent-light); background:transparent;
+  transition:all 0.25s; cursor:pointer;
 }
-.nav-cta:hover { background:#3a3a3a; transform:translateY(-1px); }
+.nav-cta:hover {
+  background:var(--accent-light); color:var(--primary); border-color:var(--accent);
+}
+
+/* Language Switcher */
+.lang-switch {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.75rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; cursor:pointer; transition:all 0.2s;
+}
+.lang-switch span {
+  padding:4px 10px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.lang-switch span:not(.active):hover { color:var(--text); }
+
 .nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
 
 /* ===== HERO ===== */
@@ -178,10 +200,13 @@ a { text-decoration:none; color:inherit; }
 }
 .footer-entity strong { color:#fff; display:block; font-size:0.8rem; }
 .footer-col h4 {
-  font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em;
-  color:#fff; margin-bottom:16px;
+  font-size:0.75rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.08em; color:#fff; margin-bottom:16px;
 }
-.footer-col a { display:block; font-size:0.85rem; color:rgba(255,255,255,0.55); padding:6px 0; transition:color 0.2s; }
+.footer-col a {
+  display:block; font-size:0.85rem; color:rgba(255,255,255,0.55);
+  padding:6px 0; transition:color 0.2s;
+}
 .footer-col a:hover { color:var(--accent-light); }
 .footer-bottom {
   border-top:1px solid rgba(255,255,255,0.08); padding-top:24px;
@@ -190,9 +215,10 @@ a { text-decoration:none; color:inherit; }
 }
 
 /* ===== MOBILE ===== */
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .nav-links { display:none; }
   .nav-toggle { display:block; }
+  .hero-inner { padding:60px 20px 40px; }
   .eco-grid { grid-template-columns:1fr; }
   .dna-wrap { grid-template-columns:1fr; gap:40px; }
   .dna-visual { height:280px; }
@@ -200,139 +226,184 @@ a { text-decoration:none; color:inherit; }
   .hero-cta-row { flex-direction:column; align-items:center; }
   .btn { width:100%; max-width:280px; justify-content:center; }
 }
-@media (max-width:480px) {
+@media (max-width: 480px) {
   .footer-grid { grid-template-columns:1fr; }
 }
 
 /* Mobile menu */
 .mobile-menu {
   display:none; position:fixed; top:68px; left:0; right:0; bottom:0;
-  background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px;
+  background:var(--bg); z-index:999; padding:24px;
+  flex-direction:column; gap:12px;
 }
 .mobile-menu.active { display:flex; }
 .mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+
+/* Lang switcher mobile */
+.lang-switch-mobile {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.8rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; margin-bottom:16px; width:fit-content;
+}
+.lang-switch-mobile span {
+  padding:5px 12px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch-mobile span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
 </style>
 </head>
 <body>
 
+<!-- Navigation -->
 <nav class="nav">
   <div class="nav-wrap">
     <a href="index.html" class="nav-logo">Q.co</a>
     <div class="nav-links">
-      <a href="qlab.html">Q.co Coffee Lab</a>
-      <a href="qbridge.html">QBridge</a>
-      <a href="qaffiliator.html">QAffiliator</a>
-      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
-        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
-      <a href="investors.html" class="nav-cta">Investor Portal</a>
+      <a href="qlab.html" data-id="Q.co Coffee Lab" data-en="Q.co Coffee Lab">Q.co Coffee Lab</a>
+      <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+      <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
+      <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog">Blog</a>
+      <!-- Language Switcher -->
+      <div class="lang-switch" onclick="toggleLang()">
+        <span class="active" id="lang-id">ID</span>
+        <span id="lang-en">EN</span>
+      </div>
+      <!-- Investor CTA - subtle, not black -->
+      <a href="investors.html" class="nav-cta" data-id="Investor" data-en="Investor">Investor</a>
     </div>
     <button class="nav-toggle" onclick="toggleMobile()" aria-label="Menu">☰</button>
   </div>
 </nav>
+
+<!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="qlab.html">Q.co Coffee Lab</a>
-  <a href="qbridge.html">QBridge</a>
-  <a href="qaffiliator.html">QAffiliator</a>
-  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
-        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
-  <a href="investors.html">Investor Portal</a>
+  <div class="lang-switch-mobile" onclick="toggleLang()">
+    <span class="active" id="lang-id-m">ID</span>
+    <span id="lang-en-m">EN</span>
+  </div>
+  <a href="qlab.html" data-id="Q.co Coffee Lab" data-en="Q.co Coffee Lab">Q.co Coffee Lab</a>
+  <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+  <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog">Blog</a>
+  <a href="investors.html" data-id="Investor Portal" data-en="Investor Portal">Investor Portal</a>
 </div>
 
+<!-- Hero -->
 <section class="hero">
   <div class="hero-inner">
+    <div class="hero-label" data-id="Dari Depok, Untuk Dunia" data-en="From Depok, To The World">Dari Depok, Untuk Dunia</div>
     <h1>Q.co <em>Ecosystem</em></h1>
-    <p class="hero-desc">
-      Tiga platform yang saling menguatkan. Satu visi: membangun infrastruktur kopi Indonesia 
-      yang transparan, terpercaya, dan berkelanjutan — dari petani di kebun hingga cangkir di meja konsumen.
+    <p class="hero-desc" data-id="Tiga platform yang saling menguatkan. Satu visi: membangun infrastruktur kopi Indonesia yang transparan, terpercaya, dan berkelanjutan — dari petani di kebun hingga cangkir di meja konsumen."
+       data-en="Three interconnected platforms. One vision: building Indonesia's coffee infrastructure that is transparent, trustworthy, and sustainable — from farmers in the field to cups on consumers' tables.">
+      Tiga platform yang saling menguatkan. Satu visi: membangun infrastruktur kopi Indonesia yang transparan, terpercaya, dan berkelanjutan — dari petani di kebun hingga cangkir di meja konsumen.
     </p>
+    <div class="hero-cta-row">
+      <a href="qlab.html" class="btn btn-pri" data-id="Jelajahi Q.co Coffee Lab →" data-en="Explore Q.co Coffee Lab →">Jelajahi Q.co Coffee Lab →</a>
+      <a href="qbridge.html" class="btn btn-sec" data-id="Kenali QBridge" data-en="Discover QBridge">Kenali QBridge</a>
+    </div>
   </div>
 </section>
 
+<!-- Ecosystem -->
 <section class="eco-section">
   <div class="eco-wrap">
     <div class="eco-header">
-      <h2>Tiga Platform, Satu Ekosistem</h2>
-      <p>Setiap platform memiliki peran unik, namun saling terhubung untuk menciptakan nilai yang lebih besar.</p>
+      <h2 data-id="Tiga Platform, Satu Ekosistem" data-en="Three Platforms, One Ecosystem">Tiga Platform, Satu Ekosistem</h2>
+      <p data-id="Setiap platform memiliki peran unik, namun saling terhubung untuk menciptakan nilai yang lebih besar."
+         data-en="Each platform has a unique role, yet they are interconnected to create greater value.">
+        Setiap platform memiliki peran unik, namun saling terhubung untuk menciptakan nilai yang lebih besar.
+      </p>
     </div>
     <div class="eco-grid">
       <a href="qlab.html" class="eco-card lab">
-        <div class="eco-badge lab">● Beroperasi</div>
+        <div class="eco-badge lab">● <span data-id="Beroperasi" data-en="Operating">Beroperasi</span></div>
         <h3>Q.co Coffee Lab & Roastery</h3>
-        <p>Roastery di Depok yang mensupply kebutuhan coffee shop sekitar. Laboratorium nyata untuk validasi rasa, kualitas, dan hubungan dengan komunitas kedai kopi.</p>
-        <span class="link">Kunjungi Halaman →</span>
+        <p data-id="Roastery di Depok yang mensupply kebutuhan coffee shop sekitar. Laboratorium nyata untuk validasi rasa, kualitas, dan hubungan dengan komunitas kedai kopi."
+           data-en="A roastery in Depok supplying nearby coffee shops. A real-world lab for taste validation, quality assurance, and building relationships with the coffee shop community.">
+          Roastery di Depok yang mensupply kebutuhan coffee shop sekitar. Laboratorium nyata untuk validasi rasa, kualitas, dan hubungan dengan komunitas kedai kopi.
+        </p>
+        <span class="link" data-id="Kunjungi Halaman →" data-en="Visit Page →">Kunjungi Halaman →</span>
       </a>
       <a href="qbridge.html" class="eco-card bridge">
-        <div class="eco-badge bridge">● Peluncuran Q4 2026</div>
+        <div class="eco-badge bridge">● <span data-id="Peluncuran Q4 2026" data-en="Launching Q4 2026">Peluncuran Q4 2026</span></div>
         <h3>QBridge</h3>
-        <p>Platform traceability berbasis blockchain dengan verifikasi tiga-lapis untuk processor kopi Indonesia. Diterima di ICC Italia, Oktober 2026.</p>
-        <span class="link">Kunjungi Halaman →</span>
+        <p data-id="Platform traceability berbasis blockchain dengan verifikasi tiga-lapis untuk processor kopi Indonesia. Diterima di ICC Italia, Oktober 2026."
+           data-en="A blockchain-based traceability platform with three-layer verification for Indonesian coffee processors. Accepted at ICC Italy, October 2026.">
+          Platform traceability berbasis blockchain dengan verifikasi tiga-lapis untuk processor kopi Indonesia. Diterima di ICC Italia, Oktober 2026.
+        </p>
+        <span class="link" data-id="Kunjungi Halaman →" data-en="Visit Page →">Kunjungi Halaman →</span>
       </a>
       <a href="qaffiliator.html" class="eco-card aff">
-        <div class="eco-badge aff">● Beta</div>
+        <div class="eco-badge aff">● <span data-id="Beta" data-en="Beta">Beta</span></div>
         <h3>QAffiliator</h3>
-        <p>Jaringan distribusi berbasis AI dengan chatbot WhatsApp, pembayaran otomatis, pengiriman, dan komisi — terintegrasi penuh.</p>
-        <span class="link">Kunjungi Halaman →</span>
+        <p data-id="Jaringan distribusi berbasis AI dengan chatbot WhatsApp, pembayaran otomatis, pengiriman, dan komisi — terintegrasi penuh."
+           data-en="An AI-powered distribution network with WhatsApp chatbot, automated payment, shipping, and commission — fully integrated.">
+          Jaringan distribusi berbasis AI dengan chatbot WhatsApp, pembayaran otomatis, pengiriman, dan komisi — terintegrasi penuh.
+        </p>
+        <span class="link" data-id="Kunjungi Halaman →" data-en="Visit Page →">Kunjungi Halaman →</span>
       </a>
     </div>
   </div>
 </section>
 
+<!-- DNA -->
 <section class="dna-section">
   <div class="dna-wrap">
     <div class="dna-visual">
       <span style="font-family:var(--font-head); font-size:2.5rem; color:var(--accent-dark);">Q.co</span>
     </div>
     <div class="dna-content">
-      <h2>Lebih dari Sekadar <em>Supplier</em></h2>
-      <p>
-        Q.co lahir dari kepercayaan bahwa hubungan antara roastery dan kedai kopi harus lebih dari transaksi. 
-        Kami adalah <strong>Sahabat Kedai Kopi</strong> — partner yang tumbuh bersama, berbagi pengetahuan, 
-        dan berkolaborasi untuk menciptakan pengalaman kopi terbaik.
+      <h2 data-id="Lebih dari Sekadar Supplier" data-en="More Than Just a Supplier">Lebih dari Sekadar <em>Supplier</em></h2>
+      <p data-id="Q.co lahir dari kepercayaan bahwa hubungan antara roastery dan kedai kopi harus lebih dari transaksi. Kami adalah Sahabat Kedai Kopi — partner yang tumbuh bersama, berbagi pengetahuan, dan berkolaborasi untuk menciptakan pengalaman kopi terbaik."
+         data-en="Q.co was born from the belief that the relationship between a roastery and a coffee shop must be more than a transaction. We are a Coffee Shop's Best Friend — partners who grow together, share knowledge, and collaborate to create the best coffee experience.">
+        Q.co lahir dari kepercayaan bahwa hubungan antara roastery dan kedai kopi harus lebih dari transaksi. Kami adalah <strong>Sahabat Kedai Kopi</strong> — partner yang tumbuh bersama, berbagi pengetahuan, dan berkolaborasi untuk menciptakan pengalaman kopi terbaik.
       </p>
-      <p>
-        Dari roasting profile yang disesuaikan dengan karakter kedai, hingga konsultasi menu dan training barista, 
-        Q.co hadir bukan untuk menjual beans, tapi untuk membangun komunitas kopi yang kuat.
+      <p data-id="Dari roasting profile yang disesuaikan dengan karakter kedai, hingga konsultasi menu dan training barista, Q.co hadir bukan untuk menjual beans, tapi untuk membangun komunitas kopi yang kuat."
+         data-en="From roasting profiles tailored to each shop's character, to menu consultation and barista training, Q.co is here not to sell beans, but to build a strong coffee community.">
+        Dari roasting profile yang disesuaikan dengan karakter kedai, hingga konsultasi menu dan training barista, Q.co hadir bukan untuk menjual beans, tapi untuk membangun komunitas kopi yang kuat.
       </p>
-      <div class="dna-quote">
+      <div class="dna-quote" data-id="Kami percaya bahwa kopi terbaik lahir dari kolaborasi, bukan kompetisi."
+           data-en="We believe the best coffee is born from collaboration, not competition.">
         "Kami percaya bahwa kopi terbaik lahir dari kolaborasi, bukan kompetisi."
       </div>
     </div>
   </div>
 </section>
 
+<!-- Footer -->
 <footer class="footer">
   <div class="footer-wrap">
     <div class="footer-grid">
       <div>
         <div class="footer-brand">Q.co <span>Ecosystem</span></div>
-        <p class="footer-desc">Membangun infrastruktur kopi Indonesia untuk pasar global. Verifikasi, traceability, dan distribusi berbasis teknologi.</p>
+        <p class="footer-desc" data-id="Membangun infrastruktur kopi Indonesia untuk pasar global. Verifikasi, traceability, dan distribusi berbasis teknologi."
+           data-en="Building Indonesia's coffee infrastructure for the global market. Verification, traceability, and technology-driven distribution.">
+          Membangun infrastruktur kopi Indonesia untuk pasar global. Verifikasi, traceability, dan distribusi berbasis teknologi.
+        </p>
         <div class="footer-entities">
-          <div class="footer-entity"><strong>Javanesia International LLC</strong>United States · Market Intelligence</div>
-          <div class="footer-entity"><strong>CV Kemari Sukses Makmur</strong>Indonesia · Operations & Roastery</div>
+          <div class="footer-entity"><strong>Javanesia International LLC</strong><span data-id="Amerika Serikat · Market Intelligence" data-en="United States · Market Intelligence">Amerika Serikat · Market Intelligence</span></div>
+          <div class="footer-entity"><strong>CV Kemari Sukses Makmur</strong><span data-id="Indonesia · Operations & Roastery" data-en="Indonesia · Operations & Roastery">Indonesia · Operations & Roastery</span></div>
         </div>
       </div>
       <div class="footer-col">
-        <h4>Platform</h4>
+        <h4 data-id="Platform" data-en="Platforms">Platform</h4>
         <a href="qlab.html">Q.co Coffee Lab</a>
         <a href="qbridge.html">QBridge</a>
         <a href="qaffiliator.html">QAffiliator</a>
       </div>
       <div class="footer-col">
-        <h4>Investor</h4>
-        <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
-        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
-  <a href="investors.html">Investor Portal</a>
+        <h4 data-id="Investor" data-en="Investors">Investor</h4>
+        <a href="investors.html">Investor Portal</a>
         <a href="investors.html">Pitch Deck</a>
         <a href="investors.html">Data Room</a>
       </div>
       <div class="footer-col">
-        <h4>Kontak</h4>
+        <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
         <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
         <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
-        <a href="investors.html">investor@qco.coffee</a>
+        <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -343,6 +414,44 @@ a { text-decoration:none; color:inherit; }
 </footer>
 
 <script>
+// ===== LANGUAGE SWITCHER =====
+let currentLang = localStorage.getItem('qco-lang') || 'id';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('qco-lang', lang);
+
+  // Update all elements with data-id and data-en
+  document.querySelectorAll('[data-id][data-en]').forEach(el => {
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = el.getAttribute('data-' + lang);
+    } else {
+      el.textContent = el.getAttribute('data-' + lang);
+    }
+  });
+
+  // Update lang switcher UI
+  document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
+    el.classList.toggle('active', lang === 'id');
+  });
+  document.querySelectorAll('#lang-en, #lang-en-m').forEach(el => {
+    el.classList.toggle('active', lang === 'en');
+  });
+
+  // Update html lang attribute
+  document.documentElement.lang = lang === 'id' ? 'id' : 'en';
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'id' ? 'en' : 'id');
+}
+
+// Apply on load
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang(currentLang);
+});
+
+// Mobile menu
 function toggleMobile() {
   document.getElementById('mobileMenu').classList.toggle('active');
 }

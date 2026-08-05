@@ -152,6 +152,44 @@ a { text-decoration:none; color:inherit; }
 .mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
 .mobile-menu.active { display:flex; }
 .mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+/* Language Switcher */
+.lang-switch {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.75rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; cursor:pointer; transition:all 0.2s;
+}
+.lang-switch span {
+  padding:4px 10px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.lang-switch span:not(.active):hover { color:var(--text); }
+
+/* Investor CTA - subtle, not black */
+.nav-cta {
+  font-size:0.8rem; font-weight:600; color:var(--accent-dark);
+  padding:8px 18px; border-radius:100px;
+  border:1.5px solid var(--accent-light); background:transparent;
+  transition:all 0.25s; cursor:pointer;
+}
+.nav-cta:hover {
+  background:var(--accent-light); color:var(--primary); border-color:var(--accent);
+}
+
+.lang-switch-mobile {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.8rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; margin-bottom:16px; width:fit-content;
+}
+.lang-switch-mobile span {
+  padding:5px 12px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch-mobile span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
 </style>
 </head>
 <body>
@@ -188,14 +226,19 @@ a { text-decoration:none; color:inherit; }
   <div class="hero-inner">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
-      Diterima di ScienceOpen.com - Research and Publishing Network untuk ICC Italia, Oktober 2026
+      <span data-id="Diterima di ICC Italia, Oktober 2026" data-en="Accepted at ICC Italy, October 2026">Diterima di ICC Italia, Oktober 2026</span>
     </div>
-    <h1>Infrastruktur <em>Kepercayaan</em><br>untuk Kopi Indonesia</h1>
-    <p class="hero-sub">
+    <h1 data-id="Infrastruktur Kepercayaan untuk Kopi Indonesia" data-en="Trust Infrastructure for Indonesian Coffee">Infrastruktur <em>Kepercayaan</em><br>untuk Kopi Indonesia</h1>
+    <p class="hero-sub" data-id="QBridge bukan marketplace. Kami adalah penyedia informasi — infrastruktur kepercayaan yang memverifikasi processor kopi Indonesia melalui tiga lapisan independen, menciptakan sinyal kepercayaan yang global buyer dapat andalkan."
+       data-en="QBridge is not a marketplace. We are an information provider — a trust infrastructure that verifies Indonesian coffee processors through three independent layers, creating a trust signal that global buyers can rely on.">
       QBridge bukan marketplace. Kami adalah penyedia informasi — infrastruktur kepercayaan 
       yang memverifikasi processor kopi Indonesia melalui tiga lapisan independen, 
       menciptakan sinyal kepercayaan yang global buyer dapat andalkan.
     </p>
+    <div class="hero-cta">
+      <a href="#layers" class="btn btn-pri">Kenali Verifikasi Tiga-Lapis →</a>
+      <a href="#waitlist" class="btn btn-sec">Daftar Beta</a>
+    </div>
   </div>
 </section>
 
@@ -203,8 +246,8 @@ a { text-decoration:none; color:inherit; }
 <section class="section problem-section" id="problem">
   <div class="section-wrap">
     <div class="section-header">
-      <div class="section-label">Masalah & Solusi</div>
-      <h2 class="section-title">Rantai Pasok yang <em>Tidak Transparan</em></h2>
+      <div class="section-label" data-id="Masalah & Solusi" data-en="Problem & Solution">Masalah & Solusi</div>
+      <h2 class="section-title" data-id="Rantai Pasok yang Tidak Transparan" data-en="An Opaque Supply Chain">Rantai Pasok yang <em>Tidak Transparan</em></h2>
       <p class="section-desc">Indonesia produsen kopi ke-4 terbesar di dunia, namun kurang dari 2% bertransaksi langsung dengan buyer global.</p>
     </div>
     <div class="problem-grid">
@@ -236,8 +279,8 @@ a { text-decoration:none; color:inherit; }
 <section class="section" id="layers">
   <div class="section-wrap">
     <div class="section-header">
-      <div class="section-label">Sistem Verifikasi</div>
-      <h2 class="section-title">Tiga Lapisan, <em>Satu Sinyal Kepercayaan</em></h2>
+      <div class="section-label" data-id="Sistem Verifikasi" data-en="Verification System">Sistem Verifikasi</div>
+      <h2 class="section-title" data-id="Tiga Lapisan, Satu Sinyal Kepercayaan" data-en="Three Layers, One Trust Signal">Tiga Lapisan, <em>Satu Sinyal Kepercayaan</em></h2>
       <p class="section-desc">Setiap lapisan diverifikasi oleh pihak independen dengan kompetensi berbeda. Bersama-sama, mereka menciptakan gambaran lengkap tentang kredibilitas sebuah processor.</p>
     </div>
     <div class="layers-grid">
@@ -288,8 +331,8 @@ a { text-decoration:none; color:inherit; }
 <section class="section badges-section" id="badges">
   <div class="section-wrap">
     <div class="section-header">
-      <div class="section-label">Badge System</div>
-      <h2 class="section-title">Sinyal Instan untuk <em>Buyer Global</em></h2>
+      <div class="section-label" data-id="Badge System" data-en="Badge System">Badge System</div>
+      <h2 class="section-title" data-id="Sinyal Instan untuk Buyer Global" data-en="Instant Signal for Global Buyers">Sinyal Instan untuk <em>Buyer Global</em></h2>
       <p class="section-desc">Buyer dapat menilai kredibilitas processor dalam satu pandangan. Processor memperoleh badge berdasarkan jumlah verifikasi yang berhasil dilalui.</p>
     </div>
     <div class="badges-grid">
@@ -378,13 +421,13 @@ a { text-decoration:none; color:inherit; }
         </div>
       </div>
       <div class="footer-col">
-        <h4>Platform</h4>
+        <h4 data-id="Platform" data-en="Platforms">Platform</h4>
         <a href="index.html">Beranda</a>
         <a href="qlab.html">Q.co Coffee Lab</a>
         <a href="qaffiliator.html">QAffiliator</a>
       </div>
       <div class="footer-col">
-        <h4>Investor</h4>
+        <h4 data-id="Investor" data-en="Investors">Investor</h4>
         <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
         <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
         <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
@@ -393,7 +436,7 @@ a { text-decoration:none; color:inherit; }
         <a href="investors.html">Data Room</a>
       </div>
       <div class="footer-col">
-        <h4>Kontak</h4>
+        <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
         <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
         <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
       </div>
@@ -407,6 +450,37 @@ a { text-decoration:none; color:inherit; }
 
 <script>
 function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('active'); }
+</script>
+<script>
+// ===== LANGUAGE SWITCHER =====
+let currentLang = localStorage.getItem('qco-lang') || 'id';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('qco-lang', lang);
+  document.querySelectorAll('[data-id][data-en]').forEach(el => {
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = el.getAttribute('data-' + lang);
+    } else {
+      el.textContent = el.getAttribute('data-' + lang);
+    }
+  });
+  document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
+    el.classList.toggle('active', lang === 'id');
+  });
+  document.querySelectorAll('#lang-en, #lang-en-m').forEach(el => {
+    el.classList.toggle('active', lang === 'en');
+  });
+  document.documentElement.lang = lang === 'id' ? 'id' : 'en';
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'id' ? 'en' : 'id');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang(currentLang);
+});
 </script>
 </body>
 </html>
