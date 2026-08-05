@@ -198,14 +198,16 @@ a { text-decoration:none; color:inherit; }
   <div class="nav-wrap">
     <a href="index.html" class="nav-logo">QBridge</a>
     <div class="nav-links">
-      <a href="index.html">Beranda</a>
+      <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
       <a href="qlab.html">Q.co Coffee Lab</a>
       <a href="qbridge.html" class="active">QBridge</a>
-      <a href="qaffiliator.html">QAffiliator</a>
+      <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
       <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
-        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
-      <a href="investors.html" class="nav-cta">Investor Portal</a>
+      <div class="lang-switch" onclick="toggleLang()">
+        <span class="active" id="lang-id">ID</span>
+        <span id="lang-en">EN</span>
+      </div>
+      <a href="investors.html" class="nav-cta" data-id="Investor" data-en="Investor">Investor</a>
     </div>
     <button class="nav-toggle" onclick="toggleMobile()">☰</button>
   </div>
@@ -235,10 +237,7 @@ a { text-decoration:none; color:inherit; }
       yang memverifikasi processor kopi Indonesia melalui tiga lapisan independen, 
       menciptakan sinyal kepercayaan yang global buyer dapat andalkan.
     </p>
-    <div class="hero-cta">
-      <a href="#layers" class="btn btn-pri">Kenali Verifikasi Tiga-Lapis →</a>
-      <a href="#waitlist" class="btn btn-sec">Daftar Beta</a>
-    </div>
+
   </div>
 </section>
 
