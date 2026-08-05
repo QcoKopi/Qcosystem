@@ -226,9 +226,67 @@ a { text-decoration:none; color:inherit; }
 .lang-switch-mobile span.active {
   background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
 }
+
+/* ===== VISUAL ENHANCEMENTS ===== */
+.grain-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+.blob {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: 0;
+  filter: blur(80px); opacity: 0.08;
+}
+.blob-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: -10%; right: -10%;
+}
+.blob-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+  bottom: 10%; left: -5%;
+}
+.hero-bg-pattern {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0.04;
+  background-image: radial-gradient(circle at 25% 25%, var(--accent) 1px, transparent 1px),
+                    radial-gradient(circle at 75% 75%, var(--accent) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.img-placeholder {
+  background: linear-gradient(135deg, var(--bg-warm), var(--accent-light));
+  border-radius: var(--radius); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.img-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8926a' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.img-placeholder .placeholder-icon {
+  font-size: 3rem; opacity: 0.3; color: var(--accent-dark); z-index: 1;
+}
+.img-placeholder .placeholder-label {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.08em; z-index: 1; background: rgba(255,255,255,0.8);
+  padding: 4px 12px; border-radius: 100px;
+}
+.accent-line {
+  width: 60px; height: 3px; background: var(--accent);
+  border-radius: 3px; margin: 20px auto;
+}
+.watermark {
+  position: absolute; font-size: 15rem; opacity: 0.02; pointer-events: none;
+  color: var(--accent-dark); z-index: 0; line-height: 1;
+}
 </style>
 </head>
 <body>
+<div class="grain-overlay"></div>
 
 <nav class="nav">
   <div class="nav-wrap">
@@ -263,6 +321,9 @@ a { text-decoration:none; color:inherit; }
 
 <!-- HERO — Tagline sebagai headline utama -->
 <section class="hero" id="top">
+  <div class="hero-bg-pattern"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
   <div class="hero-inner">
     <h1>Q.co <em>Coffee Lab</em><br>& Roastery</h1>
     <p class="hero-tagline" data-id="Kopi terbaik lahir dari kolaborasi, bukan kompetisi."
@@ -325,6 +386,7 @@ a { text-decoration:none; color:inherit; }
 <section class="section products-section" id="products">
   <div class="section-wrap">
     <div class="section-header">
+      <div class="accent-line"></div>
       <div class="section-label" data-id="Produk Kami" data-en="Our Products">Produk Kami</div>
       <h2 class="section-title" data-id="Roasted Beans, Dari Hati ke Cangkir" data-en="Roasted Beans, From Heart to Cup">Roasted Beans, <em>Dari Hati ke Cangkir</em></h2>
       <p class="section-desc" data-id="Setiap batch di-roast dengan presisi, di-cup oleh Q Grader bersertifikat, dan disesuaikan dengan profil rasa yang Anda inginkan. Dari single origin hingga house blend signature."
@@ -335,7 +397,7 @@ a { text-decoration:none; color:inherit; }
     </div>
     <div class="products-grid">
       <div class="product-card">
-        <div class="product-img">☕</div>
+        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
         <div class="product-info">
           <span class="product-tag">Single Origin</span>
           <h3>Arabika Gayo</h3>
@@ -347,7 +409,7 @@ a { text-decoration:none; color:inherit; }
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img">☕</div>
+        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
         <div class="product-info">
           <span class="product-tag">Single Origin</span>
           <h3>Arabika Toraja</h3>
@@ -359,7 +421,7 @@ a { text-decoration:none; color:inherit; }
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img">☕</div>
+        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
         <div class="product-info">
           <span class="product-tag">House Blend</span>
           <h3>Q.co Signature Blend</h3>
@@ -371,7 +433,7 @@ a { text-decoration:none; color:inherit; }
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img">☕</div>
+        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
         <div class="product-info">
           <span class="product-tag">Single Origin</span>
           <h3>Arabika Flores</h3>
@@ -383,7 +445,7 @@ a { text-decoration:none; color:inherit; }
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img">☕</div>
+        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
         <div class="product-info">
           <span class="product-tag">Single Origin</span>
           <h3>Robusta Lampung</h3>
@@ -395,7 +457,7 @@ a { text-decoration:none; color:inherit; }
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img">☕</div>
+        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
         <div class="product-info">
           <span class="product-tag">Custom</span>
           <h3>Custom Roast Profile</h3>
@@ -414,6 +476,7 @@ a { text-decoration:none; color:inherit; }
 <section class="section services-section" id="partnership">
   <div class="section-wrap">
     <div class="section-header">
+      <div class="accent-line"></div>
       <div class="section-label" data-id="Layanan & Kolaborasi" data-en="Services & Collaboration">Layanan & Kolaborasi</div>
       <h2 class="section-title" data-id="Sahabat Kedai Kopi — Bukan Sekadar Supplier" data-en="A Coffee Shop's Best Friend — Not Just a Supplier">Sahabat Kedai Kopi — <em>Bukan Sekadar Supplier</em></h2>
       <p class="section-desc">
@@ -482,6 +545,7 @@ a { text-decoration:none; color:inherit; }
 <section class="section testi-section">
   <div class="section-wrap">
     <div class="section-header">
+      <div class="accent-line"></div>
       <div class="section-label" data-id="Testimoni" data-en="Testimonials">Testimoni</div>
       <h2 class="section-title" data-id="Kata Mereka, Sahabat Kami" data-en="What They Say, Our Friends">Kata Mereka, <em>Sahabat Kami</em></h2>
       <p class="section-desc" data-id="Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co." data-en="Coffee shops around Depok and West Java who have collaborated with Q.co.">Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co.</p>

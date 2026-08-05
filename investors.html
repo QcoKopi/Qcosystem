@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,22 +122,23 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-logo {
   font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-primary); white-space: nowrap;
 }
 .nav-logo span { color: var(--color-accent); }
 .nav-back {
   font-size: 0.875rem; color: var(--color-text-secondary); font-weight: 500;
   display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  white-space: nowrap;
 }
 .nav-back:hover { color: var(--color-text); }
 
 /* Hero */
 .portal-hero {
   background: linear-gradient(135deg, #f8f7f4 0%, #f0efe9 100%);
-  padding: 80px 0 60px;
+  padding: 80px 0 60px; position: relative; overflow: hidden;
 }
 .portal-hero-container {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1;
 }
 .portal-hero-label {
   font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
@@ -180,7 +181,7 @@ a { color: inherit; text-decoration: none; }
 .card-action {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 0.875rem; font-weight: 600; color: var(--color-primary);
-  transition: gap 0.2s; cursor: pointer;
+  transition: gap 0.2s; cursor: pointer; border: none; background: none; padding: 0;
 }
 .card-action:hover { gap: 10px; color: var(--color-accent); }
 .card-meta {
@@ -279,7 +280,7 @@ a { color: inherit; text-decoration: none; }
   .full-card { padding: 28px 20px; }
 }
 
-.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; color:rgba(255,255,255,0.7); }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; color:var(--color-text-secondary); }
 .mobile-menu {
   display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999;
   background:linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%); padding:80px 24px 24px;
@@ -292,65 +293,86 @@ a { color: inherit; text-decoration: none; }
   .nav-links { display:none !important; }
   .nav-toggle { display:block !important; }
   .nav-back { display:none; }
+  .nav-lang-switch { display:none !important; }
 }
+
 /* Language Switcher */
 .lang-switch {
   display:flex; align-items:center; gap:4px;
-  font-size:0.75rem; font-weight:600; color:var(--text-muted);
-  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
-  padding:3px; cursor:pointer; transition:all 0.2s;
+  font-size:0.75rem; font-weight:600; color:var(--color-text-muted);
+  background:var(--color-bg-warm); border:1px solid var(--color-border); border-radius:100px;
+  padding:3px; cursor:pointer; transition:all 0.2s; user-select:none;
 }
 .lang-switch span {
   padding:4px 10px; border-radius:100px; transition:all 0.2s;
 }
 .lang-switch span.active {
-  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+  background:var(--color-card); color:var(--color-primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
 }
-.lang-switch span:not(.active):hover { color:var(--text); }
-
-/* Investor CTA - subtle, not black */
-.nav-cta {
-  font-size:0.8rem; font-weight:600; color:var(--accent-dark);
-  padding:8px 18px; border-radius:100px;
-  border:1.5px solid var(--accent-light); background:transparent;
-  transition:all 0.25s; cursor:pointer;
-}
-.nav-cta:hover {
-  background:var(--accent-light); color:var(--primary); border-color:var(--accent);
-}
+.lang-switch span:not(.active):hover { color:var(--color-text); }
 
 .lang-switch-mobile {
   display:flex; align-items:center; gap:4px;
-  font-size:0.8rem; font-weight:600; color:var(--text-muted);
-  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  font-size:0.8rem; font-weight:600; color:rgba(255,255,255,0.5);
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:100px;
   padding:3px; margin-bottom:16px; width:fit-content;
 }
 .lang-switch-mobile span {
-  padding:5px 12px; border-radius:100px; transition:all 0.2s;
+  padding:5px 12px; border-radius:100px; transition:all 0.2s; cursor:pointer;
 }
 .lang-switch-mobile span.active {
-  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+  background:rgba(255,255,255,0.15); color:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.15);
+}
+
+/* ===== VISUAL ENHANCEMENTS ===== */
+.grain-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+.blob {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: 0;
+  filter: blur(80px); opacity: 0.08;
+}
+.blob-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+  top: -10%; right: -10%;
+}
+.blob-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--color-accent-light) 0%, transparent 70%);
+  bottom: 10%; left: -5%;
+}
+.hero-bg-pattern {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0.04;
+  background-image: radial-gradient(circle at 25% 25%, var(--color-accent) 1px, transparent 1px),
+                    radial-gradient(circle at 75% 75%, var(--color-accent) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 </style>
 </head>
 <body>
+<div class="grain-overlay"></div>
 
 <!-- Password Gate -->
 <div class="gate-overlay" id="gateOverlay">
   <div class="gate-box">
     <div class="gate-logo">Q.co <span>Investor Portal</span></div>
-    <p class="gate-subtitle">Confidential materials for qualified investors and strategic partners.</p>
+    <p class="gate-subtitle" data-id="Materi rahasia untuk investor dan mitra strategis yang memenuhi syarat." data-en="Confidential materials for qualified investors and strategic partners.">Confidential materials for qualified investors and strategic partners.</p>
     <div class="gate-input-wrap">
       <input type="password" class="gate-input" id="gatePassword" placeholder="Enter access code" autocomplete="off" onkeypress="if(event.key==='Enter')unlockPortal()">
       <button class="gate-toggle" onclick="togglePasswordVisibility()" title="Show/Hide password">👁</button>
     </div>
-    <button class="gate-btn" onclick="unlockPortal()">Unlock Portal</button>
+    <button class="gate-btn" onclick="unlockPortal()" data-id="Buka Portal" data-en="Unlock Portal">Unlock Portal</button>
     <div class="gate-error" id="gateError"></div>
     <p class="gate-note">
-      This portal contains confidential financial and strategic information.<br>
-      By accessing, you agree to treat all materials as strictly confidential.<br><br>
-      <strong>Current password: QBridge2026</strong><br>
-      <span style="font-size:0.7rem; color:rgba(255,255,255,0.2);">Change in JS before deployment.</span>
+      <span data-id="Portal ini berisi informasi keuangan dan strategis yang rahasia." data-en="This portal contains confidential financial and strategic information.">This portal contains confidential financial and strategic information.</span><br>
+      <span data-id="Dengan mengakses, Anda setuju untuk menganggap semua materi sebagai sangat rahasia." data-en="By accessing, you agree to treat all materials as strictly confidential.">By accessing, you agree to treat all materials as strictly confidential.</span><br><br>
+      <strong data-id="Password saat ini: QBridge2026" data-en="Current password: QBridge2026">Current password: QBridge2026</strong><br>
+      <span style="font-size:0.7rem; color:rgba(255,255,255,0.2);" data-id="Ubah di JS sebelum deployment." data-en="Change in JS before deployment.">Change in JS before deployment.</span>
     </p>
   </div>
 </div>
@@ -363,18 +385,30 @@ a { color: inherit; text-decoration: none; }
   <div class="nav-container">
     <a href="index.html" class="nav-logo">Q.co <span>Investor Portal</span></a>
     <div class="nav-links" style="display:flex; gap:28px; align-items:center;">
-      <a href="index.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">Beranda</a>
-      <a href="qlab.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">Q.co Coffee Lab</a>
-      <a href="qbridge.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">QBridge</a>
-      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-      <a href="qaffiliator.html" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary); transition:color 0.2s;">QAffiliator</a>
+      <a href="index.html" style="font-size:0.85rem; font-weight:500; color:var(--color-text-secondary); transition:color 0.2s;" data-id="Beranda" data-en="Home">Beranda</a>
+      <a href="qlab.html" style="font-size:0.85rem; font-weight:500; color:var(--color-text-secondary); transition:color 0.2s;">Q.co Coffee Lab</a>
+      <a href="qbridge.html" style="font-size:0.85rem; font-weight:500; color:var(--color-text-secondary); transition:color 0.2s;">QBridge</a>
+      <a href="https://blog.qcoid.com/" target="_blank" style="font-size:0.85rem; font-weight:500; color:var(--color-text-secondary); transition:color 0.2s;" data-id="Blog" data-en="Blog">Blog</a>
+      <a href="qaffiliator.html" style="font-size:0.85rem; font-weight:500; color:var(--color-text-secondary); transition:color 0.2s;">QAffiliator</a>
     </div>
-    <a href="index.html" class="nav-back">← Back to Public Site</a>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div class="lang-switch nav-lang-switch" onclick="toggleLang()" role="button" aria-label="Switch language">
+        <span id="lang-id" class="active">ID</span>
+        <span id="lang-en">EN</span>
+      </div>
+      <a href="index.html" class="nav-back">
+        <span data-id="← Kembali ke Situs Publik" data-en="← Back to Public Site">← Back to Public Site</span>
+      </a>
+      <button class="nav-toggle" onclick="toggleMobile()" aria-label="Toggle menu">☰</button>
+    </div>
   </div>
 </nav>
 
 <!-- Hero -->
 <section class="portal-hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-bg-pattern"></div>
   <div class="portal-hero-container">
     <div class="portal-hero-label" data-id="Rahasia — Jangan Disebarluaskan" data-en="Confidential — Do Not Distribute">Confidential — Do Not Distribute</div>
     <h1 data-id="Materi Investor Q.co Ecosystem" data-en="Q.co Ecosystem Investor Materials">Q.co Ecosystem Investor Materials</h1>
@@ -386,16 +420,16 @@ a { color: inherit; text-decoration: none; }
 <section class="section" style="padding-top: 40px;">
   <div class="section-container">
     <div class="full-card">
-      <h3>Investment Highlights</h3>
+      <h3 data-id="Highlight Investasi" data-en="Investment Highlights">Investment Highlights</h3>
       <ul class="highlight-list">
-        <li>Revenue-generating roastery (Q.co Lab) operational since 20XX</li>
-        <li>4 years US market intelligence via SCE/WOC exhibitions</li>
-        <li>KBRI Washington trade partnership (2024–2026)</li>
-        <li>QBridge research accepted at ICC Italy, October 2026</li>
-        <li>3-layer verification system (Admin → Q Processing → Q Grader)</li>
-        <li>Dual-entity structure: Javanesia International LLC (US) + CV Kemari Sukses Makmur (ID)</li>
-        <li>Proprietary 5-system digital infrastructure (QFinance, QSales, QTask, QBridge, QAffiliator)</li>
-        <li>Q Grader & Q Processing (QP1/QP2, all methods) certified founder</li>
+        <li data-id="Roastery yang menghasilkan pendapatan (Q.co Lab) beroperasi sejak 2023" data-en="Revenue-generating roastery (Q.co Lab) operational since 2023">Revenue-generating roastery (Q.co Lab) operational since 2023</li>
+        <li data-id="4 tahun intelijen pasar AS melalui pameran SCE/WOC" data-en="4 years US market intelligence via SCE/WOC exhibitions">4 years US market intelligence via SCE/WOC exhibitions</li>
+        <li data-id="Kemitraan perdagangan KBRI Washington (2024–2026)" data-en="KBRI Washington trade partnership (2024–2026)">KBRI Washington trade partnership (2024–2026)</li>
+        <li data-id="Penelitian QBridge diterima di ICC Italia, Oktober 2026" data-en="QBridge research accepted at ICC Italy, October 2026">QBridge research accepted at ICC Italy, October 2026</li>
+        <li data-id="Sistem verifikasi 3 lapisan (Admin → Q Processing → Q Grader)" data-en="3-layer verification system (Admin → Q Processing → Q Grader)">3-layer verification system (Admin → Q Processing → Q Grader)</li>
+        <li data-id="Struktur dual-entitas: Javanesia International LLC (US) + CV Kemari Sukses Makmur (ID)" data-en="Dual-entity structure: Javanesia International LLC (US) + CV Kemari Sukses Makmur (ID)">Dual-entity structure: Javanesia International LLC (US) + CV Kemari Sukses Makmur (ID)</li>
+        <li data-id="Infrastruktur digital 5 sistem proprietary (QFinance, QSales, QTask, QBridge, QAffiliator)" data-en="Proprietary 5-system digital infrastructure (QFinance, QSales, QTask, QBridge, QAffiliator)">Proprietary 5-system digital infrastructure (QFinance, QSales, QTask, QBridge, QAffiliator)</li>
+        <li data-id="Founder bersertifikat Q Grader & Q Processing (QP1/QP2, semua metode)" data-en="Q Grader & Q Processing (QP1/QP2, all methods) certified founder">Q Grader & Q Processing (QP1/QP2, all methods) certified founder</li>
       </ul>
     </div>
   </div>
@@ -408,67 +442,79 @@ a { color: inherit; text-decoration: none; }
 
       <div class="card">
         <div class="card-icon">📊</div>
-        <h3>Pitch Deck</h3>
-        <p>Comprehensive investor presentation covering problem, solution, traction, market, team, and financial projections.</p>
-        <span class="card-action" onclick="trackDownload('deck')">Download PDF →</span>
+        <h3 data-id="Pitch Deck" data-en="Pitch Deck">Pitch Deck</h3>
+        <p data-id="Presentasi investor komprehensif mencakup masalah, solusi, traksi, pasar, tim, dan proyeksi keuangan." data-en="Comprehensive investor presentation covering problem, solution, traction, market, team, and financial projections.">Comprehensive investor presentation covering problem, solution, traction, market, team, and financial projections.</p>
+        <span class="card-action" onclick="trackDownload('deck')">
+          <span data-id="Unduh PDF" data-en="Download PDF">Download PDF</span> →
+        </span>
         <div class="card-meta">
-          <span>Last updated: Aug 2026</span>
-          <span>~24 slides</span>
-          <span>Password-protected</span>
+          <span data-id="Terakhir diperbarui: Agt 2026" data-en="Last updated: Aug 2026">Last updated: Aug 2026</span>
+          <span>~24 <span data-id="slide" data-en="slides">slides</span></span>
+          <span data-id="Dilindungi password" data-en="Password-protected">Password-protected</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-icon">📈</div>
-        <h3>Financial Highlights</h3>
-        <p>Q.co Lab revenue trends, unit economics, projected P&L for QBridge and QAffiliator post-launch, and use of funds breakdown.</p>
-        <span class="card-action" onclick="trackDownload('financials')">Download PDF →</span>
+        <h3 data-id="Highlight Keuangan" data-en="Financial Highlights">Financial Highlights</h3>
+        <p data-id="Tren pendapatan Q.co Lab, unit ekonomi, proyeksi P&L untuk QBridge dan QAffiliator pasca-peluncuran, dan rincian penggunaan dana." data-en="Q.co Lab revenue trends, unit economics, projected P&L for QBridge and QAffiliator post-launch, and use of funds breakdown.">Q.co Lab revenue trends, unit economics, projected P&L for QBridge and QAffiliator post-launch, and use of funds breakdown.</p>
+        <span class="card-action" onclick="trackDownload('financials')">
+          <span data-id="Unduh PDF" data-en="Download PDF">Download PDF</span> →
+        </span>
         <div class="card-meta">
-          <span>From QFinance system</span>
-          <span>Quarterly updates</span>
+          <span data-id="Dari sistem QFinance" data-en="From QFinance system">From QFinance system</span>
+          <span data-id="Pembaruan triwulanan" data-en="Quarterly updates">Quarterly updates</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-icon">📄</div>
-        <h3>Cap Table & Entity Structure</h3>
-        <p>Ownership structure, Javanesia International LLC (US) and CV Kemari Sukses Makmur (ID) legal documentation, and governance framework.</p>
-        <span class="card-action" onclick="trackDownload('captable')">Download PDF →</span>
+        <h3 data-id="Struktur Kepemilikan & Entitas" data-en="Cap Table & Entity Structure">Cap Table & Entity Structure</h3>
+        <p data-id="Struktur kepemilikan, dokumentasi legal Javanesia International LLC (US) dan CV Kemari Sukses Makmur (ID), serta kerangka tata kelola." data-en="Ownership structure, Javanesia International LLC (US) and CV Kemari Sukses Makmur (ID) legal documentation, and governance framework.">Ownership structure, Javanesia International LLC (US) and CV Kemari Sukses Makmur (ID) legal documentation, and governance framework.</p>
+        <span class="card-action" onclick="trackDownload('captable')">
+          <span data-id="Unduh PDF" data-en="Download PDF">Download PDF</span> →
+        </span>
         <div class="card-meta">
-          <span>Confidential</span>
-          <span>NDA required for full version</span>
+          <span data-id="Rahasia" data-en="Confidential">Confidential</span>
+          <span data-id="NDA diperlukan untuk versi lengkap" data-en="NDA required for full version">NDA required for full version</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-icon">🔬</div>
-        <h3>ICC Italy 2026 Paper</h3>
-        <p>Peer-reviewed research abstract and full paper: "Beyond Traceability: Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee."</p>
-        <span class="card-action" onclick="trackDownload('paper')">Download PDF →</span>
+        <h3 data-id="Makalah ICC Italia 2026" data-en="ICC Italy 2026 Paper">ICC Italy 2026 Paper</h3>
+        <p data-id="Abstrak dan makalah lengkap yang telah ditinjau rekan sejawat: &quot;Beyond Traceability: Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee.&quot;" data-en="Peer-reviewed research abstract and full paper: &quot;Beyond Traceability: Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee.&quot;">Peer-reviewed research abstract and full paper: "Beyond Traceability: Digital Fairness, Cultural Capital, and Trust in Indonesian Coffee."</p>
+        <span class="card-action" onclick="trackDownload('paper')">
+          <span data-id="Unduh PDF" data-en="Download PDF">Download PDF</span> →
+        </span>
         <div class="card-meta">
-          <span>Accepted for presentation</span>
-          <span>Oct 2026, Italy</span>
+          <span data-id="Diterima untuk presentasi" data-en="Accepted for presentation">Accepted for presentation</span>
+          <span data-id="Okt 2026, Italia" data-en="Oct 2026, Italy">Oct 2026, Italy</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-icon">🏛️</div>
-        <h3>Data Room</h3>
-        <p>Due diligence documents: legal entity certificates, Q.co Lab financials, QBridge technical architecture, QAffiliator system docs, and partnership agreements.</p>
-        <span class="card-action" onclick="alert('Data room access requires NDA. Contact investor@qco.coffee')">Request Access →</span>
+        <h3 data-id="Ruang Data" data-en="Data Room">Data Room</h3>
+        <p data-id="Dokumen due diligence: sertifikat entitas legal, laporan keuangan Q.co Lab, arsitektur teknis QBridge, dokumen sistem QAffiliator, dan perjanjian kemitraan." data-en="Due diligence documents: legal entity certificates, Q.co Lab financials, QBridge technical architecture, QAffiliator system docs, and partnership agreements.">Due diligence documents: legal entity certificates, Q.co Lab financials, QBridge technical architecture, QAffiliator system docs, and partnership agreements.</p>
+        <span class="card-action" onclick="alert(document.documentElement.lang === 'id' ? 'Akses ruang data memerlukan NDA. Hubungi investor@qco.coffee' : 'Data room access requires NDA. Contact investor@qco.coffee')">
+          <span data-id="Minta Akses" data-en="Request Access">Request Access</span> →
+        </span>
         <div class="card-meta">
-          <span>NDA required</span>
+          <span data-id="NDA diperlukan" data-en="NDA required">NDA required</span>
           <span>Google Drive / Notion</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-icon">🎥</div>
-        <h3>Product Demo & Walkthrough</h3>
-        <p>Screen recordings of QBridge verification dashboard, QAffiliator AI bot in action, and QFinance integrated reporting. 12-minute overview.</p>
-        <span class="card-action" onclick="trackDownload('demo')">Watch Video →</span>
+        <h3 data-id="Demo Produk & Walkthrough" data-en="Product Demo & Walkthrough">Product Demo & Walkthrough</h3>
+        <p data-id="Rekaman layar dashboard verifikasi QBridge, AI bot QAffiliator dalam aksi, dan pelaporan terintegrasi QFinance. Ikhtisar 12 menit." data-en="Screen recordings of QBridge verification dashboard, QAffiliator AI bot in action, and QFinance integrated reporting. 12-minute overview.">Screen recordings of QBridge verification dashboard, QAffiliator AI bot in action, and QFinance integrated reporting. 12-minute overview.</p>
+        <span class="card-action" onclick="trackDownload('demo')">
+          <span data-id="Tonton Video" data-en="Watch Video">Watch Video</span> →
+        </span>
         <div class="card-meta">
-          <span>12 min</span>
+          <span>12 <span data-id="menit" data-en="min">min</span></span>
           <span>Loom / YouTube unlisted</span>
         </div>
       </div>
@@ -482,35 +528,35 @@ a { color: inherit; text-decoration: none; }
   <div class="section-container">
     <div class="contact-grid">
       <div>
-        <h2>Schedule a Briefing</h2>
-        <p>Ready to discuss the opportunity? Book a confidential call or send us a message.</p>
+        <h2 data-id="Jadwalkan Briefing" data-en="Schedule a Briefing">Schedule a Briefing</h2>
+        <p data-id="Siap membahas peluang ini? Jadwalkan panggilan rahasia atau kirimkan pesan kepada kami." data-en="Ready to discuss the opportunity? Book a confidential call or send us a message.">Ready to discuss the opportunity? Book a confidential call or send us a message.</p>
         <div class="contact-info">
           <div class="contact-item">
             <div class="contact-item-icon">📧</div>
             <div class="contact-item-text">
               <strong>investor@qco.coffee</strong>
-              <span>Primary investor relations</span>
+              <span data-id="Hubungan investor utama" data-en="Primary investor relations">Primary investor relations</span>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-item-icon">📅</div>
             <div class="contact-item-text">
               <strong>Calendly / Cal.com</strong>
-              <span>Book a 30-min intro call</span>
+              <span data-id="Panggilan perkenalan 30 menit" data-en="Book a 30-min intro call">Book a 30-min intro call</span>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-item-icon">📍</div>
             <div class="contact-item-text">
               <strong>Depok, Jawa Barat, Indonesia</strong>
-              <span>Q.co Coffee Lab HQ</span>
+              <span data-id="Kantor Pusat Q.co Coffee Lab" data-en="Q.co Coffee Lab HQ">Q.co Coffee Lab HQ</span>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-item-icon">🇺🇸</div>
             <div class="contact-item-text">
               <strong>Javanesia International LLC</strong>
-              <span>US market intelligence entity</span>
+              <span data-id="Entitas intelijen pasar AS" data-en="US market intelligence entity">US market intelligence entity</span>
             </div>
           </div>
         </div>
@@ -518,22 +564,22 @@ a { color: inherit; text-decoration: none; }
       <div class="contact-form">
         <form id="contactForm" onsubmit="handleContactSubmit(event)">
           <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Your name" required>
+            <label data-id="Nama" data-en="Name">Name</label>
+            <input type="text" name="name" placeholder="Your name" data-id="Nama Anda" data-en="Your name" required>
           </div>
           <div class="form-group">
             <label>Email</label>
             <input type="email" name="email" placeholder="you@firm.com" required>
           </div>
           <div class="form-group">
-            <label>Firm</label>
-            <input type="text" name="firm" placeholder="VC Firm, Angel, Strategic...">
+            <label data-id="Perusahaan / Firma" data-en="Firm">Firm</label>
+            <input type="text" name="firm" placeholder="VC Firm, Angel, Strategic..." data-id="Firma VC, Angel, Strategis..." data-en="VC Firm, Angel, Strategic...">
           </div>
           <div class="form-group">
-            <label>Message</label>
-            <textarea name="message" rows="3" placeholder="What would you like to discuss?"></textarea>
+            <label data-id="Pesan" data-en="Message">Message</label>
+            <textarea name="message" rows="3" placeholder="What would you like to discuss?" data-id="Apa yang ingin Anda diskusikan?" data-en="What would you like to discuss?"></textarea>
           </div>
-          <button type="submit" class="form-submit">Send Message</button>
+          <button type="submit" class="form-submit" data-id="Kirim Pesan" data-en="Send Message">Send Message</button>
         </form>
       </div>
     </div>
@@ -543,13 +589,13 @@ a { color: inherit; text-decoration: none; }
 <!-- Footer -->
 <footer class="footer">
   <div class="footer-container">
-    <span>© 2026 Q.co Ecosystem. Confidential materials.</span>
+    <span data-id="© 2026 Q.co Ecosystem. Materi rahasia." data-en="© 2026 Q.co Ecosystem. Confidential materials.">© 2026 Q.co Ecosystem. Confidential materials.</span>
     <div>
-      <a href="index.html" style="color:rgba(255,255,255,0.55);">Beranda</a> · 
+      <a href="index.html" style="color:rgba(255,255,255,0.55);" data-id="Beranda" data-en="Home">Beranda</a> · 
       <a href="qlab.html" style="color:rgba(255,255,255,0.55);">Q.co Coffee Lab</a> · 
       <a href="qbridge.html" style="color:rgba(255,255,255,0.55);">QBridge</a> · 
       <a href="qaffiliator.html" style="color:rgba(255,255,255,0.55);">QAffiliator</a> · 
-      <a href="https://blog.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);">Blog</a> · 
+      <a href="https://blog.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);" data-id="Blog" data-en="Blog">Blog</a> · 
       <a href="https://qbridge-id.com/" target="_blank" style="color:rgba(255,255,255,0.55);">QBridge Live</a> · 
       <a href="https://affiliate.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);">QAffiliator Live</a>
     </div>
@@ -563,30 +609,20 @@ a { color: inherit; text-decoration: none; }
 // PASSWORD GATE — Works on ALL contexts (HTTPS, HTTP, file://)
 // ============================================================
 
-// CHANGE THIS PASSWORD BEFORE DEPLOYING TO PRODUCTION
-// To generate a new hash: open browser console and run:
-//   simpleHash('YourNewPassword')
-// Then replace the value below with the output.
 const CORRECT_HASH = '1879973c';
 
-// Simple hash function that works everywhere (no crypto.subtle needed)
 function simpleHash(str) {
   let hash = 0;
   if (str.length === 0) return hash.toString(16);
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
+    hash = hash & hash;
   }
-  // Convert to hex string and pad to consistent length
   let hex = (hash >>> 0).toString(16);
   while (hex.length < 8) hex = '0' + hex;
   return hex;
 }
-
-// Alternative: direct string comparison (less secure but simplest)
-// Uncomment the line below and comment out the hash-based check if you want simplicity:
-// const CORRECT_PASSWORD = 'QBridge2026';
 
 function unlockPortal() {
   const input = document.getElementById('gatePassword');
@@ -595,22 +631,17 @@ function unlockPortal() {
   const content = document.getElementById('mainContent');
   const password = input.value.trim();
 
-  // Clear previous error
   error.textContent = '';
   input.classList.remove('error');
 
   if (!password) {
-    error.textContent = 'Please enter an access code.';
+    error.textContent = currentLang === 'id' ? 'Silakan masukkan kode akses.' : 'Please enter an access code.';
     input.classList.add('error');
     input.focus();
     return;
   }
 
-  // Hash-based check (works on all contexts)
   const hash = simpleHash(password);
-
-  // For debugging: uncomment to see hash in console
-  // console.log('Input:', password, 'Hash:', hash, 'Expected:', CORRECT_HASH);
 
   if (hash === CORRECT_HASH) {
     overlay.classList.add('hidden');
@@ -620,7 +651,7 @@ function unlockPortal() {
     }
     sessionStorage.setItem('portalUnlocked', 'true');
   } else {
-    error.textContent = 'Invalid access code. Please try again.';
+    error.textContent = currentLang === 'id' ? 'Kode akses tidak valid. Silakan coba lagi.' : 'Invalid access code. Please try again.';
     input.classList.add('error');
     input.value = '';
     input.focus();
@@ -642,13 +673,11 @@ function togglePasswordVisibility() {
   }
 }
 
-// Check if already unlocked this session
 if (sessionStorage.getItem('portalUnlocked') === 'true') {
   document.getElementById('gateOverlay').classList.add('hidden');
   document.getElementById('mainContent').classList.add('unlocked');
 }
 
-// Track downloads
 function trackDownload(type) {
   if (typeof gtag !== 'undefined') {
     gtag('event', 'download', {
@@ -656,10 +685,12 @@ function trackDownload(type) {
       'event_label': type
     });
   }
-  alert('Download tracking triggered. Replace this with actual file download or link to your data room.\n\nType: ' + type);
+  const msg = currentLang === 'id' 
+    ? 'Pelacakan unduhan diaktifkan. Ganti ini dengan unduhan file aktual atau tautan ke ruang data Anda.\n\nJenis: ' + type
+    : 'Download tracking triggered. Replace this with actual file download or link to your data room.\n\nType: ' + type;
+  alert(msg);
 }
 
-// Contact form
 function handleContactSubmit(e) {
   e.preventDefault();
   const form = e.target;
@@ -669,14 +700,15 @@ function handleContactSubmit(e) {
       'event_label': 'contact_form'
     });
   }
+  const title = currentLang === 'id' ? 'Pesan Terkirim' : 'Message Sent';
+  const subtitle = currentLang === 'id' ? 'Kami akan merespons dalam 24 jam.' : 'We will respond within 24 hours.';
+  const note = currentLang === 'id' ? 'Hubungkan form ini ke backend GAS atau layanan email Anda.' : 'Connect this form to your GAS backend or email service.';
   form.innerHTML = `
     <div style="text-align:center; padding: 32px 0;">
       <div style="font-size: 2.5rem; margin-bottom: 12px;">✓</div>
-      <h3 style="font-family: var(--font-heading); margin-bottom: 8px; color: #fff;">Message Sent</h3>
-      <p style="color: rgba(255,255,255,0.7);">We will respond within 24 hours.</p>
-      <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 16px;">
-        Connect this form to your GAS backend or email service.
-      </p>
+      <h3 style="font-family: var(--font-heading); margin-bottom: 8px; color: #fff;">${title}</h3>
+      <p style="color: rgba(255,255,255,0.7);">${subtitle}</p>
+      <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 16px;">${note}</p>
     </div>
   `;
 }
@@ -685,8 +717,6 @@ function toggleMobile() {
   document.getElementById('mobileMenu').classList.toggle('active');
 }
 
-</script>
-<script>
 // ===== LANGUAGE SWITCHER =====
 let currentLang = localStorage.getItem('qco-lang') || 'id';
 
@@ -694,10 +724,11 @@ function applyLang(lang) {
   currentLang = lang;
   localStorage.setItem('qco-lang', lang);
   document.querySelectorAll('[data-id][data-en]').forEach(el => {
+    const text = el.getAttribute('data-' + lang);
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-      el.placeholder = el.getAttribute('data-' + lang);
+      el.placeholder = text;
     } else {
-      el.textContent = el.getAttribute('data-' + lang);
+      el.textContent = text;
     }
   });
   document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
@@ -717,13 +748,20 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLang(currentLang);
 });
 </script>
+
+<!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Beranda</a>
+  <div class="lang-switch-mobile" role="button" aria-label="Switch language">
+    <span id="lang-id-m" class="active" onclick="applyLang('id')">ID</span>
+    <span id="lang-en-m" onclick="applyLang('en')">EN</span>
+  </div>
+  <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
   <a href="qlab.html">Q.co Coffee Lab</a>
   <a href="qbridge.html">QBridge</a>
   <a href="qaffiliator.html">QAffiliator</a>
-  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-  <a href="index.html">← Back to Public Site</a>
+  <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog">Blog</a>
+  <a href="index.html" data-id="← Kembali ke Situs Publik" data-en="← Back to Public Site">← Back to Public Site</a>
 </div>
+
 </body>
 </html>
