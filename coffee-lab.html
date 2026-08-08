@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCO Coffee Lab — Sensory Simulator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --paper:#F5F1E7;
+  --paper-2:#FFFFFF;
+  --paper-3:#EFE9DA;
+  --ink:#211D18;
+  --ink-soft:#4A443B;
+  --graphite:#82796B;
+  --line:#DED2B9;
+  --line-soft:#EAE1CC;
+  --roast:#6B3A24;
+  --roast-dark:#432414;
+  --roast-light:#9C6A47;
+  --brass:#A9822F;
+  --brass-light:#D4B565;
+  --screen-bg:#1C1A16;
+  --screen-grid:#332E26;
+  --screen-line:#4C4638;
+  --screen-text:#E9E2D0;
+  --data-a:#E8A33D;
+  --data-b:#2FA6A6;
+  --data-c:#C06B8F;
+  --data-target:#E0594A;
+  --band-1:#D9695C;
+  --band-2:#DE9A55;
+  --band-3:#D5B84B;
+  --band-4:#8FB35F;
+  --band-5:#4C9A5B;
+  --shadow-panel: 0 1px 2px rgba(33,29,24,0.04), 0 8px 24px -12px rgba(33,29,24,0.18);
+  --radius: 3px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'IBM Plex Sans',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-attachment: fixed;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--brass-light); color:var(--ink);}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:6px;}
+::-webkit-scrollbar-thumb:hover{background:var(--graphite);}
+
+a{color:inherit;}
+button{font-family:inherit;}
+:focus-visible{outline:2px solid var(--roast); outline-offset:2px;}
+
+.mono{font-family:'IBM Plex Mono',monospace;}
+.serif{font-family:'IBM Plex Serif',serif;}
+
+/* ============ APP SHELL ============ */
+.app{
+  display:grid;
+  grid-template-columns: 236px 1fr;
+  min-height:100vh;
+}
+@media (max-width: 900px){
+  .app{grid-template-columns: 1fr;}
+}
+
+/* ---- RAIL ---- */
+.rail{
+  background: var(--roast-dark);
+  color: #EFE4D5;
+  padding: 22px 14px 20px;
+  position: sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column; gap:22px;
+  border-right: 1px solid rgba(0,0,0,.25);
+}
+@media (max-width: 900px){
+  .rail{ position: static; height:auto; flex-direction:row; align-items:center; padding:12px 14px; overflow-x:auto; gap:16px; }
+}
+.rail-brand{ display:flex; align-items:center; gap:10px; padding: 2px 6px 6px; flex-shrink:0; }
+.rail-brand .mark{
+  width:34px; height:34px; border:1.5px solid var(--brass-light); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Serif',serif; font-weight:700; font-size:15px; color:var(--brass-light);
+  position:relative; flex-shrink:0;
+}
+.rail-brand .mark::after{
+  content:''; position:absolute; inset:-5px; border:1px solid rgba(212,181,101,.35); border-radius:50%;
+}
+.rail-brand .txt .t1{ font-family:'IBM Plex Serif',serif; font-size:15px; letter-spacing:.04em; font-weight:600; line-height:1.15;}
+.rail-brand .txt .t2{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.14em; color:var(--brass-light); text-transform:uppercase; margin-top:2px;}
+
+.rail-nav{ display:flex; flex-direction:column; gap:2px; flex:1; }
+@media (max-width: 900px){ .rail-nav{ flex-direction:row; flex:none; } }
+.rail-btn{
+  display:flex; align-items:center; gap:10px;
+  background:transparent; border:none; color:#CFC0AA;
+  text-align:left; padding:10px 10px; border-radius:2px; cursor:pointer;
+  font-size:12.5px; letter-spacing:.02em; white-space:nowrap;
+  border-left: 2px solid transparent;
+  transition: background .15s ease, color .15s ease;
+}
+@media (max-width: 900px){ .rail-btn{ border-left:none; border-bottom:2px solid transparent; } }
+.rail-btn .num{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--brass-light); opacity:.8; }
+.rail-btn:hover{ background:rgba(255,255,255,.05); color:#fff; }
+.rail-btn.active{ background:rgba(255,255,255,.08); color:#fff; border-left-color:var(--brass-light); font-weight:600; }
+@media (max-width: 900px){ .rail-btn.active{ border-left:none; border-bottom-color:var(--brass-light);} }
+
+.rail-foot{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:#8B7A62; line-height:1.6; padding: 8px 8px 0; border-top:1px solid rgba(255,255,255,.08); }
+@media (max-width: 900px){ .rail-foot{ display:none; } }
+
+/* ---- MAIN ---- */
+.main{ padding: 26px 30px 60px; max-width:1220px; }
+@media (max-width: 640px){ .main{ padding: 18px 14px 50px; } }
+
+.topbar{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; margin-bottom:18px; }
+.topbar h1{ font-family:'IBM Plex Serif',serif; font-size:26px; font-weight:600; margin:0 0 4px; letter-spacing:-.01em; }
+.topbar p{ margin:0; color:var(--ink-soft); font-size:13px; max-width:52ch; }
+
+.status-pill{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.04em;
+  padding:6px 11px; border-radius:20px; border:1px solid var(--line); background:var(--paper-2);
+  color:var(--ink-soft); box-shadow:var(--shadow-panel);
+}
+.status-pill .dot{ width:7px; height:7px; border-radius:50%; background:var(--graphite); flex-shrink:0; }
+.status-pill.live .dot{ background:var(--band-5); box-shadow:0 0 0 3px rgba(76,154,91,.18); animation:pulse 2s infinite; }
+.status-pill.offline .dot{ background:var(--data-target); box-shadow:0 0 0 3px rgba(224,89,74,.16); }
+@keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.4;} }
+
+.statrow{ display:flex; gap:10px; flex-wrap:wrap; margin: 16px 0 26px; }
+.statchip{
+  background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+  padding:9px 14px; box-shadow:var(--shadow-panel); min-width:100px;
+}
+.statchip .v{ font-family:'IBM Plex Mono',monospace; font-size:19px; font-weight:600; color:var(--roast); line-height:1.1; }
+.statchip .l{ font-size:10px; color:var(--graphite); text-transform:uppercase; letter-spacing:.06em; margin-top:3px; }
+
+/* ---- PANELS ---- */
+.panel{ display:none; animation: fadein .25s ease; }
+.panel.active{ display:block; }
+@keyframes fadein{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+.card{
+  background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow-panel); position:relative; padding:20px 22px;
+}
+.card + .card{ margin-top:18px; }
+.card-corner{ position:absolute; width:9px; height:9px; border-color:var(--brass); opacity:.55; }
+.card-corner.tl{ top:-1px; left:-1px; border-top:2px solid; border-left:2px solid; }
+.card-corner.tr{ top:-1px; right:-1px; border-top:2px solid; border-right:2px solid; }
+.card-corner.bl{ bottom:-1px; left:-1px; border-bottom:2px solid; border-left:2px solid; }
+.card-corner.br{ bottom:-1px; right:-1px; border-bottom:2px solid; border-right:2px solid; }
+
+.card h2{ font-family:'IBM Plex Serif',serif; font-size:16px; margin:0 0 3px; font-weight:600; }
+.card h2 .idx{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--brass); margin-right:8px; }
+.card .sub{ font-size:12px; color:var(--graphite); margin:0 0 16px; max-width:64ch; }
+
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:760px){ .grid2{ grid-template-columns:1fr; } }
+.grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width:900px){ .grid3{ grid-template-columns:1fr; } }
+
+/* sample selector card */
+.sample{
+  border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px 16px;
+  background:linear-gradient(180deg, var(--paper-2), var(--paper-3));
+  border-top:3px solid var(--sample-color, var(--roast));
+}
+.sample .tag{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--sample-color, var(--roast)); font-weight:700; }
+.sample select{
+  width:100%; margin-top:8px; padding:9px 10px; font-size:12.5px; font-family:'IBM Plex Sans',sans-serif;
+  border:1px solid var(--line); border-radius:2px; background:#fff; color:var(--ink); cursor:pointer;
+}
+.sample select:focus{ border-color:var(--sample-color, var(--roast)); }
+.sample .procline{ margin-top:8px; font-size:11px; color:var(--graphite); font-style:italic; min-height:15px; }
+
+/* slider */
+.blend-slider-wrap{ margin: 22px 0 6px; }
+.slider-labels{ display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:12px; margin-bottom:8px; }
+.slider-labels .a{ color:var(--data-a); font-weight:700; }
+.slider-labels .b{ color:var(--data-b); font-weight:700; }
+input[type=range]{
+  -webkit-appearance:none; width:100%; height:6px; border-radius:4px; outline:none;
+  background: linear-gradient(90deg, var(--data-a) 0%, var(--data-a) var(--pct,50%), var(--data-b) var(--pct,50%), var(--data-b) 100%);
+  cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%;
+  background:var(--paper-2); border:3px solid var(--roast); cursor:grab; box-shadow:0 2px 5px rgba(0,0,0,.25);
+  margin-top:-7px;
+}
+input[type=range]::-moz-range-thumb{
+  width:16px; height:16px; border-radius:50%; background:var(--paper-2); border:3px solid var(--roast); cursor:grab;
+}
+input[type=range]::-moz-range-track{ height:6px; border-radius:4px; background:var(--line); }
+
+.attr-slider-row{ display:grid; grid-template-columns: 118px 1fr 46px; align-items:center; gap:10px; margin-bottom:14px; }
+.attr-slider-row label{ font-size:12px; font-weight:600; color:var(--ink-soft); }
+.attr-slider-row .val{ font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:700; text-align:right; color:var(--roast); }
+
+/* scope / screen panel */
+.scope{
+  background: var(--screen-bg);
+  border-radius: var(--radius);
+  border: 6px solid #E4DAC4;
+  box-shadow: inset 0 0 0 1px #171512, var(--shadow-panel);
+  padding: 14px 12px 6px;
+  position:relative;
+  margin: 18px 0 8px;
+}
+.scope::before{
+  content:''; position:absolute; inset:6px;
+  background-image: linear-gradient(var(--screen-grid) 1px, transparent 1px), linear-gradient(90deg, var(--screen-grid) 1px, transparent 1px);
+  background-size: 20px 20px; pointer-events:none; opacity:.5; border-radius:2px;
+}
+.scope-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:2px; position:relative; z-index:1; }
+.scope-head .lbl{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--screen-text); opacity:.65; }
+.scope-head .rec{ display:flex; align-items:center; gap:5px; font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--data-target); }
+.scope-head .rec .d{ width:6px; height:6px; border-radius:50%; background:var(--data-target); animation:pulse 1.4s infinite; }
+.scope canvas{ position:relative; z-index:1; max-height:320px; }
+
+.legend-row{ display:flex; gap:16px; flex-wrap:wrap; margin: 10px 2px 0; font-size:11.5px; }
+.legend-row .item{ display:flex; align-items:center; gap:6px; color:var(--ink-soft); }
+.legend-row .sw{ width:11px; height:11px; border-radius:2px; flex-shrink:0; }
+
+/* readout table */
+.readout-table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:12.5px; }
+.readout-table th{ text-align:left; font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--graphite); padding:6px 8px; border-bottom:1.5px solid var(--line); }
+.readout-table td{ padding:9px 8px; border-bottom:1px solid var(--line-soft); vertical-align:top; }
+.readout-table tr:last-child td{ border-bottom:none; }
+.badge{
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:700;
+  padding:2px 8px; border-radius:20px; color:#2b2418; white-space:nowrap;
+}
+.notewrap{ color:var(--ink-soft); font-size:11.8px; line-height:1.45; }
+.notewrap b{ color:var(--ink); }
+
+/* buttons */
+.btn{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.03em; font-weight:600;
+  padding:10px 18px; border-radius:2px; border:1px solid var(--roast); background:var(--roast); color:#fff;
+  cursor:pointer; transition: all .15s ease; text-transform:uppercase;
+}
+.btn:hover{ background:var(--roast-dark); }
+.btn.ghost{ background:transparent; color:var(--roast); }
+.btn.ghost:hover{ background:var(--paper-3); }
+.btn:disabled{ opacity:.45; cursor:not-allowed; }
+.btn-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+/* result list */
+.result-item{
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:11px 13px; border:1px solid var(--line); border-radius:2px; margin-bottom:8px; cursor:pointer;
+  background:var(--paper-2); transition: border-color .15s, background .15s;
+}
+.result-item:hover, .result-item.selected{ border-color:var(--roast); background:#FBF6EC; }
+.result-item .ri-left{ font-size:12px; line-height:1.5; }
+.result-item .ri-left .nm{ font-weight:600; }
+.result-item .ri-left .pct{ font-family:'IBM Plex Mono',monospace; color:var(--graphite); font-size:11px; }
+.result-item .ri-score{ text-align:right; flex-shrink:0; }
+.result-item .ri-score .num{ font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:16px; color:var(--band-5); }
+.result-item .ri-score .lbl{ font-size:9px; color:var(--graphite); text-transform:uppercase; letter-spacing:.05em; }
+
+.section-label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.09em; color:var(--brass); margin: 22px 0 10px; display:flex; align-items:center; gap:8px; }
+.section-label::after{ content:''; flex:1; height:1px; background:var(--line); }
+
+/* age curve */
+.day-scrub{ display:flex; align-items:center; gap:14px; margin-top:16px; }
+.day-readout{
+  font-family:'IBM Plex Mono',monospace; background:var(--ink); color:var(--screen-text);
+  padding:9px 14px; border-radius:2px; font-size:13px; min-width:118px; text-align:center; flex-shrink:0;
+}
+.day-readout .big{ font-size:19px; font-weight:700; display:block; }
+.anchor-badges{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.anchor-badge{ font-family:'IBM Plex Mono',monospace; font-size:10px; padding:4px 9px; border-radius:20px; border:1px dashed var(--line); color:var(--graphite); }
+.anchor-badge.on{ border-style:solid; border-color:var(--brass); color:var(--brass); font-weight:700; background:#FBF3E1; }
+
+/* overview mini bars */
+.origin-card{ border:1px solid var(--line); border-radius:var(--radius); padding:13px 15px; background:var(--paper-2); }
+.origin-card .nm{ font-weight:600; font-size:13px; }
+.origin-card .pr{ font-size:10.5px; color:var(--graphite); margin-bottom:10px; font-style:italic; }
+.mbar-row{ display:grid; grid-template-columns:64px 1fr 20px; align-items:center; gap:8px; margin-bottom:5px; }
+.mbar-row .k{ font-size:9.5px; color:var(--graphite); text-transform:uppercase; letter-spacing:.03em; }
+.mbar-track{ height:6px; background:var(--paper-3); border-radius:4px; overflow:hidden; }
+.mbar-fill{ height:100%; border-radius:4px; }
+.mbar-row .v{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-align:right; color:var(--ink-soft); }
+
+/* data table */
+.table-toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+.search-box{ flex:1; min-width:200px; padding:9px 12px; border:1px solid var(--line); border-radius:2px; font-size:12.5px; font-family:inherit; }
+.chip-group{ display:flex; gap:6px; flex-wrap:wrap; }
+.chip{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:6px 11px; border-radius:20px; border:1px solid var(--line); background:#fff; cursor:pointer; color:var(--ink-soft); }
+.chip.on{ background:var(--roast); border-color:var(--roast); color:#fff; }
+
+.data-table{ width:100%; border-collapse:collapse; font-size:11.8px; }
+.data-table thead th{
+  position:sticky; top:0; background:var(--ink); color:#EFE4D5; text-align:left; padding:9px 8px;
+  font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.04em; cursor:pointer; white-space:nowrap;
+}
+.data-table thead th:hover{ background:var(--roast-dark); }
+.data-table thead th .arrow{ opacity:.5; margin-left:3px; }
+.data-table tbody tr{ border-bottom:1px solid var(--line-soft); cursor:pointer; }
+.data-table tbody tr:hover{ background:var(--paper-3); }
+.data-table td{ padding:8px; vertical-align:middle; }
+.data-table td.origin-cell .nm{ font-weight:600; }
+.data-table td.origin-cell .pr{ color:var(--graphite); font-size:10.5px; }
+.table-wrap{ overflow-x:auto; max-height:640px; overflow-y:auto; border:1px solid var(--line); border-radius:2px; }
+.expand-row td{ background:#FBF8F0; padding:14px 18px; }
+.expand-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+.expand-grid .eg-item .ttl{ font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--brass); margin-bottom:4px; }
+.expand-grid .eg-item .txt{ font-size:12px; line-height:1.5; color:var(--ink-soft); }
+.rowcount{ font-size:11px; color:var(--graphite); margin-top:10px; font-family:'IBM Plex Mono',monospace; }
+
+.small-radar-wrap{ max-width:380px; margin:0 auto; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001s !important; transition-duration:.001s !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= RAIL ================= -->
+  <nav class="rail">
+    <div class="rail-brand">
+      <div class="mark">Q</div>
+      <div class="txt">
+        <div class="t1">Coffee Lab</div>
+        <div class="t2">Sensory Simulator</div>
+      </div>
+    </div>
+    <div class="rail-nav" id="railNav">
+      <button class="rail-btn active" data-panel="overview"><span class="num">01</span> Ringkasan</button>
+      <button class="rail-btn" data-panel="blend"><span class="num">02</span> Blend Mixer</button>
+      <button class="rail-btn" data-panel="target"><span class="num">03</span> Target Match</button>
+      <button class="rail-btn" data-panel="age"><span class="num">04</span> Age Curve</button>
+      <button class="rail-btn" data-panel="table"><span class="num">05</span> Data Lengkap</button>
+    </div>
+    <div class="rail-foot">
+      SHEET: Sensory<br>
+      SRC: QAssembly QC<br>
+      v1.0
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+
+    <div class="topbar">
+      <div>
+        <h1>Coffee Lab — Sensory Simulator</h1>
+        <p>Simulasi houseblend, pencocokan profil target, dan eksplorasi umur kopi — dihitung langsung dari data sensori QCO.</p>
+      </div>
+      <div id="statusPill" class="status-pill offline"><span class="dot"></span><span id="statusText">Menghubungkan ke Sensory DB…</span></div>
+    </div>
+
+    <div class="statrow" id="statRow"><!-- diisi JS --></div>
+
+    <!-- ========== PANEL: OVERVIEW ========== -->
+    <section class="panel active" id="panel-overview">
+      <div class="card">
+        <div class="card-corner tl"></div><div class="card-corner tr"></div><div class="card-corner bl"></div><div class="card-corner br"></div>
+        <h2><span class="idx">01</span>Peta Origin</h2>
+        <p class="sub">Baseline tiap origin pada Roast Medium, cluster Optimum (5–14 hari) — titik acuan sebelum bereksperimen di panel lain.</p>
+        <div class="grid3" id="originOverviewGrid"><!-- diisi JS --></div>
+      </div>
+
+      <div class="card">
+        <div class="card-corner tl"></div><div class="card-corner tr"></div><div class="card-corner bl"></div><div class="card-corner br"></div>
+        <h2><span class="idx">02</span>Cara Membaca Data</h2>
+        <div class="grid2">
+          <div>
+            <div class="section-label" style="margin-top:0">Roast Level</div>
+            <p class="notewrap"><b>Medium</b> — karakter origin & proses paling menonjol, keasaman & manis lebih hidup.<br><br>
+            <b>Medium to Dark</b> — body & pahit naik, keasaman turun, aftertaste lebih "roasty" — degassing lebih cepat tapi staling juga lebih cepat.</p>
+          </div>
+          <div>
+            <div class="section-label" style="margin-top:0">Cluster Freshness</div>
+            <p class="notewrap"><b>Resting</b> (&lt;5 hari) — gas CO2 belum keluar penuh, rasa belum stabil.<br><br>
+            <b>Optimum</b> (5–14 hari) — sweet spot, rasa paling seimbang & ekspresif.<br><br>
+            <b>Matured</b> (14–30 hari) — mulai teroksidasi, kompleksitas menurun.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PANEL: BLEND MIXER ========== -->
+    <section class="panel" id="panel-blend">
+      <div class="card">
+        <div class="card-corner tl"></div><div class="card-corner tr"></div><div class="card-corner bl"></div><div class="card-corner br"></div>
+        <h2><span class="idx">02</span>Blend Mixer</h2>
+        <p class="sub">Pilih dua kopi, geser slider komposisinya, dan lihat profil sensori signature blend Anda terbentuk secara live.</p>
+
+        <div class="grid2">
+          <div class="sample" style="--sample-color:var(--data-a)">
+            <div class="tag">● Kopi A</div>
+            <select id="blendA_origin"></select>
+            <select id="blendA_roast" style="margin-top:6px"></select>
+            <select id="blendA_cluster" style="margin-top:6px"></select>
+            <div class="procline" id="blendA_proc"></div>
+          </div>
+          <div class="sample" style="--sample-color:var(--data-b)">
+            <div class="tag">● Kopi B</div>
+            <select id="blendB_origin"></select>
+            <select id="blendB_roast" style="margin-top:6px"></select>
+            <select id="blendB_cluster" style="margin-top:6px"></select>
+            <div class="procline" id="blendB_proc"></div>
+          </div>
+        </div>
+
+        <div class="blend-slider-wrap">
+          <div class="slider-labels">
+            <span class="a mono" id="blendPctA">65% Kopi A</span>
+            <span class="b mono" id="blendPctB">35% Kopi B</span>
+          </div>
+          <input type="range" id="blendSlider" min="0" max="100" value="65" step="1">
+        </div>
+
+        <div class="scope">
+          <div class="scope-head"><span class="lbl">Readout — Radar Sensori</span><span class="rec"><span class="d"></span>LIVE</span></div>
+          <canvas id="blendRadar" height="260"></canvas>
+        </div>
+        <div class="legend-row">
+          <span class="item"><span class="sw" style="background:var(--data-a)"></span>Kopi A</span>
+          <span class="item"><span class="sw" style="background:var(--data-b)"></span>Kopi B</span>
+          <span class="item"><span class="sw" style="background:#F3EFE3;border:1px solid #9a9182"></span>Hasil Blend</span>
+        </div>
+
+        <div class="section-label">Tabel Pembacaan</div>
+        <table class="readout-table">
+          <thead><tr><th>Atribut</th><th>Kopi A</th><th>Kopi B</th><th>Hasil Blend</th></tr></thead>
+          <tbody id="blendReadoutBody"></tbody>
+        </table>
+
+        <div class="section-label">Catatan Blend</div>
+        <div id="blendNotes"></div>
+      </div>
+    </section>
+
+    <!-- ========== PANEL: TARGET MATCH ========== -->
+    <section class="panel" id="panel-target">
+      <div class="card">
+        <div class="card-corner tl"></div><div class="card-corner tr"></div><div class="card-corner bl"></div><div class="card-corner br"></div>
+        <h2><span class="idx">03</span>Target Match</h2>
+        <p class="sub">Tentukan profil sensori yang Anda inginkan — sistem mencari kombinasi origin, roast level, cluster, dan persentase yang paling mendekati, dari 2 kopi (default) hingga 3 kopi.</p>
+
+        <div id="targetSliders"></div>
+
+        <div class="btn-row">
+          <button class="btn" id="targetSearchBtn">Cari Kombinasi Terbaik</button>
+          <button class="btn ghost" id="targetResetBtn">Reset ke Tengah</button>
+        </div>
+
+        <div class="scope" style="margin-top:22px">
+          <div class="scope-head"><span class="lbl">Readout — Target vs Hasil Terpilih</span><span class="rec"><span class="d"></span>LIVE</span></div>
+          <canvas id="targetRadar" height="260"></canvas>
+        </div>
+        <div class="legend-row">
+          <span class="item"><span class="sw" style="background:var(--data-target)"></span>Target Anda</span>
+          <span class="item"><span class="sw" style="background:#F3EFE3;border:1px solid #9a9182"></span>Kombinasi Terpilih</span>
+        </div>
+
+        <div class="section-label">Kecocokan Tunggal Terbaik</div>
+        <div id="targetSingleResults"></div>
+
+        <div class="section-label">Kombinasi 2 Kopi Terbaik</div>
+        <div id="target2Results"></div>
+
+        <div class="section-label">Kombinasi 3 Kopi Terbaik <span style="text-transform:none;font-weight:400;color:var(--graphite)">— dihitung dari subset kandidat paling relevan agar tetap cepat</span></div>
+        <div id="target3Results"></div>
+      </div>
+    </section>
+
+    <!-- ========== PANEL: AGE CURVE ========== -->
+    <section class="panel" id="panel-age">
+      <div class="card">
+        <div class="card-corner tl"></div><div class="card-corner tr"></div><div class="card-corner bl"></div><div class="card-corner br"></div>
+        <h2><span class="idx">04</span>Age Curve — Eksplorasi Umur Kopi</h2>
+        <p class="sub">Bagaimana profil sensori bergerak dari hari ke-0 sampai hari ke-30 pasca-roasting. Kurva diinterpolasi linear di antara 3 titik cluster yang benar-benar diukur (ditandai bulat solid di grafik) — bukan data harian asli.</p>
+
+        <div class="grid2">
+          <div class="sample" style="--sample-color:var(--roast)">
+            <div class="tag">● Origin</div>
+            <select id="ageOrigin"></select>
+            <select id="ageRoast" style="margin-top:6px"></select>
+            <div class="procline" id="ageProc"></div>
+          </div>
+          <div>
+            <div class="section-label" style="margin-top:0">Titik Data Terukur</div>
+            <div class="anchor-badges">
+              <span class="anchor-badge" id="anchorResting">Resting · hari ~2</span>
+              <span class="anchor-badge" id="anchorOptimum">Optimum · hari ~9.5</span>
+              <span class="anchor-badge" id="anchorMatured">Matured · hari ~22</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scope" style="margin-top:16px">
+          <div class="scope-head"><span class="lbl">Readout — Kurva 30 Hari</span><span class="rec"><span class="d"></span>LIVE</span></div>
+          <canvas id="ageLine" height="230"></canvas>
+        </div>
+
+        <div class="day-scrub">
+          <div class="day-readout"><span class="big mono" id="dayNum">Hari 9</span><span id="dayCluster" style="font-size:9.5px;opacity:.7">Optimum</span></div>
+          <input type="range" id="daySlider" min="0" max="30" value="9" step="1" style="flex:1">
+          <button class="btn ghost" id="playBtn" style="white-space:nowrap">▶ Putar</button>
+        </div>
+
+        <div class="grid2" style="margin-top:20px">
+          <div>
+            <div class="section-label" style="margin-top:0">Snapshot Hari Ini</div>
+            <div class="small-radar-wrap"><canvas id="ageRadar" height="230"></canvas></div>
+          </div>
+          <div>
+            <div class="section-label" style="margin-top:0">Catatan Referensi Cluster Terdekat</div>
+            <div id="ageNotes"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PANEL: DATA TABLE ========== -->
+    <section class="panel" id="panel-table">
+      <div class="card">
+        <div class="card-corner tl"></div><div class="card-corner tr"></div><div class="card-corner bl"></div><div class="card-corner br"></div>
+        <h2><span class="idx">05</span>Data Lengkap</h2>
+        <p class="sub">Seluruh 42 profil dari sheet Sensory — klik baris untuk membuka semua catatan. Klik header kolom untuk mengurutkan.</p>
+
+        <div class="table-toolbar">
+          <input type="text" class="search-box" id="tableSearch" placeholder="Cari origin, proses, atau kata kunci catatan…">
+          <div class="chip-group" id="roastChips"></div>
+          <div class="chip-group" id="clusterChips"></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-sort="origin">Jenis Kopi<span class="arrow"></span></th>
+                <th data-sort="roast">Roast<span class="arrow"></span></th>
+                <th data-sort="cluster">Cluster<span class="arrow"></span></th>
+                <th data-sort="sweetness">Sweetness<span class="arrow"></span></th>
+                <th data-sort="acidity">Acidity<span class="arrow"></span></th>
+                <th data-sort="bitterness">Bitterness<span class="arrow"></span></th>
+                <th data-sort="body">Body<span class="arrow"></span></th>
+                <th data-sort="intensity">Intensity<span class="arrow"></span></th>
+              </tr>
+            </thead>
+            <tbody id="dataTableBody"></tbody>
+          </table>
+        </div>
+        <div class="rowcount" id="rowCount"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* =====================================================================
+   0. DATA LAYER
+===================================================================== */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbz1KfZDPsWCpRSI39Ylqbs0DchguLFVfgcVMTCa3h8yQD9ocd7kDqfoAuE2I7ooSWU/exec';
+const ATTRS = ['sweetness','acidity','bitterness','body','intensity'];
+const ATTR_LABELS = { sweetness:'Sweetness', acidity:'Acidity', bitterness:'Bitterness', body:'Body', intensity:'Intensity' };
+const ROASTS = ['Medium','Medium to Dark'];
+const CLUSTERS = ['Resting (< 5 Hari)','Optimum (5 - 14 Hari)','Matured (14 - 30 Hari)'];
+const BAND_COLORS = {
+  'Sangat Rendah':'var(--band-1)','Rendah':'var(--band-2)','Sedang':'var(--band-3)','Tinggi':'var(--band-4)','Sangat Tinggi':'var(--band-5)'
+};
+function bandColorHex(band){
+  const map = {'Sangat Rendah':'#D9695C','Rendah':'#DE9A55','Sedang':'#D5B84B','Tinggi':'#8FB35F','Sangat Tinggi':'#4C9A5B'};
+  return map[band] || '#999';
+}
+
+const FALLBACK_DATA = [{"origin":"Robusta Temanggung","process":"Natural / Unwashed (Giling Kering)","roast":"Medium","cluster":"Resting (< 5 Hari)","sweetness":{"level":3,"band":"Rendah","note":"karamel, moka, & sedikit cokelat belum berkembang penuh, masih tertutup gas CO2 hasil sangrai"},"acidity":{"level":5,"band":"Sedang","note":"asam rendah khas Robusta terasa naik & tajam, belum menyatu dengan body"},"bitterness":{"level":10,"band":"Sangat Tinggi","note":"pahit kuat tembakau/cokelat gelap terasa kasar/tidak rata karena ekstraksi belum stabil"},"body":{"level":6,"band":"Sedang","note":"tebal, kental, creamy, namun mouthfeel belum penuh, kesan agak 'hollow'"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste tembakau/cokelat yang berat & melekat lama mulai terasa, tapi durasinya belum stabil - terpotong gas CO2 yang belum keluar penuh"}},{"origin":"Robusta Temanggung","process":"Natural / Unwashed (Giling Kering)","roast":"Medium","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":5,"band":"Sedang","note":"karamel, moka, & sedikit cokelat - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"acidity":{"level":3,"band":"Rendah","note":"asam rendah khas Robusta - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"bitterness":{"level":9,"band":"Sangat Tinggi","note":"pahit kuat tembakau/cokelat gelap - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"body":{"level":8,"band":"Tinggi","note":"tebal, kental, creamy - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"intensity":{"level":8,"band":"Tinggi","note":"aftertaste tembakau/cokelat yang berat & melekat lama - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"}},{"origin":"Robusta Temanggung","process":"Natural / Unwashed (Giling Kering)","roast":"Medium","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":3,"band":"Rendah","note":"karamel, moka, & sedikit cokelat mulai pudar seiring oksidasi"},"acidity":{"level":1,"band":"Sangat Rendah","note":"asam rendah khas Robusta kian datar, nyaris tak terasa"},"bitterness":{"level":10,"band":"Sangat Tinggi","note":"pahit kuat tembakau/cokelat gelap relatif makin dominan saat rasa lain memudar"},"body":{"level":6,"band":"Sedang","note":"tebal, kental, creamy masih terasa, namun mouthfeel mulai menurun akibat oksidasi lipid"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste tembakau/cokelat yang berat & melekat lama tetap bertahan namun sisi manisnya memudar & mulai condong kering/pahit"}},{"origin":"Robusta Temanggung","process":"Natural / Unwashed (Giling Kering)","roast":"Medium to Dark","cluster":"Resting (< 5 Hari)","sweetness":{"level":3,"band":"Rendah","note":"karamel, moka, & sedikit cokelat sudah mulai terasa - penalti lebih kecil karena roast lebih gelap men-degas lebih cepat"},"acidity":{"level":2,"band":"Sangat Rendah","note":"asam rendah khas Robusta sedikit naik, kenaikannya tidak setajam pada roast medium"},"bitterness":{"level":10,"band":"Sangat Tinggi","note":"pahit kuat tembakau/cokelat gelap sudah cukup terasa meski ekstraksi belum sepenuhnya stabil"},"body":{"level":8,"band":"Tinggi","note":"tebal, kental, creamy, mouthfeel sudah mendekati penuh - roast lebih gelap butuh resting lebih singkat"},"intensity":{"level":8,"band":"Tinggi","note":"aftertaste tembakau/cokelat yang berat & melekat lama sudah cukup terasa; roast lebih gelap butuh waktu resting lebih singkat untuk 'matang' rasanya"}},{"origin":"Robusta Temanggung","process":"Natural / Unwashed (Giling Kering)","roast":"Medium to Dark","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":4,"band":"Rendah","note":"karamel, moka, & sedikit cokelat, namun sedikit tertutup rasa sangrai, tidak semanis pada roast medium dibanding roast medium"},"acidity":{"level":1,"band":"Sangat Rendah","note":"asam rendah khas Robusta, namun meredup - senyawa asam alami mulai terurai oleh panas sangrai yang lebih lama dibanding roast medium"},"bitterness":{"level":10,"band":"Sangat Tinggi","note":"pahit kuat tembakau/cokelat gelap, namun lebih menonjol - kontribusi karamelisasi lanjut & senyawa pahit hasil sangrai mulai terasa dibanding roast medium"},"body":{"level":9,"band":"Sangat Tinggi","note":"tebal, kental, creamy, namun terasa lebih tebal - minyak yang naik ke permukaan biji menambah kesan viskos/creamy dibanding roast medium"},"intensity":{"level":9,"band":"Sangat Tinggi","note":"aftertaste tembakau/cokelat yang berat & melekat lama, namun lebih panjang & lebih 'roasty' - rasa sangrai ikut membekas di aftertaste dibanding roast medium"}},{"origin":"Robusta Temanggung","process":"Natural / Unwashed (Giling Kering)","roast":"Medium to Dark","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":1,"band":"Sangat Rendah","note":"karamel, moka, & sedikit cokelat memudar lebih cepat & lebih jauh - roast lebih gelap lebih rentan oksidasi/tengik"},"acidity":{"level":2,"band":"Sangat Rendah","note":"PENTING: nilai ini bergeser NAIK, bukan turun - oksidasi minyak pada roast lebih gelap memunculkan rasa asam/sour-rancid yang tidak diinginkan, bukan brightness yang baik"},"bitterness":{"level":10,"band":"Sangat Tinggi","note":"pahit kuat tembakau/cokelat gelap makin dominan & mulai terasa kering/tajam seiring rasa lain memudar"},"body":{"level":6,"band":"Sedang","note":"mouthfeel menurun cukup signifikan - minyak permukaan biji roast lebih gelap teroksidasi lebih cepat"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste memendek cukup jauh & condong ke rasa tengik/kering - staling pada roast lebih gelap paling cepat terlihat di antara dua level roasting"}},{"origin":"Arabika Jawa Barat (Full Wash)","process":"Java Preanger, Full/Semi Washed","roast":"Medium","cluster":"Resting (< 5 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis lemon & brown sugar yang bersih belum berkembang penuh, masih tertutup gas CO2 hasil sangrai"},"acidity":{"level":9,"band":"Sangat Tinggi","note":"asam citrus/lemon soft-medium terasa naik & tajam, belum menyatu dengan body"},"bitterness":{"level":5,"band":"Sedang","note":"pahit sangat rendah, clean cup terasa kasar/tidak rata karena ekstraksi belum stabil"},"body":{"level":3,"band":"Rendah","note":"body medium, halus & lembut, namun mouthfeel belum penuh, kesan agak 'hollow'"},"intensity":{"level":4,"band":"Rendah","note":"aftertaste bersih & seimbang (balance aftertaste) mulai terasa, tapi durasinya belum stabil - terpotong gas CO2 yang belum keluar penuh"}},{"origin":"Arabika Jawa Barat (Full Wash)","process":"Java Preanger, Full/Semi Washed","roast":"Medium","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis lemon & brown sugar yang bersih - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"acidity":{"level":7,"band":"Tinggi","note":"asam citrus/lemon soft-medium - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"bitterness":{"level":3,"band":"Rendah","note":"pahit sangat rendah, clean cup - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"body":{"level":5,"band":"Sedang","note":"body medium, halus & lembut - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste bersih & seimbang (balance aftertaste) - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"}},{"origin":"Arabika Jawa Barat (Full Wash)","process":"Java Preanger, Full/Semi Washed","roast":"Medium","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis lemon & brown sugar yang bersih mulai pudar seiring oksidasi"},"acidity":{"level":5,"band":"Sedang","note":"asam citrus/lemon soft-medium kian datar, nyaris tak terasa"},"bitterness":{"level":5,"band":"Sedang","note":"pahit sangat rendah, clean cup relatif makin dominan saat rasa lain memudar"},"body":{"level":3,"band":"Rendah","note":"body medium, halus & lembut masih terasa, namun mouthfeel mulai menurun akibat oksidasi lipid"},"intensity":{"level":4,"band":"Rendah","note":"aftertaste bersih & seimbang (balance aftertaste) tetap bertahan namun sisi manisnya memudar & mulai condong kering/pahit"}},{"origin":"Arabika Jawa Barat (Full Wash)","process":"Java Preanger, Full/Semi Washed","roast":"Medium to Dark","cluster":"Resting (< 5 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis lemon & brown sugar yang bersih sudah mulai terasa - penalti lebih kecil karena roast lebih gelap men-degas lebih cepat"},"acidity":{"level":6,"band":"Sedang","note":"asam citrus/lemon soft-medium sedikit naik, kenaikannya tidak setajam pada roast medium"},"bitterness":{"level":6,"band":"Sedang","note":"pahit sangat rendah, clean cup sudah cukup terasa meski ekstraksi belum sepenuhnya stabil"},"body":{"level":5,"band":"Sedang","note":"body medium, halus & lembut, mouthfeel sudah mendekati penuh - roast lebih gelap butuh resting lebih singkat"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste bersih & seimbang (balance aftertaste) sudah cukup terasa; roast lebih gelap butuh waktu resting lebih singkat untuk 'matang' rasanya"}},{"origin":"Arabika Jawa Barat (Full Wash)","process":"Java Preanger, Full/Semi Washed","roast":"Medium to Dark","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":5,"band":"Sedang","note":"manis lemon & brown sugar yang bersih, namun sedikit tertutup rasa sangrai, tidak semanis pada roast medium dibanding roast medium"},"acidity":{"level":5,"band":"Sedang","note":"asam citrus/lemon soft-medium, namun meredup - senyawa asam alami mulai terurai oleh panas sangrai yang lebih lama dibanding roast medium"},"bitterness":{"level":5,"band":"Sedang","note":"pahit sangat rendah, clean cup, namun lebih menonjol - kontribusi karamelisasi lanjut & senyawa pahit hasil sangrai mulai terasa dibanding roast medium"},"body":{"level":6,"band":"Sedang","note":"body medium, halus & lembut, namun terasa lebih tebal - minyak yang naik ke permukaan biji menambah kesan viskos/creamy dibanding roast medium"},"intensity":{"level":7,"band":"Tinggi","note":"aftertaste bersih & seimbang (balance aftertaste), namun lebih panjang & lebih 'roasty' - rasa sangrai ikut membekas di aftertaste dibanding roast medium"}},{"origin":"Arabika Jawa Barat (Full Wash)","process":"Java Preanger, Full/Semi Washed","roast":"Medium to Dark","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":2,"band":"Sangat Rendah","note":"manis lemon & brown sugar yang bersih memudar lebih cepat & lebih jauh - roast lebih gelap lebih rentan oksidasi/tengik"},"acidity":{"level":6,"band":"Sedang","note":"PENTING: nilai ini bergeser NAIK, bukan turun - oksidasi minyak pada roast lebih gelap memunculkan rasa asam/sour-rancid yang tidak diinginkan, bukan brightness yang baik"},"bitterness":{"level":8,"band":"Tinggi","note":"pahit sangat rendah, clean cup makin dominan & mulai terasa kering/tajam seiring rasa lain memudar"},"body":{"level":3,"band":"Rendah","note":"mouthfeel menurun cukup signifikan - minyak permukaan biji roast lebih gelap teroksidasi lebih cepat"},"intensity":{"level":4,"band":"Rendah","note":"aftertaste memendek cukup jauh & condong ke rasa tengik/kering - staling pada roast lebih gelap paling cepat terlihat di antara dua level roasting"}},{"origin":"Arabika Jawa Barat (Natural)","process":"Natural / Dry Process","roast":"Medium","cluster":"Resting (< 5 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis nanas/berry alami (naturally sweet) belum berkembang penuh, masih tertutup gas CO2 hasil sangrai"},"acidity":{"level":8,"band":"Tinggi","note":"asam malic/fruity yang moderat terasa naik & tajam, belum menyatu dengan body"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural terasa kasar/tidak rata karena ekstraksi belum stabil"},"body":{"level":5,"band":"Sedang","note":"body lebih tebal dari full wash, namun mouthfeel belum penuh, kesan agak 'hollow'"},"intensity":{"level":5,"band":"Sedang","note":"aftertaste manis buah yang lingering mulai terasa, tapi durasinya belum stabil - terpotong gas CO2 yang belum keluar penuh"}},{"origin":"Arabika Jawa Barat (Natural)","process":"Natural / Dry Process","roast":"Medium","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":8,"band":"Tinggi","note":"manis nanas/berry alami (naturally sweet) - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"acidity":{"level":6,"band":"Sedang","note":"asam malic/fruity yang moderat - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"bitterness":{"level":3,"band":"Rendah","note":"pahit rendah, khas arabika natural - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"body":{"level":7,"band":"Tinggi","note":"body lebih tebal dari full wash - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"intensity":{"level":7,"band":"Tinggi","note":"aftertaste manis buah yang lingering - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"}},{"origin":"Arabika Jawa Barat (Natural)","process":"Natural / Dry Process","roast":"Medium","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis nanas/berry alami (naturally sweet) mulai pudar seiring oksidasi"},"acidity":{"level":4,"band":"Rendah","note":"asam malic/fruity yang moderat kian datar, nyaris tak terasa"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural relatif makin dominan saat rasa lain memudar"},"body":{"level":5,"band":"Sedang","note":"body lebih tebal dari full wash masih terasa, namun mouthfeel mulai menurun akibat oksidasi lipid"},"intensity":{"level":5,"band":"Sedang","note":"aftertaste manis buah yang lingering tetap bertahan namun sisi manisnya memudar & mulai condong kering/pahit"}},{"origin":"Arabika Jawa Barat (Natural)","process":"Natural / Dry Process","roast":"Medium to Dark","cluster":"Resting (< 5 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis nanas/berry alami (naturally sweet) sudah mulai terasa - penalti lebih kecil karena roast lebih gelap men-degas lebih cepat"},"acidity":{"level":5,"band":"Sedang","note":"asam malic/fruity yang moderat sedikit naik, kenaikannya tidak setajam pada roast medium"},"bitterness":{"level":6,"band":"Sedang","note":"pahit rendah, khas arabika natural sudah cukup terasa meski ekstraksi belum sepenuhnya stabil"},"body":{"level":7,"band":"Tinggi","note":"body lebih tebal dari full wash, mouthfeel sudah mendekati penuh - roast lebih gelap butuh resting lebih singkat"},"intensity":{"level":7,"band":"Tinggi","note":"aftertaste manis buah yang lingering sudah cukup terasa; roast lebih gelap butuh waktu resting lebih singkat untuk 'matang' rasanya"}},{"origin":"Arabika Jawa Barat (Natural)","process":"Natural / Dry Process","roast":"Medium to Dark","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":7,"band":"Tinggi","note":"manis nanas/berry alami (naturally sweet), namun sedikit tertutup rasa sangrai, tidak semanis pada roast medium dibanding roast medium"},"acidity":{"level":4,"band":"Rendah","note":"asam malic/fruity yang moderat, namun meredup - senyawa asam alami mulai terurai oleh panas sangrai yang lebih lama dibanding roast medium"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural, namun lebih menonjol - kontribusi karamelisasi lanjut & senyawa pahit hasil sangrai mulai terasa dibanding roast medium"},"body":{"level":8,"band":"Tinggi","note":"body lebih tebal dari full wash, namun terasa lebih tebal - minyak yang naik ke permukaan biji menambah kesan viskos/creamy dibanding roast medium"},"intensity":{"level":8,"band":"Tinggi","note":"aftertaste manis buah yang lingering, namun lebih panjang & lebih 'roasty' - rasa sangrai ikut membekas di aftertaste dibanding roast medium"}},{"origin":"Arabika Jawa Barat (Natural)","process":"Natural / Dry Process","roast":"Medium to Dark","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis nanas/berry alami (naturally sweet) memudar lebih cepat & lebih jauh - roast lebih gelap lebih rentan oksidasi/tengik"},"acidity":{"level":5,"band":"Sedang","note":"PENTING: nilai ini bergeser NAIK, bukan turun - oksidasi minyak pada roast lebih gelap memunculkan rasa asam/sour-rancid yang tidak diinginkan, bukan brightness yang baik"},"bitterness":{"level":8,"band":"Tinggi","note":"pahit rendah, khas arabika natural makin dominan & mulai terasa kering/tajam seiring rasa lain memudar"},"body":{"level":5,"band":"Sedang","note":"mouthfeel menurun cukup signifikan - minyak permukaan biji roast lebih gelap teroksidasi lebih cepat"},"intensity":{"level":5,"band":"Sedang","note":"aftertaste memendek cukup jauh & condong ke rasa tengik/kering - staling pada roast lebih gelap paling cepat terlihat di antara dua level roasting"}},{"origin":"Arabika Gayo (Semi-Washed)","process":"Giling Basah / Wet-Hulled","roast":"Medium","cluster":"Resting (< 5 Hari)","sweetness":{"level":3,"band":"Rendah","note":"manis karamel & gula aren yang halus belum berkembang penuh, masih tertutup gas CO2 hasil sangrai - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"acidity":{"level":5,"band":"Sedang","note":"asam rendah khas wet-hull terasa naik & tajam, belum menyatu dengan body - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"bitterness":{"level":8,"band":"Tinggi","note":"pahit herbal & cokelat gelap moderat terasa kasar/tidak rata karena ekstraksi belum stabil - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"body":{"level":7,"band":"Tinggi","note":"sangat tebal/heavy body, signature khas Gayo, namun mouthfeel belum penuh, kesan agak 'hollow' - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"intensity":{"level":5,"band":"Sedang","note":"aftertaste panjang & bersih, earthy-herbal mulai terasa, tapi durasinya belum stabil - terpotong gas CO2 yang belum keluar penuh - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"}},{"origin":"Arabika Gayo (Semi-Washed)","process":"Giling Basah / Wet-Hulled","roast":"Medium","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis karamel & gula aren yang halus - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"acidity":{"level":2,"band":"Sangat Rendah","note":"asam rendah khas wet-hull - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"bitterness":{"level":5,"band":"Sedang","note":"pahit herbal & cokelat gelap moderat - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"body":{"level":10,"band":"Sangat Tinggi","note":"sangat tebal/heavy body, signature khas Gayo - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"intensity":{"level":8,"band":"Tinggi","note":"aftertaste panjang & bersih, earthy-herbal - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"}},{"origin":"Arabika Gayo (Semi-Washed)","process":"Giling Basah / Wet-Hulled","roast":"Medium","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis karamel & gula aren yang halus mulai pudar seiring oksidasi"},"acidity":{"level":1,"band":"Sangat Rendah","note":"asam rendah khas wet-hull kian datar, nyaris tak terasa"},"bitterness":{"level":7,"band":"Tinggi","note":"pahit herbal & cokelat gelap moderat relatif makin dominan saat rasa lain memudar"},"body":{"level":8,"band":"Tinggi","note":"sangat tebal/heavy body, signature khas Gayo masih terasa, namun mouthfeel mulai menurun akibat oksidasi lipid"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste panjang & bersih, earthy-herbal tetap bertahan namun sisi manisnya memudar & mulai condong kering/pahit"}},{"origin":"Arabika Gayo (Semi-Washed)","process":"Giling Basah / Wet-Hulled","roast":"Medium to Dark","cluster":"Resting (< 5 Hari)","sweetness":{"level":3,"band":"Rendah","note":"manis karamel & gula aren yang halus sudah mulai terasa - penalti lebih kecil karena roast lebih gelap men-degas lebih cepat - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"acidity":{"level":3,"band":"Rendah","note":"asam rendah khas wet-hull sedikit naik, kenaikannya tidak setajam pada roast medium - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"bitterness":{"level":9,"band":"Sangat Tinggi","note":"pahit herbal & cokelat gelap moderat sudah cukup terasa meski ekstraksi belum sepenuhnya stabil - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"body":{"level":8,"band":"Tinggi","note":"sangat tebal/heavy body, signature khas Gayo, mouthfeel sudah mendekati penuh - roast lebih gelap butuh resting lebih singkat - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"},"intensity":{"level":7,"band":"Tinggi","note":"aftertaste panjang & bersih, earthy-herbal sudah cukup terasa; roast lebih gelap butuh waktu resting lebih singkat untuk 'matang' rasanya - KHUSUS proses giling basah: riset spesifik menunjukkan origin ini butuh resting lebih lama dari origin lain sebelum layak diseduh"}},{"origin":"Arabika Gayo (Semi-Washed)","process":"Giling Basah / Wet-Hulled","roast":"Medium to Dark","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":5,"band":"Sedang","note":"manis karamel & gula aren yang halus, namun sedikit tertutup rasa sangrai, tidak semanis pada roast medium dibanding roast medium"},"acidity":{"level":1,"band":"Sangat Rendah","note":"asam rendah khas wet-hull, namun meredup - senyawa asam alami mulai terurai oleh panas sangrai yang lebih lama dibanding roast medium"},"bitterness":{"level":7,"band":"Tinggi","note":"pahit herbal & cokelat gelap moderat, namun lebih menonjol - kontribusi karamelisasi lanjut & senyawa pahit hasil sangrai mulai terasa dibanding roast medium"},"body":{"level":10,"band":"Sangat Tinggi","note":"sangat tebal/heavy body, signature khas Gayo, namun terasa lebih tebal - minyak yang naik ke permukaan biji menambah kesan viskos/creamy dibanding roast medium"},"intensity":{"level":9,"band":"Sangat Tinggi","note":"aftertaste panjang & bersih, earthy-herbal, namun lebih panjang & lebih 'roasty' - rasa sangrai ikut membekas di aftertaste dibanding roast medium"}},{"origin":"Arabika Gayo (Semi-Washed)","process":"Giling Basah / Wet-Hulled","roast":"Medium to Dark","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":2,"band":"Sangat Rendah","note":"manis karamel & gula aren yang halus memudar lebih cepat & lebih jauh - roast lebih gelap lebih rentan oksidasi/tengik"},"acidity":{"level":2,"band":"Sangat Rendah","note":"PENTING: nilai ini bergeser NAIK, bukan turun - oksidasi minyak pada roast lebih gelap memunculkan rasa asam/sour-rancid yang tidak diinginkan, bukan brightness yang baik"},"bitterness":{"level":10,"band":"Sangat Tinggi","note":"pahit herbal & cokelat gelap moderat makin dominan & mulai terasa kering/tajam seiring rasa lain memudar"},"body":{"level":7,"band":"Tinggi","note":"mouthfeel menurun cukup signifikan - minyak permukaan biji roast lebih gelap teroksidasi lebih cepat"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste memendek cukup jauh & condong ke rasa tengik/kering - staling pada roast lebih gelap paling cepat terlihat di antara dua level roasting"}},{"origin":"Arabika Bali (Natural)","process":"Kintamani, Natural Process","roast":"Medium","cluster":"Resting (< 5 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis stroberi/ceri & brown sugar belum berkembang penuh, masih tertutup gas CO2 hasil sangrai"},"acidity":{"level":7,"band":"Tinggi","note":"asam buah moderat (sumber cukup beragam) terasa naik & tajam, belum menyatu dengan body"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural terasa kasar/tidak rata karena ekstraksi belum stabil"},"body":{"level":4,"band":"Rendah","note":"body cukup penuh, didukung proses natural, namun mouthfeel belum penuh, kesan agak 'hollow'"},"intensity":{"level":4,"band":"Rendah","note":"aftertaste manis buah & fermented notes mulai terasa, tapi durasinya belum stabil - terpotong gas CO2 yang belum keluar penuh"}},{"origin":"Arabika Bali (Natural)","process":"Kintamani, Natural Process","roast":"Medium","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":8,"band":"Tinggi","note":"manis stroberi/ceri & brown sugar - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"acidity":{"level":5,"band":"Sedang","note":"asam buah moderat (sumber cukup beragam) - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"bitterness":{"level":3,"band":"Rendah","note":"pahit rendah, khas arabika natural - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"body":{"level":6,"band":"Sedang","note":"body cukup penuh, didukung proses natural - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste manis buah & fermented notes - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"}},{"origin":"Arabika Bali (Natural)","process":"Kintamani, Natural Process","roast":"Medium","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis stroberi/ceri & brown sugar mulai pudar seiring oksidasi"},"acidity":{"level":3,"band":"Rendah","note":"asam buah moderat (sumber cukup beragam) kian datar, nyaris tak terasa"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural relatif makin dominan saat rasa lain memudar"},"body":{"level":4,"band":"Rendah","note":"body cukup penuh, didukung proses natural masih terasa, namun mouthfeel mulai menurun akibat oksidasi lipid"},"intensity":{"level":4,"band":"Rendah","note":"aftertaste manis buah & fermented notes tetap bertahan namun sisi manisnya memudar & mulai condong kering/pahit"}},{"origin":"Arabika Bali (Natural)","process":"Kintamani, Natural Process","roast":"Medium to Dark","cluster":"Resting (< 5 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis stroberi/ceri & brown sugar sudah mulai terasa - penalti lebih kecil karena roast lebih gelap men-degas lebih cepat"},"acidity":{"level":4,"band":"Rendah","note":"asam buah moderat (sumber cukup beragam) sedikit naik, kenaikannya tidak setajam pada roast medium"},"bitterness":{"level":6,"band":"Sedang","note":"pahit rendah, khas arabika natural sudah cukup terasa meski ekstraksi belum sepenuhnya stabil"},"body":{"level":6,"band":"Sedang","note":"body cukup penuh, didukung proses natural, mouthfeel sudah mendekati penuh - roast lebih gelap butuh resting lebih singkat"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste manis buah & fermented notes sudah cukup terasa; roast lebih gelap butuh waktu resting lebih singkat untuk 'matang' rasanya"}},{"origin":"Arabika Bali (Natural)","process":"Kintamani, Natural Process","roast":"Medium to Dark","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":7,"band":"Tinggi","note":"manis stroberi/ceri & brown sugar, namun sedikit tertutup rasa sangrai, tidak semanis pada roast medium dibanding roast medium"},"acidity":{"level":3,"band":"Rendah","note":"asam buah moderat (sumber cukup beragam), namun meredup - senyawa asam alami mulai terurai oleh panas sangrai yang lebih lama dibanding roast medium"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural, namun lebih menonjol - kontribusi karamelisasi lanjut & senyawa pahit hasil sangrai mulai terasa dibanding roast medium"},"body":{"level":7,"band":"Tinggi","note":"body cukup penuh, didukung proses natural, namun terasa lebih tebal - minyak yang naik ke permukaan biji menambah kesan viskos/creamy dibanding roast medium"},"intensity":{"level":7,"band":"Tinggi","note":"aftertaste manis buah & fermented notes, namun lebih panjang & lebih 'roasty' - rasa sangrai ikut membekas di aftertaste dibanding roast medium"}},{"origin":"Arabika Bali (Natural)","process":"Kintamani, Natural Process","roast":"Medium to Dark","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis stroberi/ceri & brown sugar memudar lebih cepat & lebih jauh - roast lebih gelap lebih rentan oksidasi/tengik"},"acidity":{"level":4,"band":"Rendah","note":"PENTING: nilai ini bergeser NAIK, bukan turun - oksidasi minyak pada roast lebih gelap memunculkan rasa asam/sour-rancid yang tidak diinginkan, bukan brightness yang baik"},"bitterness":{"level":8,"band":"Tinggi","note":"pahit rendah, khas arabika natural makin dominan & mulai terasa kering/tajam seiring rasa lain memudar"},"body":{"level":4,"band":"Rendah","note":"mouthfeel menurun cukup signifikan - minyak permukaan biji roast lebih gelap teroksidasi lebih cepat"},"intensity":{"level":4,"band":"Rendah","note":"aftertaste memendek cukup jauh & condong ke rasa tengik/kering - staling pada roast lebih gelap paling cepat terlihat di antara dua level roasting"}},{"origin":"Arabika Argopuro (Full Wash)","process":"Full Washed","roast":"Medium","cluster":"Resting (< 5 Hari)","sweetness":{"level":3,"band":"Rendah","note":"manis lembut & bersih (gentle sweetness) belum berkembang penuh, masih tertutup gas CO2 hasil sangrai"},"acidity":{"level":10,"band":"Sangat Tinggi","note":"asam citrus cerah & jernih (citrus clarity) terasa naik & tajam, belum menyatu dengan body"},"bitterness":{"level":5,"band":"Sedang","note":"pahit sangat rendah, cup sangat bersih terasa kasar/tidak rata karena ekstraksi belum stabil"},"body":{"level":2,"band":"Sangat Rendah","note":"body ringan-medium, namun mouthfeel belum penuh, kesan agak 'hollow'"},"intensity":{"level":3,"band":"Rendah","note":"aftertaste bersih & elegan, durasi sedang mulai terasa, tapi durasinya belum stabil - terpotong gas CO2 yang belum keluar penuh"}},{"origin":"Arabika Argopuro (Full Wash)","process":"Full Washed","roast":"Medium","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":5,"band":"Sedang","note":"manis lembut & bersih (gentle sweetness) - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"acidity":{"level":8,"band":"Tinggi","note":"asam citrus cerah & jernih (citrus clarity) - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"bitterness":{"level":3,"band":"Rendah","note":"pahit sangat rendah, cup sangat bersih - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"body":{"level":4,"band":"Rendah","note":"body ringan-medium - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"intensity":{"level":5,"band":"Sedang","note":"aftertaste bersih & elegan, durasi sedang - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"}},{"origin":"Arabika Argopuro (Full Wash)","process":"Full Washed","roast":"Medium","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":3,"band":"Rendah","note":"manis lembut & bersih (gentle sweetness) mulai pudar seiring oksidasi"},"acidity":{"level":6,"band":"Sedang","note":"asam citrus cerah & jernih (citrus clarity) kian datar, nyaris tak terasa"},"bitterness":{"level":5,"band":"Sedang","note":"pahit sangat rendah, cup sangat bersih relatif makin dominan saat rasa lain memudar"},"body":{"level":2,"band":"Sangat Rendah","note":"body ringan-medium masih terasa, namun mouthfeel mulai menurun akibat oksidasi lipid"},"intensity":{"level":3,"band":"Rendah","note":"aftertaste bersih & elegan, durasi sedang tetap bertahan namun sisi manisnya memudar & mulai condong kering/pahit"}},{"origin":"Arabika Argopuro (Full Wash)","process":"Full Washed","roast":"Medium to Dark","cluster":"Resting (< 5 Hari)","sweetness":{"level":3,"band":"Rendah","note":"manis lembut & bersih (gentle sweetness) sudah mulai terasa - penalti lebih kecil karena roast lebih gelap men-degas lebih cepat"},"acidity":{"level":7,"band":"Tinggi","note":"asam citrus cerah & jernih (citrus clarity) sedikit naik, kenaikannya tidak setajam pada roast medium"},"bitterness":{"level":6,"band":"Sedang","note":"pahit sangat rendah, cup sangat bersih sudah cukup terasa meski ekstraksi belum sepenuhnya stabil"},"body":{"level":4,"band":"Rendah","note":"body ringan-medium, mouthfeel sudah mendekati penuh - roast lebih gelap butuh resting lebih singkat"},"intensity":{"level":5,"band":"Sedang","note":"aftertaste bersih & elegan, durasi sedang sudah cukup terasa; roast lebih gelap butuh waktu resting lebih singkat untuk 'matang' rasanya"}},{"origin":"Arabika Argopuro (Full Wash)","process":"Full Washed","roast":"Medium to Dark","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis lembut & bersih (gentle sweetness), namun sedikit tertutup rasa sangrai, tidak semanis pada roast medium dibanding roast medium"},"acidity":{"level":6,"band":"Sedang","note":"asam citrus cerah & jernih (citrus clarity), namun meredup - senyawa asam alami mulai terurai oleh panas sangrai yang lebih lama dibanding roast medium"},"bitterness":{"level":5,"band":"Sedang","note":"pahit sangat rendah, cup sangat bersih, namun lebih menonjol - kontribusi karamelisasi lanjut & senyawa pahit hasil sangrai mulai terasa dibanding roast medium"},"body":{"level":5,"band":"Sedang","note":"body ringan-medium, namun terasa lebih tebal - minyak yang naik ke permukaan biji menambah kesan viskos/creamy dibanding roast medium"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste bersih & elegan, durasi sedang, namun lebih panjang & lebih 'roasty' - rasa sangrai ikut membekas di aftertaste dibanding roast medium"}},{"origin":"Arabika Argopuro (Full Wash)","process":"Full Washed","roast":"Medium to Dark","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":1,"band":"Sangat Rendah","note":"manis lembut & bersih (gentle sweetness) memudar lebih cepat & lebih jauh - roast lebih gelap lebih rentan oksidasi/tengik"},"acidity":{"level":7,"band":"Tinggi","note":"PENTING: nilai ini bergeser NAIK, bukan turun - oksidasi minyak pada roast lebih gelap memunculkan rasa asam/sour-rancid yang tidak diinginkan, bukan brightness yang baik"},"bitterness":{"level":8,"band":"Tinggi","note":"pahit sangat rendah, cup sangat bersih makin dominan & mulai terasa kering/tajam seiring rasa lain memudar"},"body":{"level":2,"band":"Sangat Rendah","note":"mouthfeel menurun cukup signifikan - minyak permukaan biji roast lebih gelap teroksidasi lebih cepat"},"intensity":{"level":3,"band":"Rendah","note":"aftertaste memendek cukup jauh & condong ke rasa tengik/kering - staling pada roast lebih gelap paling cepat terlihat di antara dua level roasting"}},{"origin":"Arabika Argopuro (Natural)","process":"Natural / Dry Process","roast":"Medium","cluster":"Resting (< 5 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis pisang matang/sirup yang kaya belum berkembang penuh, masih tertutup gas CO2 hasil sangrai"},"acidity":{"level":9,"band":"Sangat Tinggi","note":"asam citrus pith & buah cerah terasa naik & tajam, belum menyatu dengan body"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural terasa kasar/tidak rata karena ekstraksi belum stabil"},"body":{"level":4,"band":"Rendah","note":"body penuh, lebih tebal dari full wash, namun mouthfeel belum penuh, kesan agak 'hollow'"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste panjang & kompleks - winey, pisang, buah kering mulai terasa, tapi durasinya belum stabil - terpotong gas CO2 yang belum keluar penuh"}},{"origin":"Arabika Argopuro (Natural)","process":"Natural / Dry Process","roast":"Medium","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":8,"band":"Tinggi","note":"manis pisang matang/sirup yang kaya - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"acidity":{"level":7,"band":"Tinggi","note":"asam citrus pith & buah cerah - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"bitterness":{"level":3,"band":"Rendah","note":"pahit rendah, khas arabika natural - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"body":{"level":6,"band":"Sedang","note":"body penuh, lebih tebal dari full wash - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"},"intensity":{"level":8,"band":"Tinggi","note":"aftertaste panjang & kompleks - winey, pisang, buah kering - profil seimbang khas roast medium, karakter origin & proses masih menonjol jelas"}},{"origin":"Arabika Argopuro (Natural)","process":"Natural / Dry Process","roast":"Medium","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis pisang matang/sirup yang kaya mulai pudar seiring oksidasi"},"acidity":{"level":5,"band":"Sedang","note":"asam citrus pith & buah cerah kian datar, nyaris tak terasa"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural relatif makin dominan saat rasa lain memudar"},"body":{"level":4,"band":"Rendah","note":"body penuh, lebih tebal dari full wash masih terasa, namun mouthfeel mulai menurun akibat oksidasi lipid"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste panjang & kompleks - winey, pisang, buah kering tetap bertahan namun sisi manisnya memudar & mulai condong kering/pahit"}},{"origin":"Arabika Argopuro (Natural)","process":"Natural / Dry Process","roast":"Medium to Dark","cluster":"Resting (< 5 Hari)","sweetness":{"level":6,"band":"Sedang","note":"manis pisang matang/sirup yang kaya sudah mulai terasa - penalti lebih kecil karena roast lebih gelap men-degas lebih cepat"},"acidity":{"level":6,"band":"Sedang","note":"asam citrus pith & buah cerah sedikit naik, kenaikannya tidak setajam pada roast medium"},"bitterness":{"level":6,"band":"Sedang","note":"pahit rendah, khas arabika natural sudah cukup terasa meski ekstraksi belum sepenuhnya stabil"},"body":{"level":6,"band":"Sedang","note":"body penuh, lebih tebal dari full wash, mouthfeel sudah mendekati penuh - roast lebih gelap butuh resting lebih singkat"},"intensity":{"level":8,"band":"Tinggi","note":"aftertaste panjang & kompleks - winey, pisang, buah kering sudah cukup terasa; roast lebih gelap butuh waktu resting lebih singkat untuk 'matang' rasanya"}},{"origin":"Arabika Argopuro (Natural)","process":"Natural / Dry Process","roast":"Medium to Dark","cluster":"Optimum (5 - 14 Hari)","sweetness":{"level":7,"band":"Tinggi","note":"manis pisang matang/sirup yang kaya, namun sedikit tertutup rasa sangrai, tidak semanis pada roast medium dibanding roast medium"},"acidity":{"level":5,"band":"Sedang","note":"asam citrus pith & buah cerah, namun meredup - senyawa asam alami mulai terurai oleh panas sangrai yang lebih lama dibanding roast medium"},"bitterness":{"level":5,"band":"Sedang","note":"pahit rendah, khas arabika natural, namun lebih menonjol - kontribusi karamelisasi lanjut & senyawa pahit hasil sangrai mulai terasa dibanding roast medium"},"body":{"level":7,"band":"Tinggi","note":"body penuh, lebih tebal dari full wash, namun terasa lebih tebal - minyak yang naik ke permukaan biji menambah kesan viskos/creamy dibanding roast medium"},"intensity":{"level":9,"band":"Sangat Tinggi","note":"aftertaste panjang & kompleks - winey, pisang, buah kering, namun lebih panjang & lebih 'roasty' - rasa sangrai ikut membekas di aftertaste dibanding roast medium"}},{"origin":"Arabika Argopuro (Natural)","process":"Natural / Dry Process","roast":"Medium to Dark","cluster":"Matured (14 - 30 Hari)","sweetness":{"level":4,"band":"Rendah","note":"manis pisang matang/sirup yang kaya memudar lebih cepat & lebih jauh - roast lebih gelap lebih rentan oksidasi/tengik"},"acidity":{"level":6,"band":"Sedang","note":"PENTING: nilai ini bergeser NAIK, bukan turun - oksidasi minyak pada roast lebih gelap memunculkan rasa asam/sour-rancid yang tidak diinginkan, bukan brightness yang baik"},"bitterness":{"level":8,"band":"Tinggi","note":"pahit rendah, khas arabika natural makin dominan & mulai terasa kering/tajam seiring rasa lain memudar"},"body":{"level":4,"band":"Rendah","note":"mouthfeel menurun cukup signifikan - minyak permukaan biji roast lebih gelap teroksidasi lebih cepat"},"intensity":{"level":6,"band":"Sedang","note":"aftertaste memendek cukup jauh & condong ke rasa tengik/kering - staling pada roast lebih gelap paling cepat terlihat di antara dua level roasting"}}];
+
+let ALL_DATA = [];
+let ORIGINS = [];
+let INDEX = {};
+
+function buildIndex(data){
+  ALL_DATA = data;
+  ORIGINS = [...new Set(data.map(r=>r.origin))];
+  INDEX = {};
+  data.forEach(r=>{ INDEX[r.origin+'|'+r.roast+'|'+r.cluster] = r; });
+}
+function getProfile(origin, roast, cluster){ return INDEX[origin+'|'+roast+'|'+cluster]; }
+function vecOf(rec){ return ATTRS.map(k=>rec[k].level); }
+function processOf(origin){ const r = ALL_DATA.find(x=>x.origin===origin); return r ? r.process : ''; }
+
+async function loadData(){
+  try{
+    const res = await fetch(GAS_URL, {method:'GET'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json = await res.json();
+    if(!json.ok || !Array.isArray(json.data) || json.data.length===0) throw new Error(json.error || 'Data kosong');
+    buildIndex(json.data);
+    setStatus(true);
+  }catch(err){
+    buildIndex(FALLBACK_DATA);
+    setStatus(false);
+  }
+  initAll();
+}
+
+function setStatus(live){
+  const pill = document.getElementById('statusPill');
+  const txt = document.getElementById('statusText');
+  if(live){
+    pill.className='status-pill live';
+    txt.textContent='Terhubung ke Sensory DB';
+  }else{
+    pill.className='status-pill offline';
+    txt.textContent='Mode Offline — data snapshot (deploy Code.gs untuk data live)';
+  }
+}
+
+/* =====================================================================
+   1. UTIL
+===================================================================== */
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+function round1(v){ return Math.round(v*10)/10; }
+
+function euclidean(a,b){ let s=0; for(let i=0;i<a.length;i++){ const d=a[i]-b[i]; s+=d*d; } return Math.sqrt(s); }
+const MAX_DIST = Math.sqrt(5*81); // rentang tiap atribut 1-10 -> beda maksimal 9
+function matchScore(dist){ return clamp(100 - (dist/MAX_DIST*100), 0, 100); }
+
+function badgeHtml(rec, key){
+  const a = rec[key];
+  return `<span class="badge" style="background:${bandColorHex(a.band)}">${a.level}/10</span>`;
+}
+function badgeHtmlVal(level, band){
+  return `<span class="badge" style="background:${bandColorHex(band)}">${round1(level)}/10</span>`;
+}
+function levelToBand(level){
+  if(level<=2) return 'Sangat Rendah';
+  if(level<=4) return 'Rendah';
+  if(level<=6) return 'Sedang';
+  if(level<=8) return 'Tinggi';
+  return 'Sangat Tinggi';
+}
+
+function populateSelect(sel, options, selected){
+  sel.innerHTML='';
+  options.forEach(o=>{
+    const opt = el('option'); opt.value=o; opt.textContent=o;
+    if(o===selected) opt.selected=true;
+    sel.appendChild(opt);
+  });
+}
+
+/* =====================================================================
+   2. NAVIGATION
+===================================================================== */
+document.querySelectorAll('.rail-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.rail-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.panel).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+/* =====================================================================
+   3. INIT — dipanggil setelah data siap
+===================================================================== */
+let charts = {};
+function upsertChart(id, config){
+  if(charts[id]){ charts[id].destroy(); }
+  charts[id] = new Chart(document.getElementById(id).getContext('2d'), config);
+  return charts[id];
+}
+
+function radarBaseOptions(dark){
+  return {
+    responsive:true, maintainAspectRatio:true,
+    animation:{duration:400},
+    scales:{ r:{
+      min:0, max:10, ticks:{ stepSize:2, display:dark, color:'#8a8272', backdropColor:'transparent', font:{family:"'IBM Plex Mono',monospace", size:9} },
+      grid:{ color: dark? '#332E26':'#332E26' },
+      angleLines:{ color: dark? '#332E26':'#332E26' },
+      pointLabels:{ color: dark? '#E9E2D0':'#E9E2D0', font:{family:"'IBM Plex Mono',monospace", size:10.5, weight:'600'} }
+    }},
+    plugins:{ legend:{display:false} }
+  };
+}
+
+function initAll(){
+  renderStatChips();
+  renderOverview();
+  initBlend();
+  initTarget();
+  initAge();
+  initTable();
+}
+
+/* =====================================================================
+   4. OVERVIEW
+===================================================================== */
+function renderStatChips(){
+  const roasts = new Set(ALL_DATA.map(r=>r.roast)).size;
+  const clusters = new Set(ALL_DATA.map(r=>r.cluster)).size;
+  const chips = [
+    [ORIGINS.length,'Origin'], [roasts,'Roast Level'], [clusters,'Cluster Freshness'],
+    [ALL_DATA.length,'Profil Sensori'], ['1–10','Skala Level']
+  ];
+  const row = document.getElementById('statRow'); row.innerHTML='';
+  chips.forEach(([v,l])=>{
+    const c = el('div','statchip', `<div class="v">${v}</div><div class="l">${l}</div>`);
+    row.appendChild(c);
+  });
+}
+
+function renderOverview(){
+  const grid = document.getElementById('originOverviewGrid'); grid.innerHTML='';
+  ORIGINS.forEach(origin=>{
+    const rec = getProfile(origin, 'Medium', 'Optimum (5 - 14 Hari)');
+    if(!rec) return;
+    const card = el('div','origin-card');
+    let bars = '';
+    ATTRS.forEach(k=>{
+      const a = rec[k];
+      bars += `<div class="mbar-row"><div class="k">${ATTR_LABELS[k]}</div><div class="mbar-track"><div class="mbar-fill" style="width:${a.level*10}%;background:${bandColorHex(a.band)}"></div></div><div class="v">${a.level}</div></div>`;
+    });
+    card.innerHTML = `<div class="nm">${origin}</div><div class="pr">${rec.process}</div>${bars}`;
+    grid.appendChild(card);
+  });
+}
+
+/* =====================================================================
+   5. BLEND MIXER
+===================================================================== */
+function initBlend(){
+  const aO=document.getElementById('blendA_origin'), aR=document.getElementById('blendA_roast'), aC=document.getElementById('blendA_cluster');
+  const bO=document.getElementById('blendB_origin'), bR=document.getElementById('blendB_roast'), bC=document.getElementById('blendB_cluster');
+  populateSelect(aO, ORIGINS, ORIGINS[0]);
+  populateSelect(aR, ROASTS, 'Medium');
+  populateSelect(aC, CLUSTERS, CLUSTERS[1]);
+  populateSelect(bO, ORIGINS, ORIGINS[3]||ORIGINS[1]);
+  populateSelect(bR, ROASTS, 'Medium');
+  populateSelect(bC, CLUSTERS, CLUSTERS[1]);
+
+  [aO,aR,aC,bO,bR,bC].forEach(s=>s.addEventListener('change', renderBlend));
+  const slider = document.getElementById('blendSlider');
+  slider.addEventListener('input', renderBlend);
+  renderBlend();
+}
+
+function renderBlend(){
+  const aO=document.getElementById('blendA_origin').value, aR=document.getElementById('blendA_roast').value, aC=document.getElementById('blendA_cluster').value;
+  const bO=document.getElementById('blendB_origin').value, bR=document.getElementById('blendB_roast').value, bC=document.getElementById('blendB_cluster').value;
+  const recA = getProfile(aO,aR,aC), recB = getProfile(bO,bR,bC);
+  document.getElementById('blendA_proc').textContent = recA ? recA.process : '';
+  document.getElementById('blendB_proc').textContent = recB ? recB.process : '';
+  if(!recA || !recB) return;
+
+  const pctA = parseInt(document.getElementById('blendSlider').value,10);
+  const pctB = 100-pctA;
+  document.getElementById('blendSlider').style.setProperty('--pct', pctA+'%');
+  document.getElementById('blendPctA').textContent = `${pctA}% ${aO}`;
+  document.getElementById('blendPctB').textContent = `${pctB}% ${bO}`;
+
+  const vecA = vecOf(recA), vecB = vecOf(recB);
+  const blended = vecA.map((v,i)=> (v*pctA + vecB[i]*pctB)/100 );
+
+  upsertChart('blendRadar', {
+    type:'radar',
+    data:{
+      labels: ATTRS.map(k=>ATTR_LABELS[k]),
+      datasets:[
+        { label:aO, data:vecA, borderColor:'#E8A33D', backgroundColor:'rgba(232,163,61,.08)', borderWidth:1.5, pointRadius:2 },
+        { label:bO, data:vecB, borderColor:'#2FA6A6', backgroundColor:'rgba(47,166,166,.08)', borderWidth:1.5, pointRadius:2 },
+        { label:'Blend', data:blended, borderColor:'#F3EFE3', backgroundColor:'rgba(243,239,227,.18)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#F3EFE3' }
+      ]
+    },
+    options: radarBaseOptions(true)
+  });
+
+  const tbody = document.getElementById('blendReadoutBody'); tbody.innerHTML='';
+  ATTRS.forEach((k,i)=>{
+    const band = levelToBand(blended[i]);
+    const tr = el('tr','', `<td>${ATTR_LABELS[k]}</td><td>${badgeHtml(recA,k)}</td><td>${badgeHtml(recB,k)}</td><td>${badgeHtmlVal(blended[i],band)}</td>`);
+    tbody.appendChild(tr);
+  });
+
+  const notesWrap = document.getElementById('blendNotes'); notesWrap.innerHTML='';
+  ATTRS.forEach((k,i)=>{
+    const contribA = recA[k].level*pctA, contribB = recB[k].level*pctB;
+    const dominant = contribA>=contribB ? {name:aO, rec:recA, pct:pctA} : {name:bO, rec:recB, pct:pctB};
+    const p = el('p','notewrap', `<b>${ATTR_LABELS[k]} (${round1(blended[i])}/10):</b> didorong ${dominant.pct}% oleh <b>${dominant.name}</b> — ${dominant.rec[k].note}`);
+    p.style.marginBottom='10px';
+    notesWrap.appendChild(p);
+  });
+}
+
+/* =====================================================================
+   6. TARGET MATCH
+===================================================================== */
+let targetVec = [5,5,5,5,5];
+let selectedResultVec = null;
+let selectedResultLabel = '';
+
+function initTarget(){
+  const wrap = document.getElementById('targetSliders'); wrap.innerHTML='';
+  ATTRS.forEach((k,i)=>{
+    const row = el('div','attr-slider-row');
+    row.innerHTML = `<label>${ATTR_LABELS[k]}</label><input type="range" min="1" max="10" step="1" value="5" data-idx="${i}" class="target-slider"><span class="val mono" id="targetVal${i}">5</span>`;
+    wrap.appendChild(row);
+  });
+  document.querySelectorAll('.target-slider').forEach(s=>{
+    s.addEventListener('input', ()=>{
+      const idx = parseInt(s.dataset.idx,10);
+      targetVec[idx] = parseInt(s.value,10);
+      document.getElementById('targetVal'+idx).textContent = s.value;
+      runTargetSearch();
+    });
+  });
+  document.getElementById('targetSearchBtn').addEventListener('click', runTargetSearch);
+  document.getElementById('targetResetBtn').addEventListener('click', ()=>{
+    targetVec=[5,5,5,5,5];
+    document.querySelectorAll('.target-slider').forEach((s,i)=>{ s.value=5; document.getElementById('targetVal'+i).textContent='5'; });
+    runTargetSearch();
+  });
+  runTargetSearch();
+}
+
+function poolAll(){ return ALL_DATA; }
+
+function runTargetSearch(){
+  const pool = poolAll();
+
+  // -- single best --
+  const singles = pool.map(rec=>({rec, dist: euclidean(vecOf(rec), targetVec)})).sort((a,b)=>a.dist-b.dist).slice(0,3);
+  const singleWrap = document.getElementById('targetSingleResults'); singleWrap.innerHTML='';
+  singles.forEach((s,i)=>{
+    const score = matchScore(s.dist);
+    const item = el('div','result-item'+(i===0?' selected':''));
+    item.innerHTML = `<div class="ri-left"><div class="nm">${s.rec.origin}</div><div class="pct">${s.rec.roast} · ${s.rec.cluster.split(' (')[0]}</div></div><div class="ri-score"><div class="num">${score.toFixed(0)}%</div><div class="lbl">cocok</div></div>`;
+    item.addEventListener('click', ()=>selectTargetResult(vecOf(s.rec), s.rec.origin, item));
+    singleWrap.appendChild(item);
+    if(i===0){ selectedResultVec=vecOf(s.rec); selectedResultLabel=s.rec.origin; }
+  });
+
+  // -- 2-way blend, exhaustive --
+  const pairs=[];
+  for(let i=0;i<pool.length;i++){
+    for(let j=i+1;j<pool.length;j++){
+      const A=pool[i], B=pool[j];
+      if(A.origin===B.origin) continue; // beda origin biar bermakna sbg blend
+      const vecA=vecOf(A), vecB=vecOf(B);
+      for(let pct=0; pct<=100; pct+=5){
+        const blended = vecA.map((v,k)=>(v*pct+vecB[k]*(100-pct))/100);
+        const dist = euclidean(blended, targetVec);
+        pairs.push({A,B,pctA:pct,pctB:100-pct,dist,vec:blended});
+      }
+    }
+  }
+  pairs.sort((a,b)=>a.dist-b.dist);
+  const top2 = dedupePairs(pairs).slice(0,3);
+  const wrap2 = document.getElementById('target2Results'); wrap2.innerHTML='';
+  top2.forEach((r,i)=>{
+    const score = matchScore(r.dist);
+    const item = el('div','result-item');
+    item.innerHTML = `<div class="ri-left"><div class="nm">${r.pctA}% ${r.A.origin} <span style="color:var(--graphite);font-weight:400">+</span> ${r.pctB}% ${r.B.origin}</div><div class="pct">${r.A.roast}/${r.A.cluster.split(' (')[0]} · ${r.B.roast}/${r.B.cluster.split(' (')[0]}</div></div><div class="ri-score"><div class="num">${score.toFixed(0)}%</div><div class="lbl">cocok</div></div>`;
+    item.addEventListener('click', ()=>selectTargetResult(r.vec, `${r.pctA}% ${r.A.origin} + ${r.pctB}% ${r.B.origin}`, item));
+    wrap2.appendChild(item);
+  });
+
+  // -- 3-way blend, restricted pool for performance --
+  const candidatePool = [...pool].sort((a,b)=> euclidean(vecOf(a),targetVec) - euclidean(vecOf(b),targetVec)).slice(0,14);
+  let best3 = [];
+  for(let i=0;i<candidatePool.length;i++){
+    for(let j=i+1;j<candidatePool.length;j++){
+      for(let k=j+1;k<candidatePool.length;k++){
+        const A=candidatePool[i], B=candidatePool[j], C=candidatePool[k];
+        if(A.origin===B.origin || B.origin===C.origin || A.origin===C.origin) continue;
+        const vecA=vecOf(A), vecB=vecOf(B), vecC=vecOf(C);
+        for(let pa=0; pa<=100; pa+=10){
+          for(let pb=0; pb<=100-pa; pb+=10){
+            const pc=100-pa-pb;
+            const blended = vecA.map((v,idx)=>(v*pa+vecB[idx]*pb+vecC[idx]*pc)/100);
+            const dist = euclidean(blended, targetVec);
+            best3.push({A,B,C,pa,pb,pc,dist,vec:blended});
+          }
+        }
+      }
+    }
+  }
+  best3.sort((a,b)=>a.dist-b.dist);
+  const top3 = dedupeTriples(best3).slice(0,2);
+  const wrap3 = document.getElementById('target3Results'); wrap3.innerHTML='';
+  if(top3.length===0){ wrap3.innerHTML = '<p class="notewrap">Tidak ditemukan kombinasi 3 origin berbeda pada subset kandidat.</p>'; }
+  top3.forEach(r=>{
+    const score = matchScore(r.dist);
+    const item = el('div','result-item');
+    item.innerHTML = `<div class="ri-left"><div class="nm">${r.pa}% ${r.A.origin} <span style="color:var(--graphite);font-weight:400">+</span> ${r.pb}% ${r.B.origin} <span style="color:var(--graphite);font-weight:400">+</span> ${r.pc}% ${r.C.origin}</div><div class="pct">kombinasi 3 origin</div></div><div class="ri-score"><div class="num">${score.toFixed(0)}%</div><div class="lbl">cocok</div></div>`;
+    item.addEventListener('click', ()=>selectTargetResult(r.vec, `${r.pa}% ${r.A.origin} + ${r.pb}% ${r.B.origin} + ${r.pc}% ${r.C.origin}`, item));
+    wrap3.appendChild(item);
+  });
+
+  drawTargetRadar();
+}
+
+function dedupePairs(sorted){
+  const seen=new Set(); const out=[];
+  for(const r of sorted){
+    const key = [r.A.origin,r.A.roast,r.A.cluster,r.B.origin,r.B.roast,r.B.cluster].sort().join('~');
+    if(seen.has(key)) continue;
+    seen.add(key); out.push(r);
+  }
+  return out;
+}
+function dedupeTriples(sorted){
+  const seen=new Set(); const out=[];
+  for(const r of sorted){
+    const key = [r.A.origin,r.B.origin,r.C.origin].sort().join('~');
+    if(seen.has(key)) continue;
+    seen.add(key); out.push(r);
+  }
+  return out;
+}
+
+function selectTargetResult(vec, label, itemEl){
+  selectedResultVec = vec; selectedResultLabel = label;
+  document.querySelectorAll('#target-panel-results .result-item, .result-item').forEach(e=>e.classList.remove('selected'));
+  if(itemEl) itemEl.classList.add('selected');
+  drawTargetRadar();
+}
+
+function drawTargetRadar(){
+  upsertChart('targetRadar', {
+    type:'radar',
+    data:{
+      labels: ATTRS.map(k=>ATTR_LABELS[k]),
+      datasets:[
+        { label:'Target', data:targetVec, borderColor:'#E0594A', borderDash:[5,4], backgroundColor:'rgba(224,89,74,.05)', borderWidth:2, pointRadius:2 },
+        { label: selectedResultLabel||'Hasil', data: selectedResultVec||[5,5,5,5,5], borderColor:'#F3EFE3', backgroundColor:'rgba(243,239,227,.18)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#F3EFE3' }
+      ]
+    },
+    options: radarBaseOptions(true)
+  });
+}
+
+/* =====================================================================
+   7. AGE CURVE
+===================================================================== */
+const AGE_ANCHOR_DAYS = { resting:2, optimum:9.5, matured:22 };
+let playTimer=null;
+
+function initAge(){
+  const oSel=document.getElementById('ageOrigin'), rSel=document.getElementById('ageRoast');
+  populateSelect(oSel, ORIGINS, ORIGINS[0]);
+  populateSelect(rSel, ROASTS, 'Medium');
+  oSel.addEventListener('change', renderAge);
+  rSel.addEventListener('change', renderAge);
+
+  const slider = document.getElementById('daySlider');
+  slider.addEventListener('input', ()=>updateAgeDay(parseInt(slider.value,10)));
+
+  document.getElementById('playBtn').addEventListener('click', toggleAgePlay);
+
+  renderAge();
+}
+
+function interpolateDay(recR, recO, recM, day){
+  const out = {};
+  ATTRS.forEach(k=>{
+    const v2=recR[k].level, v9=recO[k].level, v22=recM[k].level;
+    let val;
+    if(day<=AGE_ANCHOR_DAYS.resting){
+      const slope=(v9-v2)/(AGE_ANCHOR_DAYS.optimum-AGE_ANCHOR_DAYS.resting);
+      val = v2 - slope*(AGE_ANCHOR_DAYS.resting-day);
+    }else if(day<=AGE_ANCHOR_DAYS.optimum){
+      const t=(day-AGE_ANCHOR_DAYS.resting)/(AGE_ANCHOR_DAYS.optimum-AGE_ANCHOR_DAYS.resting);
+      val = v2 + (v9-v2)*t;
+    }else if(day<=AGE_ANCHOR_DAYS.matured){
+      const t=(day-AGE_ANCHOR_DAYS.optimum)/(AGE_ANCHOR_DAYS.matured-AGE_ANCHOR_DAYS.optimum);
+      val = v9 + (v22-v9)*t;
+    }else{
+      const slope=(v22-v9)/(AGE_ANCHOR_DAYS.matured-AGE_ANCHOR_DAYS.optimum);
+      val = v22 + slope*(day-AGE_ANCHOR_DAYS.matured);
+    }
+    out[k] = clamp(val,1,10);
+  });
+  return out;
+}
+function nearestClusterName(day){
+  const b1=(AGE_ANCHOR_DAYS.resting+AGE_ANCHOR_DAYS.optimum)/2, b2=(AGE_ANCHOR_DAYS.optimum+AGE_ANCHOR_DAYS.matured)/2;
+  if(day<b1) return CLUSTERS[0];
+  if(day<b2) return CLUSTERS[1];
+  return CLUSTERS[2];
+}
+
+let ageCurveData=null;
+function renderAge(){
+  const origin=document.getElementById('ageOrigin').value, roast=document.getElementById('ageRoast').value;
+  const recR=getProfile(origin,roast,CLUSTERS[0]), recO=getProfile(origin,roast,CLUSTERS[1]), recM=getProfile(origin,roast,CLUSTERS[2]);
+  document.getElementById('ageProc').textContent = recO ? recO.process : '';
+  if(!recR||!recO||!recM) return;
+
+  const days=[]; const series={sweetness:[],acidity:[],bitterness:[],body:[],intensity:[]};
+  for(let d=0; d<=30; d++){
+    days.push(d);
+    const p = interpolateDay(recR,recO,recM,d);
+    ATTRS.forEach(k=>series[k].push(round1(p[k])));
+  }
+  ageCurveData = {days, series, recR, recO, recM};
+
+  const colors = {sweetness:'#D5B84B', acidity:'#2FA6A6', bitterness:'#C06B8F', body:'#8FB35F', intensity:'#E8A33D'};
+  upsertChart('ageLine', {
+    type:'line',
+    data:{
+      labels: days,
+      datasets: ATTRS.map(k=>({
+        label: ATTR_LABELS[k], data: series[k], borderColor: colors[k], backgroundColor:'transparent',
+        borderWidth:2, pointRadius: days.map(d=> [2,9.5,22].some(a=>Math.abs(a-d)<0.6) ? 4:0 ),
+        pointBackgroundColor: colors[k], tension:0
+      }))
+    },
+    options:{
+      responsive:true, maintainAspectRatio:true, animation:{duration:300},
+      interaction:{mode:'index', intersect:false},
+      scales:{
+        x:{ title:{display:true,text:'Hari pasca-roasting', color:'#E9E2D0', font:{family:"'IBM Plex Mono',monospace",size:10}}, ticks:{color:'#8a8272', font:{family:"'IBM Plex Mono',monospace",size:9}}, grid:{color:'#332E26'} },
+        y:{ min:0, max:10, ticks:{color:'#8a8272', stepSize:2, font:{family:"'IBM Plex Mono',monospace",size:9}}, grid:{color:'#332E26'} }
+      },
+      plugins:{ legend:{ position:'bottom', labels:{ color:'#E9E2D0', font:{family:"'IBM Plex Mono',monospace",size:10}, boxWidth:10 } } }
+    }
+  });
+
+  const anchorEls = { 'Resting (< 5 Hari)':'anchorResting', 'Optimum (5 - 14 Hari)':'anchorOptimum', 'Matured (14 - 30 Hari)':'anchorMatured' };
+  Object.values(anchorEls).forEach(id=>document.getElementById(id).classList.remove('on'));
+
+  const daySlider=document.getElementById('daySlider');
+  updateAgeDay(parseInt(daySlider.value,10));
+}
+
+function updateAgeDay(day){
+  document.getElementById('daySlider').value = day;
+  document.getElementById('dayNum').textContent = 'Hari '+day;
+  const cluster = nearestClusterName(day);
+  document.getElementById('dayCluster').textContent = cluster.split(' (')[0];
+
+  const anchorEls = { 'Resting (< 5 Hari)':'anchorResting', 'Optimum (5 - 14 Hari)':'anchorOptimum', 'Matured (14 - 30 Hari)':'anchorMatured' };
+  Object.values(anchorEls).forEach(id=>document.getElementById(id).classList.remove('on'));
+  document.getElementById(anchorEls[cluster]).classList.add('on');
+
+  if(!ageCurveData) return;
+  const p = {};
+  ATTRS.forEach(k=> p[k] = ageCurveData.series[k][day] );
+  const vec = ATTRS.map(k=>p[k]);
+
+  upsertChart('ageRadar', {
+    type:'radar',
+    data:{ labels:ATTRS.map(k=>ATTR_LABELS[k]), datasets:[{ label:'Hari '+day, data:vec, borderColor:'#F3EFE3', backgroundColor:'rgba(243,239,227,.18)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#F3EFE3' }] },
+    options: radarBaseOptions(true)
+  });
+
+  const refRec = cluster===CLUSTERS[0] ? ageCurveData.recR : cluster===CLUSTERS[1] ? ageCurveData.recO : ageCurveData.recM;
+  const notesWrap = document.getElementById('ageNotes'); notesWrap.innerHTML='';
+  ATTRS.forEach(k=>{
+    const p2 = el('p','notewrap', `<b>${ATTR_LABELS[k]}:</b> ${refRec[k].note}`);
+    p2.style.marginBottom='9px';
+    notesWrap.appendChild(p2);
+  });
+}
+
+function toggleAgePlay(){
+  const btn = document.getElementById('playBtn');
+  if(playTimer){
+    clearInterval(playTimer); playTimer=null; btn.textContent='▶ Putar';
+    return;
+  }
+  btn.textContent='⏸ Berhenti';
+  let d = parseInt(document.getElementById('daySlider').value,10);
+  playTimer = setInterval(()=>{
+    d = (d+1)%31;
+    updateAgeDay(d);
+    if(d===30){ clearInterval(playTimer); playTimer=null; btn.textContent='▶ Putar'; }
+  }, 180);
+}
+
+/* =====================================================================
+   8. DATA TABLE
+===================================================================== */
+let tableState = { search:'', roast:'all', cluster:'all', sortKey:'origin', sortDir:1, expanded:null };
+
+function initTable(){
+  const roastChips = document.getElementById('roastChips');
+  ['all',...ROASTS].forEach(r=>{
+    const c = el('button','chip'+(r==='all'?' on':''), r==='all'?'Semua Roast':r);
+    c.addEventListener('click', ()=>{
+      tableState.roast=r;
+      roastChips.querySelectorAll('.chip').forEach(x=>x.classList.remove('on')); c.classList.add('on');
+      renderTable();
+    });
+    roastChips.appendChild(c);
+  });
+  const clusterChips = document.getElementById('clusterChips');
+  ['all',...CLUSTERS].forEach(cl=>{
+    const c = el('button','chip'+(cl==='all'?' on':''), cl==='all'?'Semua Cluster':cl.split(' (')[0]);
+    c.addEventListener('click', ()=>{
+      tableState.cluster=cl;
+      clusterChips.querySelectorAll('.chip').forEach(x=>x.classList.remove('on')); c.classList.add('on');
+      renderTable();
+    });
+    clusterChips.appendChild(c);
+  });
+  document.getElementById('tableSearch').addEventListener('input', (e)=>{
+    tableState.search = e.target.value.toLowerCase();
+    renderTable();
+  });
+  document.querySelectorAll('.data-table thead th').forEach(th=>{
+    th.addEventListener('click', ()=>{
+      const key = th.dataset.sort;
+      if(tableState.sortKey===key) tableState.sortDir *= -1;
+      else { tableState.sortKey=key; tableState.sortDir=1; }
+      document.querySelectorAll('.data-table thead th .arrow').forEach(a=>a.textContent='');
+      th.querySelector('.arrow').textContent = tableState.sortDir===1 ? '▲':'▼';
+      renderTable();
+    });
+  });
+  renderTable();
+}
+
+function renderTable(){
+  let rows = ALL_DATA.filter(r=>{
+    if(tableState.roast!=='all' && r.roast!==tableState.roast) return false;
+    if(tableState.cluster!=='all' && r.cluster!==tableState.cluster) return false;
+    if(tableState.search){
+      const hay = [r.origin,r.process,r.roast,r.cluster, ...ATTRS.map(k=>r[k].note)].join(' ').toLowerCase();
+      if(!hay.includes(tableState.search)) return false;
+    }
+    return true;
+  });
+
+  rows.sort((a,b)=>{
+    let va, vb;
+    if(ATTRS.includes(tableState.sortKey)){ va=a[tableState.sortKey].level; vb=b[tableState.sortKey].level; }
+    else { va=a[tableState.sortKey]; vb=b[tableState.sortKey]; }
+    if(va<vb) return -1*tableState.sortDir;
+    if(va>vb) return 1*tableState.sortDir;
+    return 0;
+  });
+
+  const tbody = document.getElementById('dataTableBody'); tbody.innerHTML='';
+  rows.forEach((r,idx)=>{
+    const tr = el('tr');
+    tr.innerHTML = `
+      <td class="origin-cell"><div class="nm">${r.origin}</div><div class="pr">${r.process}</div></td>
+      <td class="mono">${r.roast}</td>
+      <td class="mono">${r.cluster.split(' (')[0]}</td>
+      <td>${badgeHtml(r,'sweetness')}</td>
+      <td>${badgeHtml(r,'acidity')}</td>
+      <td>${badgeHtml(r,'bitterness')}</td>
+      <td>${badgeHtml(r,'body')}</td>
+      <td>${badgeHtml(r,'intensity')}</td>
+    `;
+    const rowKey = r.origin+'|'+r.roast+'|'+r.cluster;
+    tr.addEventListener('click', ()=>{
+      const next = tableState.expanded===rowKey ? null : rowKey;
+      tableState.expanded = next;
+      renderTable();
+    });
+    tbody.appendChild(tr);
+
+    if(tableState.expanded===rowKey){
+      const etr = el('tr','expand-row');
+      const td = el('td'); td.colSpan=8;
+      let grid = '<div class="expand-grid">';
+      ATTRS.forEach(k=>{
+        grid += `<div class="eg-item"><div class="ttl">${ATTR_LABELS[k]} — ${r[k].band} (${r[k].level}/10)</div><div class="txt">${r[k].note}</div></div>`;
+      });
+      grid += '</div>';
+      td.innerHTML = grid;
+      etr.appendChild(td);
+      tbody.appendChild(etr);
+    }
+  });
+
+  document.getElementById('rowCount').textContent = `Menampilkan ${rows.length} dari ${ALL_DATA.length} profil`;
+}
+
+/* =====================================================================
+   9. START
+===================================================================== */
+loadData();
+</script>
+</body>
+</html>
