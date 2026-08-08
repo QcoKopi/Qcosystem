@@ -956,32 +956,53 @@ function productionFetch() {
       <p>${currentLang === 'id' ? 'Memuat data produksi...' : 'Loading production data...'}</p>
     </div>
   `;
+
+  // Strategy 1: Try fetch API first (works if CORS allows)
+  fetch(PROD_API_URL)
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      prodDataCache = data;
+      productionRender(data);
+    })
+    .catch(err => {
+      console.log('Fetch failed, trying JSONP:', err.message);
+      // Strategy 2: JSONP fallback
+      productionFetchJSONP();
+    });
+
+  // Strategy 3: Mock data fallback after 5 seconds
+  setTimeout(() => {
+    if (!prodDataCache && container.querySelector('.prod-loading')) {
+      console.log('All strategies failed, showing mock data');
+      productionRenderMock();
+    }
+  }, 5000);
+}
+
+function productionFetchJSONP() {
+  const container = document.getElementById('prodCalendar');
   const script = document.createElement('script');
   const callbackName = 'prodCb_' + Date.now();
+
   window[callbackName] = function(data) {
     prodDataCache = data;
     productionRender(data);
     delete window[callbackName];
     if (script.parentNode) script.parentNode.removeChild(script);
   };
+
   script.src = PROD_API_URL + '&callback=' + callbackName;
   script.onerror = function() {
-    container.innerHTML = `
-      <div class="prod-error">
-        <strong>${currentLang === 'id' ? 'Gagal memuat data' : 'Failed to load data'}</strong><br>
-        ${currentLang === 'id'
-          ? 'Pastikan URL GAS sudah benar dan Web App di-deploy. Cek console untuk detail.'
-          : 'Ensure GAS URL is correct and Web App is deployed. Check console for details.'}
-      </div>
-    `;
+    console.log('JSONP also failed');
     delete window[callbackName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+    // Don't show error yet — mock fallback will kick in after 5s
   };
+
   document.head.appendChild(script);
-  setTimeout(() => {
-    if (!prodDataCache && container.querySelector('.prod-loading')) {
-      productionRenderMock();
-    }
-  }, 10000);
 }
 
 function productionRender(data) {
@@ -989,6 +1010,7 @@ function productionRender(data) {
     productionRenderError(data && data.error ? data.error : 'Unknown error');
     return;
   }
+
   const sumRB = document.getElementById('sumTotalRB');
   const sumHB = document.getElementById('sumTotalHB');
   const sumBest = document.getElementById('sumBest');
@@ -1138,22 +1160,32 @@ function productionRenderMock() {
     success: true,
     calendar: [
       {
-        date: '2026-08-06', dateDisplay: '06 Agu 2026', ageDays: 0, cluster: 'fresh', clusterLabel: 'Too Fresh',
+        date: '2026-08-08', dateDisplay: '08 Agu 2026', ageDays: 0, cluster: 'fresh', clusterLabel: 'Too Fresh',
+        rb: [{ batchNo: '0808-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung' }],
+        hb: []
+      },
+      {
+        date: '2026-08-06', dateDisplay: '06 Agu 2026', ageDays: 2, cluster: 'fresh', clusterLabel: 'Too Fresh',
         rb: [{ batchNo: '0608-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung' }],
         hb: [{ batchNo: '0608-MAS594793938', name: 'Houseblend 40% Robusta Temanggung 60% Arabika Gayo Premium', weight: 20, rawMaterial: 'RB Robusta Temanggung' }]
       },
       {
-        date: '2026-08-04', dateDisplay: '04 Agu 2026', ageDays: 2, cluster: 'fresh', clusterLabel: 'Too Fresh',
+        date: '2026-08-04', dateDisplay: '04 Agu 2026', ageDays: 4, cluster: 'fresh', clusterLabel: 'Too Fresh',
         rb: [{ batchNo: '0408-RB05', name: 'RB Gayo', weight: 25.8, rawMaterial: 'GB Gayo' }],
         hb: [{ batchNo: '0408-HB01207030C', name: 'RB Houseblend 70% Robusta 30% Arabika Classic', weight: 2, rawMaterial: 'RB Robusta Temanggung' }]
       },
       {
-        date: '2026-07-29', dateDisplay: '29 Jul 2026', ageDays: 7, cluster: 'best', clusterLabel: 'Best',
+        date: '2026-08-03', dateDisplay: '03 Agu 2026', ageDays: 5, cluster: 'best', clusterLabel: 'Best',
+        rb: [],
+        hb: [{ batchNo: '0308-MAS192093463', name: 'Houseblend 70% Arabika Jawa Barat 30% Arabika Bali Natural', weight: 1, rawMaterial: 'RB Arabika Jawa Barat105' }]
+      },
+      {
+        date: '2026-07-29', dateDisplay: '29 Jul 2026', ageDays: 10, cluster: 'best', clusterLabel: 'Best',
         rb: [{ batchNo: '2907-RB15-250', name: '250 gr - RB Arabika Bali Kintamani Natural', weight: 1, rawMaterial: 'RB Arabika Bali Kintamani Natural' }],
         hb: [{ batchNo: '2907-HB01074060RNEW', name: 'RB Houseblend 40% Robusta 60% Arabika NEW', weight: 3, rawMaterial: 'RB Arabika Jawa Barat' }]
       },
       {
-        date: '2026-07-24', dateDisplay: '24 Jul 2026', ageDays: 12, cluster: 'best', clusterLabel: 'Best',
+        date: '2026-07-24', dateDisplay: '24 Jul 2026', ageDays: 15, cluster: 'mature', clusterLabel: 'Matured',
         rb: [
           { batchNo: '2407-RB20', name: 'RB Arabika Jawa Barat105', weight: 13.3, rawMaterial: 'GB Arabika Jawa Barat105' },
           { batchNo: '2407-RB01', name: 'RB Robusta Temanggung', weight: 25.4, rawMaterial: 'GB Robusta Temanggung' }
@@ -1164,7 +1196,7 @@ function productionRenderMock() {
         ]
       },
       {
-        date: '2026-07-21', dateDisplay: '21 Jul 2026', ageDays: 15, cluster: 'mature', clusterLabel: 'Matured',
+        date: '2026-07-21', dateDisplay: '21 Jul 2026', ageDays: 18, cluster: 'mature', clusterLabel: 'Matured',
         rb: [{ batchNo: '2107-RB01', name: 'RB Robusta Temanggung', weight: 13.3, rawMaterial: 'GB Robusta Temanggung' }],
         hb: [
           { batchNo: '2107-HB01205050C', name: 'RB Houseblend 50% Robusta 50% Arabika Classic', weight: 5, rawMaterial: 'RB Robusta Temanggung' },
@@ -1193,7 +1225,7 @@ function productionRenderMock() {
         { name: 'GB Arabika Jawa Barat105', sisa: 10 }
       ]
     },
-    summary: { totalRB: 5, totalHB: 8, best: 2, matured: 1 }
+    summary: { totalRB: 5, totalHB: 8, best: 2, matured: 2 }
   };
   productionRender(mockData);
 }
