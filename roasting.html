@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q.co Roasting — Sahabat Kedai Kopi</title>
+<meta name="description" content="Q.co Roasting & Supply — Sahabat Kedai Kopi. Supplier roasted beans dan houseblend berkualitas dari Q.co Coffee Lab.">
+<style>
+:root {
+  --bg: #faf9f6;
+  --bg-warm: #f5f3ee;
+  --bg-cream: #f0ebe3;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --text-sec: #5c5c5c;
+  --text-muted: #9a9a9a;
+  --primary: #2c2c2c;
+  --accent: #b8926a;
+  --accent-light: #e8d5b5;
+  --accent-dark: #8b6f4e;
+  --border: #e8e6e1;
+  --font-head: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-body); background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; }
+a { text-decoration:none; color:inherit; }
+
+/* ===== NAV ===== */
+.nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(250,249,246,0.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-wrap { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:68px; }
+.nav-logo { font-family:var(--font-head); font-size:1.3rem; font-weight:600; }
+.nav-logo span { color:var(--accent); font-weight:400; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { font-size:0.85rem; font-weight:500; color:var(--text-sec); transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a.active { color:var(--accent-dark); font-weight:600; }
+.nav-cta { background:var(--primary); color:#fff; padding:10px 22px; border-radius:100px; font-size:0.8rem; font-weight:600; }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
+
+/* ===== HERO ===== */
+.hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:68px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
+.hero::before { content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px; background:radial-gradient(circle, rgba(184,146,106,0.08) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+.hero::after { content:''; position:absolute; bottom:-15%; left:-10%; width:500px; height:500px; background:radial-gradient(circle, rgba(184,146,106,0.06) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+.hero-inner { max-width:800px; text-align:center; padding:60px 24px; position:relative; z-index:1; }
+.hero-tag { display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:6px 18px; border-radius:100px; margin-bottom:28px; }
+.hero h1 { font-family:var(--font-head); font-size:clamp(2.5rem, 5vw, 4rem); line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:20px; letter-spacing:-0.02em; }
+.hero h1 em { font-style:italic; color:var(--accent-dark); }
+.hero-tagline {
+  font-family:var(--font-head); font-size:clamp(1.3rem, 2.5vw, 1.8rem); font-style:italic;
+  color:var(--accent-dark); line-height:1.5; max-width:640px; margin:0 auto 40px;
+  position:relative; padding:0 20px;
+}
+.hero-tagline::before { content:'"'; position:absolute; left:-8px; top:-12px; font-size:3rem; color:var(--accent-light); opacity:0.6; font-family:var(--font-head); }
+.hero-tagline::after { content:'"'; position:absolute; right:-8px; bottom:-24px; font-size:3rem; color:var(--accent-light); opacity:0.6; font-family:var(--font-head); }
+.hero-desc { font-size:clamp(1rem, 1.8vw, 1.15rem); color:var(--text-sec); max-width:560px; margin:0 auto 36px; line-height:1.7; }
+.hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:100px; font-size:0.9rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none; }
+.btn-pri { background:var(--primary); color:#fff; }
+.btn-pri:hover { background:#3a3a3a; transform:translateY(-2px); }
+.btn-sec { background:transparent; color:var(--text); border:1.5px solid var(--border); }
+.btn-sec:hover { border-color:var(--accent); color:var(--accent-dark); }
+
+/* ===== SECTIONS ===== */
+.section { padding:100px 0; }
+.section-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.section-header { text-align:center; margin-bottom:56px; }
+.section-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-dark); margin-bottom:12px; display:inline-block; background:rgba(184,146,106,0.1); padding:4px 14px; border-radius:100px; }
+.section-title { font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.4rem); font-weight:400; margin-bottom:12px; line-height:1.2; }
+.section-title em { font-style:italic; color:var(--accent-dark); }
+.section-desc { color:var(--text-sec); max-width:560px; margin:0 auto; font-size:1rem; line-height:1.7; }
+
+/* ===== DNA / PHILOSOPHY ===== */
+.dna-section { background:var(--bg-warm); }
+.dna-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+.dna-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:20px; line-height:1.3; }
+.dna-content h2 em { font-style:italic; color:var(--accent-dark); }
+.dna-content p { color:var(--text-sec); line-height:1.8; margin-bottom:20px; font-size:1rem; }
+.dna-quote {
+  border-left:3px solid var(--accent); padding-left:24px; font-family:var(--font-head);
+  font-size:1.15rem; color:var(--text-sec); font-style:italic; line-height:1.6; margin-top:28px;
+}
+.dna-values { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+.dna-value { background:var(--card); border-radius:8px; padding:20px; border:1px solid var(--border); transition:all 0.3s; }
+.dna-value:hover { transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.dna-value-icon { font-size:1.5rem; margin-bottom:8px; }
+.dna-value h4 { font-size:0.9rem; font-weight:600; margin-bottom:4px; }
+.dna-value p { font-size:0.8rem; color:var(--text-muted); margin:0; line-height:1.5; }
+.dna-visual { display:flex; flex-direction:column; gap:24px; }
+.dna-img-card {
+  background:linear-gradient(135deg, var(--accent-light), rgba(184,146,106,0.15));
+  border-radius:var(--radius); min-height:200px; display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); font-family:var(--font-head); font-size:1.4rem; color:var(--accent-dark);
+  text-align:center; padding:40px;
+}
+.dna-stats-bar {
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:28px;
+  padding:12px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  font-size:0.85rem; color:var(--text-sec);
+}
+.dna-stats-bar span { font-weight:500; }
+.dna-sep { color:var(--accent); font-weight:400; }
+.dna-values-inline {
+  display:flex; gap:20px; flex-wrap:wrap; margin-top:16px;
+  font-size:0.8rem; color:var(--text-muted);
+}
+.dna-values-inline span { display:flex; align-items:center; gap:6px; }
+
+/* ===== PRODUCTS ===== */
+.products-section { background:var(--bg); }
+.products-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.product-card { background:var(--card); border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); transition:all 0.35s; }
+.product-card:hover { transform:translateY(-6px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.product-img { height:200px; background:linear-gradient(135deg, var(--accent-light), var(--bg-cream)); display:flex; align-items:center; justify-content:center; font-size:2.5rem; border-bottom:1px solid var(--border); }
+.product-info { padding:28px; }
+.product-tag { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:3px 10px; border-radius:100px; display:inline-block; margin-bottom:10px; }
+.product-info h3 { font-family:var(--font-head); font-size:1.15rem; margin-bottom:8px; }
+.product-info p { font-size:0.85rem; color:var(--text-sec); line-height:1.6; margin-bottom:16px; }
+.product-meta { display:flex; gap:16px; font-size:0.75rem; color:var(--text-muted); }
+
+/* ===== SERVICES ===== */
+.services-section { background:var(--bg-warm); }
+.services-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:24px; }
+.service-card { background:var(--card); border-radius:var(--radius); padding:40px; border:1px solid var(--border); transition:all 0.3s; }
+.service-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.service-card h3 { font-family:var(--font-head); font-size:1.2rem; margin-bottom:12px; display:flex; align-items:center; gap:12px; }
+.service-card h3 span { font-size:1.8rem; }
+.service-card p { font-size:0.9rem; color:var(--text-sec); line-height:1.7; margin-bottom:20px; }
+.service-list { list-style:none; }
+.service-list li { font-size:0.85rem; color:var(--text-sec); padding:8px 0; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:10px; }
+.service-list li:last-child { border-bottom:none; }
+.service-list li::before { content:'→'; color:var(--accent); font-weight:700; flex-shrink:0; }
+
+/* ===== TESTIMONIALS ===== */
+.testi-section { background:var(--bg); }
+.testi-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.testi-card { background:var(--card); border-radius:var(--radius); padding:36px; border:1px solid var(--border); position:relative; }
+.testi-card::before { content:'"'; font-family:var(--font-head); font-size:4rem; color:var(--accent-light); position:absolute; top:16px; left:24px; line-height:1; }
+.testi-text { font-family:var(--font-head); font-size:1.05rem; color:var(--text-sec); font-style:italic; line-height:1.7; margin-bottom:24px; padding-top:20px; position:relative; z-index:1; }
+.testi-author { display:flex; align-items:center; gap:14px; }
+.testi-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--accent-light), var(--accent)); display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-size:1rem; color:#fff; font-weight:600; flex-shrink:0; }
+.testi-name { font-size:0.9rem; font-weight:600; }
+.testi-role { font-size:0.75rem; color:var(--text-muted); }
+
+/* ===== CTA ===== */
+.cta-section { background:var(--primary); color:#fff; padding:100px 0; text-align:center; }
+.cta-section h2 { font-family:var(--font-head); font-size:clamp(1.8rem, 3vw, 2.6rem); font-weight:400; margin-bottom:16px; }
+.cta-section p { color:rgba(255,255,255,0.7); max-width:520px; margin:0 auto 36px; font-size:1.05rem; line-height:1.7; }
+.cta-btn { display:inline-flex; align-items:center; gap:10px; padding:16px 36px; background:var(--accent); color:var(--primary); border-radius:100px; font-size:1rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none; }
+.cta-btn:hover { background:var(--accent-light); transform:translateY(-2px); }
+
+/* ===== FOOTER ===== */
+.footer { background:var(--primary); color:rgba(255,255,255,0.55); padding:56px 0 32px; }
+.footer-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+.footer-brand { font-family:var(--font-head); font-size:1.3rem; color:#fff; margin-bottom:12px; }
+.footer-brand span { color:var(--accent-light); }
+.footer-desc { font-size:0.9rem; line-height:1.6; margin-bottom:20px; max-width:320px; }
+.footer-entities { display:flex; flex-direction:column; gap:8px; }
+.footer-entity { font-size:0.75rem; background:rgba(255,255,255,0.05); padding:8px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.08); }
+.footer-entity strong { color:#fff; display:block; font-size:0.8rem; }
+.footer-col h4 { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#fff; margin-bottom:16px; }
+.footer-col a { display:block; font-size:0.85rem; color:rgba(255,255,255,0.55); padding:6px 0; transition:color 0.2s; }
+.footer-col a:hover { color:var(--accent-light); }
+.footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:0.8rem; }
+
+/* ===== MOBILE ===== */
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+  .hero-tagline::before { left:0; top:-8px; font-size:2rem; }
+  .hero-tagline::after { right:0; bottom:-16px; font-size:2rem; }
+  .dna-grid { grid-template-columns:1fr; gap:40px; }
+  .products-grid { grid-template-columns:1fr; }
+  .services-grid { grid-template-columns:1fr; }
+  .testi-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  .hero-cta { flex-direction:column; align-items:center; }
+  .btn { width:100%; max-width:300px; justify-content:center; }
+  .section { padding:60px 0; }
+  .dna-stats-bar { font-size:0.75rem; gap:8px; }
+  .dna-values-inline { gap:12px; font-size:0.75rem; }
+}
+
+.mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
+.mobile-menu.active { display:flex; }
+.mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+/* Language Switcher */
+.lang-switch {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.75rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; cursor:pointer; transition:all 0.2s;
+}
+.lang-switch span {
+  padding:4px 10px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.lang-switch span:not(.active):hover { color:var(--text); }
+
+/* Investor CTA - subtle, not black */
+.nav-cta {
+  font-size:0.8rem; font-weight:600; color:var(--accent-dark);
+  padding:8px 18px; border-radius:100px;
+  border:1.5px solid var(--accent-light); background:transparent;
+  transition:all 0.25s; cursor:pointer;
+}
+.nav-cta:hover {
+  background:var(--accent-light); color:var(--primary); border-color:var(--accent);
+}
+
+.lang-switch-mobile {
+  display:flex; align-items:center; gap:4px;
+  font-size:0.8rem; font-weight:600; color:var(--text-muted);
+  background:var(--bg-warm); border:1px solid var(--border); border-radius:100px;
+  padding:3px; margin-bottom:16px; width:fit-content;
+}
+.lang-switch-mobile span {
+  padding:5px 12px; border-radius:100px; transition:all 0.2s;
+}
+.lang-switch-mobile span.active {
+  background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* ===== VISUAL ENHANCEMENTS ===== */
+.grain-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+.blob {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: 0;
+  filter: blur(80px); opacity: 0.08;
+}
+.blob-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: -10%; right: -10%;
+}
+.blob-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+  bottom: 10%; left: -5%;
+}
+.hero-bg-pattern {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0.04;
+  background-image: radial-gradient(circle at 25% 25%, var(--accent) 1px, transparent 1px),
+                    radial-gradient(circle at 75% 75%, var(--accent) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.img-placeholder {
+  background: linear-gradient(135deg, var(--bg-warm), var(--accent-light));
+  border-radius: var(--radius); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.img-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8926a' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.img-placeholder .placeholder-icon {
+  font-size: 3rem; opacity: 0.3; color: var(--accent-dark); z-index: 1;
+}
+.img-placeholder .placeholder-label {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.08em; z-index: 1; background: rgba(255,255,255,0.8);
+  padding: 4px 12px; border-radius: 100px;
+}
+.accent-line {
+  width: 60px; height: 3px; background: var(--accent);
+  border-radius: 3px; margin: 20px auto;
+}
+.watermark {
+  position: absolute; font-size: 15rem; opacity: 0.02; pointer-events: none;
+  color: var(--accent-dark); z-index: 0; line-height: 1;
+}
+
+
+/* ===== PRODUCTION DASHBOARD ===== */
+.prod-dashboard {
+  background: var(--bg, #faf9f6);
+  padding: 80px 0;
+}
+.prod-dashboard-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+}
+.prod-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 20px; margin-bottom: 32px;
+}
+.prod-header h2 {
+  font-family: var(--font-head, Georgia, serif); font-size: 1.8rem;
+  color: var(--text, #1a1a1a); font-weight: 400;
+}
+.prod-header p {
+  color: var(--text-sec, #5c5c5c); font-size: 0.95rem;
+  max-width: 500px; margin-top: 6px;
+}
+.prod-legend {
+  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+}
+.prod-legend-item {
+  display: flex; align-items: center; gap: 6px; font-size: 0.8rem;
+  color: var(--text-sec, #5c5c5c);
+}
+.prod-legend-dot {
+  width: 12px; height: 12px; border-radius: 50%; display: inline-block;
+}
+.dot-resting { background: #a8d5ba; border: 2px solid #7bc093; }
+.dot-optimum  { background: #e8d5b5; border: 2px solid #c8a97e; }
+.dot-peak{ background: #c4a882; border: 2px solid #a08060; }
+
+/* Summary Cards */
+.prod-summary {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-bottom: 32px;
+}
+@media (max-width: 768px) {
+  .prod-summary { grid-template-columns: repeat(2, 1fr); }
+}
+.prod-summary-card {
+  background: var(--card, #fff); border-radius: var(--radius, 12px);
+  padding: 20px; border: 1px solid var(--border, #e8e6e1);
+  text-align: center; transition: all 0.2s;
+}
+.prod-summary-card:hover { transform: translateY(-2px); box-shadow: var(--shadow, 0 4px 20px rgba(0,0,0,0.06)); }
+.prod-summary-card .num {
+  font-family: var(--font-head, Georgia, serif); font-size: 2rem;
+  color: var(--text, #1a1a1a); line-height: 1;
+}
+.prod-summary-card .label {
+  font-size: 0.75rem; color: var(--text-muted, #9a9a9a);
+  margin-top: 6px; text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+/* Calendar Grid */
+.prod-calendar {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.prod-day {
+  background: var(--card, #fff); border-radius: var(--radius, 12px);
+  border: 1px solid var(--border, #e8e6e1); overflow: hidden;
+  transition: all 0.3s; position: relative;
+}
+.prod-day:hover { box-shadow: var(--shadow, 0 4px 20px rgba(0,0,0,0.06)); transform: translateY(-2px); }
+.prod-day.resting { border-top: 4px solid #7bc093; }
+.prod-day.optimum   { border-top: 4px solid #c8a97e; }
+.prod-day.peak { border-top: 4px solid #a08060; }
+
+.prod-day-header {
+  padding: 16px 20px 12px; border-bottom: 1px solid var(--border, #e8e6e1);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.prod-day-date {
+  font-family: var(--font-head, Georgia, serif); font-size: 1.1rem;
+  color: var(--text, #1a1a1a);
+}
+.prod-day-badge {
+  font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 100px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.badge-resting { background: #e8f5e9; color: #2e7d32; }
+.badge-optimum  { background: #fff8e1; color: #8a6d3b; }
+.badge-peak{ background: #efebe9; color: #5d4037; }
+.prod-day-age {
+  font-size: 0.75rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
+}
+
+.prod-day-body { padding: 16px 20px; }
+.prod-section-title {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted, #9a9a9a);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+
+/* RB & HB Items */
+.prod-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 10px 12px; background: var(--bg-warm, #f5f3ee);
+  border-radius: 8px; margin-bottom: 8px;
+  border: 1px solid var(--border, #e8e6e1); transition: all 0.2s;
+}
+.prod-item:hover { background: #e8e4da; }
+.prod-item-name {
+  font-size: 0.85rem; font-weight: 600; color: var(--text, #1a1a1a);
+  line-height: 1.3;
+}
+.prod-item-batch {
+  font-size: 0.7rem; color: var(--text-muted, #9a9a9a); margin-top: 3px;
+  font-family: monospace;
+}
+.prod-item-meta {
+  font-size: 0.75rem; color: var(--text-muted, #9a9a9a); margin-top: 3px;
+}
+.prod-item-qty {
+  font-size: 0.8rem; font-weight: 700; color: var(--accent, #b8926a);
+  white-space: nowrap; text-align: right;
+}
+.prod-item-qty span {
+  font-size: 0.65rem; font-weight: 400; color: var(--text-muted, #9a9a9a);
+  display: block;
+}
+
+/* Loading & Error */
+.prod-loading {
+  text-align: center; padding: 60px 20px; color: var(--text-muted, #9a9a9a);
+}
+.prod-loading-spinner {
+  width: 40px; height: 40px; border: 3px solid var(--border, #e8e6e1);
+  border-top-color: var(--accent, #b8926a); border-radius: 50%;
+  animation: spin 1s linear infinite; margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.prod-error {
+  background: #ffebee; border: 1px solid #ef9a9a; border-radius: 8px;
+  padding: 20px; color: #c62828; text-align: center; margin: 20px 0;
+}
+.prod-empty {
+  text-align: center; padding: 60px 20px; color: var(--text-muted, #9a9a9a);
+}
+
+/* Refresh Button */
+.prod-refresh {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; background: var(--bg-warm, #f5f3ee);
+  border: 1px solid var(--border, #e8e6e1); border-radius: 8px;
+  font-size: 0.8rem; font-weight: 600; color: var(--text-sec, #5c5c5c);
+  cursor: pointer; transition: all 0.2s;
+}
+.prod-refresh:hover { background: var(--accent-light, #e8d5b5); color: var(--text, #1a1a1a); }
+
+/* ===== PRODUCT CARD (per produk) ===== */
+.prod-day-header {
+  padding: 14px 18px 10px;
+  gap: 10px;
+}
+.prod-day-date {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.3;
+  word-break: break-word;
+}
+.prod-day-badge {
+  font-size: 0.6rem;
+  padding: 3px 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.prod-calendar {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+@media (max-width: 400px) {
+  .prod-calendar {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prod-batch-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px; background: var(--bg-warm, #f5f3ee);
+  border-radius: 8px; margin-bottom: 8px;
+  border: 1px solid var(--border, #e8e6e1); transition: all 0.2s;
+  position: relative;
+}
+.prod-batch-row:hover { background: #e8e4da; }
+
+.prod-batch-main {
+  min-width: 110px; flex-shrink: 0;
+}
+.prod-batch-date {
+  font-family: var(--font-head, Georgia, serif); font-size: 0.85rem;
+  color: var(--text, #1a1a1a); font-weight: 600;
+}
+.prod-batch-age {
+  font-size: 0.7rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
+}
+
+.prod-batch-detail {
+  flex: 1; display: flex; flex-direction: column; gap: 2px;
+  min-width: 0;
+}
+.prod-batch-line {
+  display: flex; gap: 6px; font-size: 0.78rem;
+}
+.prod-batch-label {
+  color: var(--text-muted, #9a9a9a); min-width: 50px; flex-shrink: 0;
+}
+.prod-batch-val {
+  color: var(--text-sec, #5c5c5c); font-weight: 500;
+  font-family: monospace; font-size: 0.75rem;
+  word-break: break-all;
+}
+
+.prod-batch-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 4px;
+  flex-shrink: 0; min-width: 70px;
+}
+
+.prod-batch-badge {
+  font-size: 0.6rem; font-weight: 700; padding: 2px 7px; border-radius: 100px;
+  text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+}
+
+.prod-batch-stock {
+  display: inline-block; padding: 2px 8px; border-radius: 100px;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.prod-batch-stock.in {
+  background: #e8f5e9; color: #2e7d32; border: 1.5px solid #a5d6a7;
+}
+.prod-batch-stock.out {
+  background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a;
+}
+
+/* ===== COFFEE SCORE BARS ===== */
+.coffee-scores {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.coffee-score-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.coffee-score-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  min-width: 70px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.coffee-score-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-cream);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.coffee-score-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+/* ===== COLLAPSE / EXPAND ===== */
+.prod-day {
+  transition: all 0.3s ease;
+}
+.prod-day-header {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+.prod-toggle-icon {
+  font-size: 0.7rem;
+  color: var(--text-muted, #9a9a9a);
+  transition: transform 0.3s ease;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.prod-day.expanded .prod-toggle-icon {
+  transform: rotate(90deg);
+}
+.prod-day-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+  padding: 0 20px;
+}
+.prod-day.expanded .prod-day-body {
+  max-height: 2000px;
+  opacity: 1;
+  padding: 16px 20px;
+}
+
+/* ===== PRODUCT CARD COLLAPSE ===== */
+.product-card {
+  cursor: pointer;
+  transition: all 0.35s;
+}
+.product-card .product-info {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+  padding: 0 28px;
+}
+.product-card.expanded .product-info {
+  max-height: 2000px;
+  opacity: 1;
+  padding: 28px;
+}
+.product-card .product-img {
+  position: relative;
+}
+.product-card .product-img::after {
+  content: '▶';
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 0.75rem;
+  color: var(--accent-dark);
+  background: rgba(255,255,255,0.9);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.product-card.expanded .product-img::after {
+  transform: rotate(90deg);
+}
+.product-card .product-info h3,
+.product-card .product-info p,
+.product-card .product-info .coffee-scores,
+.product-card .product-info .product-meta {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.product-card.expanded .product-info h3,
+.product-card.expanded .product-info p,
+.product-card.expanded .product-info .coffee-scores,
+.product-card.expanded .product-info .product-meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+.product-card.expanded .product-info h3 { transition-delay: 0.05s; }
+.product-card.expanded .product-info p { transition-delay: 0.1s; }
+.product-card.expanded .product-info .coffee-scores { transition-delay: 0.15s; }
+.product-card.expanded .product-info .product-meta { transition-delay: 0.2s; }
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+<div class="grain-overlay"></div>
+
+<nav class="nav">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">Q.co <span>Coffee Lab</span></a>
+    <div class="nav-links">
+      <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
+      <a href="coffee-lab.html">Q.co Lab</a>
+      <a href="roasting.html" class="active">Q.co Roasting</a>
+      <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+      <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
+      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+      <div class="lang-switch" onclick="toggleLang()">
+        <span class="active" id="lang-id">ID</span>
+        <span id="lang-en">EN</span>
+      </div>
+      <a href="investors.html" class="nav-cta" data-id="Investor" data-en="Investor">Investor</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMobile()">☰</button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="lang-switch-mobile" onclick="toggleLang()">
+    <span class="active" id="lang-id-m">ID</span>
+    <span id="lang-en-m">EN</span>
+  </div>
+  <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
+  <a href="coffee-lab.html">Q.co Lab</a>
+    <a href="roasting.html">Q.co Roasting</a>
+  <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+  <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+  <a href="investors.html" data-id="Investor Portal" data-en="Investor Portal">Investor Portal</a>
+</div>
+
+<!-- HERO — Tagline sebagai headline utama -->
+<section class="hero" id="top">
+  <div class="hero-bg-pattern"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-inner">
+    <h1>Q.co <em>Roasting</em><br>& Supply</h1>
+    <p class="hero-tagline" data-id="Kopi terbaik lahir dari kolaborasi, bukan kompetisi."
+       data-en="The best coffee is born from collaboration, not competition.">Kopi terbaik lahir dari kolaborasi, bukan kompetisi.</p>
+    <p class="hero-desc" data-id="Lebih dari sekadar supplier roasted beans. Kami adalah Sahabat Kedai Kopi — partner yang tumbuh bersama, berbagi pengetahuan, dan berkolaborasi untuk menciptakan pengalaman kopi terbaik di setiap cangkir."
+       data-en="More than just a roasted bean supplier. We are a Coffee Shop's Best Friend — partners who grow together, share knowledge, and collaborate to create the best coffee experience in every cup.">
+      Lebih dari sekadar supplier roasted beans. Kami adalah <strong>Sahabat Kedai Kopi</strong> — 
+      partner yang tumbuh bersama, berbagi pengetahuan, dan berkolaborasi untuk menciptakan 
+      pengalaman kopi terbaik di setiap cangkir.
+    </p>
+
+  </div>
+</section>
+
+<!-- DNA — Clean, tidak berantakan, tanpa placeholder besar -->
+<section class="section dna-section" id="tentang">
+  <div class="section-wrap">
+    <div class="dna-grid">
+      <div class="dna-content">
+        <div class="section-label" data-id="Siapa Kami" data-en="Who We Are">Siapa Kami</div>
+        <h2 data-id="Kenapa Kami Bukan Sekadar Supplier" data-en="Why We Are More Than Just a Supplier">Kenapa Kami <em>Bukan Sekadar Supplier</em></h2>
+        <p>
+          Q.co lahir dari pengalaman bertahun-tahun di ekosistem kopi Indonesia — dari kebun petani 
+          di pegunungan, meja cupping di mill, hingga pameran internasional di Amerika Serikat. 
+          Kami memahami bahwa kopi yang luar biasa tidak hanya tentang biji yang bagus, tetapi juga 
+          tentang <strong>hubungan yang kuat</strong> antara setiap aktor dalam rantai pasok.
+        </p>
+        <p>
+          Kami memposisikan diri sebagai <strong>Sahabat Kedai Kopi</strong> — bukan vendor yang hanya 
+          mengirim beans dan invoice. Kami berkolaborasi dalam menyusun menu, mengembangkan roasting 
+          profile yang sesuai dengan karakter kedai, memberikan training barista, dan berbagi insight 
+          pasar kopi terkini.
+        </p>
+        <div class="dna-quote">
+          Ketika kedai kopi berkembang, kami juga berkembang. Pertumbuhan bersama adalah inti dari 
+          setiap hubungan yang kami bangun.
+        </div>
+        <div class="dna-stats-bar">
+          <span>50+ Kedai Kopi Mitra</span>
+          <span class="dna-sep">|</span>
+          <span>Q Grader & Q Processing Certified</span>
+          <span class="dna-sep">|</span>
+          <span>4+ Tahun Beroperasi</span>
+        </div>
+        <div class="dna-values-inline">
+          <span>🤝 Kolaborasi</span>
+          <span>📚 Pengetahuan</span>
+          <span>🎯 Kualitas</span>
+          <span>🌱 Berkelanjutan</span>
+        </div>
+      </div>
+      <div class="dna-visual">
+        <div class="dna-img-card">
+          <span>Q.co<br><small style="font-size:0.9rem; font-weight:400; opacity:0.7;">Coffee Lab & Roastery</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section products-section" id="products">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Produk Kami" data-en="Our Products">Produk Kami</div>
+      <h2 class="section-title" data-id="Karakteristik Kopi Q.co" data-en="Q.co Coffee Characteristics">Karakteristik Kopi <em>Q.co</em></h2>
+      <p class="section-desc" data-id="Setiap biji kopi memiliki karakter unik. Pahami profil rasa dan pilih yang sesuai dengan karakter kedai Anda." data-en="Every coffee bean has a unique character. Understand the flavor profile and choose what suits your shop.">
+        Setiap biji kopi memiliki karakter unik. Pahami profil rasa dan pilih yang sesuai dengan karakter kedai Anda.
+      </p>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card collapsed" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Single Origin</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Single Origin</span>
+          <h3>Robusta Temanggung</h3>
+          <p>Sangat dominan di Body yang tebal dan Bitterness yang tegas khas robusta berkualitas tinggi (sering ada notes earthy, tobacco, atau dark chocolate). Acidity sangat rendah, namun Temanggung dikenal memiliki sweetness yang cukup baik untuk ukuran robusta.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:60%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:28%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card collapsed" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Full Washed</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Full Washed</span>
+          <h3>Arabika Jawa Barat (Full Wash)</h3>
+          <p>Memiliki keseimbangan yang baik (well-balanced). Acidity-nya cerah (biasanya cenderung citrus atau floral tergantung daerah tanam seperti Puntang atau Malabar), dengan Body medium yang bersih dan clean aftertaste.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:48%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:65%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:78%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card collapsed" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Natural Process</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Natural Process</span>
+          <h3>Arabika Jawa Barat (Natural)</h3>
+          <p>Proses natural mendongkrak skor Sweetness dan Intensity secara signifikan. Menghasilkan flavor notes buah-buahan matang (ripen fruits / tropical berry), Acidity yang kompleks, serta Body yang lebih padat dibanding proses wash-nya.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card collapsed" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Semi Washed</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Semi Washed</span>
+          <h3>Arabika Gayo (Semi-Washed)</h3>
+          <p>Memiliki Body yang sangat berat dan syrupy serta Bitterness yang sedikit lebih tinggi dibanding arabika biasa. Acidity-nya cenderung rendah-sedang, dengan dominasi rasa herbal, spicy, earthy, dan dark chocolate yang pekat.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:70%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:60%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card collapsed" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Natural Process</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Natural Process</span>
+          <h3>Arabika Bali (Natural)</h3>
+          <p>Dikenal dengan sweetness yang menonjol dan aroma buah-buahan tropis atau jeruk manis (sering ada sentuhan citrus dan fruity yang bersih). Acidity-nya sedang-tinggi tetapi tetap terasa smooth diimbangi body yang cukup tebal.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:70%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card collapsed" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Full Washed</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Full Washed</span>
+          <h3>Arabika Argopuro (Full Wash)</h3>
+          <p>Kopi asal Jawa Timur ini memiliki clean cup yang sangat baik dengan acidity yang cerah dan segar (cenderung citrus atau floral). Body-nya medium dengan keseimbangan rasa yang bersih.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:45%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:70%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card collapsed" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Natural Process</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Natural Process</span>
+          <h3>Arabika Argopuro (Natural)</h3>
+          <p>Versi proses natural dari Argopuro terkenal sangat ekspresif. Memiliki tingkat sweetness dan intensity yang sangat tinggi (sering memunculkan notes buah matang yang kompleks, berry-like, atau winey), serta body yang lebih juicy dan padat.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:90%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card collapsed" style="border:2px solid var(--accent-light);" onclick="toggleProductCard(this)">
+        <div class="product-img img-placeholder" style="background:linear-gradient(135deg, var(--accent-light), var(--accent));">
+          <span class="placeholder-icon" style="font-size:3rem;">🫘</span>
+          <span class="placeholder-label" style="background:rgba(255,255,255,0.9); color:var(--accent-dark);">House Blend</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag" style="background:var(--accent); color:#fff;">House Blend</span>
+          <h3>Q.co Signature HouseBlend</h3>
+          <p>Racikan khas Q.co yang dirancang untuk keseimbangan sempurna. Gunakan tools simulasi blending untuk menciptakan profil rasa sesuai keinginan — dari fruity & bright hingga bold & chocolatey.</p>
+          <div class="coffee-scores" style="opacity:0.5;">
+            <div class="coffee-score-row"><span class="coffee-score-label">Custom</span><div class="coffee-score-bar-wrap"><div class="coffee-score-bar" style="width:50%; background:var(--accent);"></div></div></div>
+            <div class="coffee-score-row"><span class="coffee-score-label">Blend</span><div class="coffee-score-bar-wrap"><div class="coffee-score-bar" style="width:50%; background:var(--accent);"></div></div></div>
+          </div>
+          <div class="product-meta">
+            <a href="coffee-lab.html" class="btn btn-pri" style="font-size:0.8rem; padding:8px 18px;">🔬 Masuk Ke Lab</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE PRODUCTION DASHBOARD -->
+<section class="section prod-dashboard" id="productionDashboard">
+  <div class="prod-dashboard-container">
+    <div class="section-header" style="margin-bottom:32px;">
+      <div class="section-label" data-id="Produksi Live" data-en="Live Production">Live Production</div>
+      <h2 class="section-title" data-id="Roasting & Blending — 30 Hari Terakhir" data-en="Roasting & Blending — Last 30 Days">Roasting & Blending — <em>30 Hari Terakhir</em></h2>
+      <p class="section-desc" data-id="Data real-time dari sistem Q.co — batch roasting (RB) dan houseblend (HB) dengan cluster umur optimal." data-en="Real-time data from Q.co system — roasting batches (RB) and houseblend (HB) with optimal age clusters.">Real-time data from Q.co system — roasting batches (RB) and houseblend (HB) with optimal age clusters.</p>
+    </div>
+
+    <div class="prod-header">
+      <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <div class="prod-legend">
+          <div class="prod-legend-item"><span class="prod-legend-dot dot-fresh"></span> <span data-id="Resting (< 5 hari)" data-en="Resting (< 5 days)">Resting (< 5 days)</span></div>
+          <div class="prod-legend-item"><span class="prod-legend-dot dot-best"></span> <span data-id="Optimum (5–14 hari)" data-en="Optimum (5–14 days)">Optimum (5–14 days)</span></div>
+          <div class="prod-legend-item"><span class="prod-legend-dot dot-mature"></span> <span data-id="Peak (14–30 hari)" data-en="Peak (14–30 days)">Peak (14–30 days)</span></div>
+        </div>
+      </div>
+      <button class="prod-refresh" onclick="productionRefresh()" title="Refresh data">
+        <span>↻</span> <span data-id="Segarkan" data-en="Refresh">Refresh</span>
+      </button>
+    </div>
+
+    <!-- Summary -->
+    <div class="prod-summary" id="prodSummary">
+      <div class="prod-summary-card">
+        <div class="num" id="sumTotalRB">—</div>
+        <div class="label" data-id="Batch RB" data-en="RB Batches">RB Batches</div>
+      </div>
+      <div class="prod-summary-card">
+        <div class="num" id="sumTotalHB">—</div>
+        <div class="label" data-id="Batch HB" data-en="HB Batches">HB Batches</div>
+      </div>
+      <div class="prod-summary-card">
+        <div class="num" id="sumBest">—</div>
+        <div class="label" data-id="Optimum Window" data-en="Optimum Window">Optimum Window</div>
+      </div>
+      <div class="prod-summary-card">
+        <div class="num" id="sumPeak">—</div>
+        <div class="label" data-id="Peak" data-en="Peak">Peak</div>
+      </div>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div id="prodCalendar">
+      <div class="prod-loading">
+        <div class="prod-loading-spinner"></div>
+        <p data-id="Memuat data produksi..." data-en="Loading production data...">Loading production data...</p>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- SERVICES — 2 kolom, lebih clean -->
+<section class="section services-section" id="partnership">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Layanan & Kolaborasi" data-en="Services & Collaboration">Layanan & Kolaborasi</div>
+      <h2 class="section-title" data-id="Sahabat Kedai Kopi — Bukan Sekadar Supplier" data-en="A Coffee Shop's Best Friend — Not Just a Supplier">Sahabat Kedai Kopi — <em>Bukan Sekadar Supplier</em></h2>
+      <p class="section-desc">
+        Kami percaya bahwa hubungan terbaik adalah yang saling menguntungkan. 
+        Inilah cara kami mendampingi kedai kopi mitra kami.
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3><span>🎯</span> Konsultasi Menu & Profil Rasa</h3>
+        <p>
+          Setiap kedai memiliki karakter unik — dari demografi pelanggan hingga konsep interior. 
+          Kami membantu menyusun menu kopi yang sesuai dengan identitas kedai Anda.
+        </p>
+        <ul class="service-list">
+          <li>Analisis karakter kedai dan target pasar</li>
+          <li>Rekomendasi beans dan roast profile</li>
+          <li>Penyusunan menu kopi (espresso-based, manual brew, signature)</li>
+          <li>Tasting session dan cupping bersama</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3><span>📚</span> Training & Knowledge Sharing</h3>
+        <p>
+          Kualitas kopi di cangkir tidak hanya ditentukan oleh beans, tapi juga oleh barista. 
+          Kami menyediakan training program untuk tim barista kedai mitra.
+        </p>
+        <ul class="service-list">
+          <li>Espresso extraction dan milk texturing</li>
+          <li>Manual brewing (V60, Chemex, French Press, Aeropress)</li>
+          <li>Cupping dan sensory evaluation</li>
+          <li>Latte art fundamentals</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3><span>🔄</span> Supply Chain Transparan</h3>
+        <p>
+          Kami bangga dengan rantai pasok kami. Setiap beans yang kami roast berasal dari 
+          petani dan processor yang kami kenal secara personal.
+        </p>
+        <ul class="service-list">
+          <li>Traceability dari kebun ke roastery</li>
+          <li>Informasi origin, varietas, dan proses pengolahan</li>
+          <li>Hubungan langsung dengan petani dan processor</li>
+          <li>Praktik berkelanjutan dan fair pricing</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3><span>🤝</span> Program Sahabat Kedai Kopi</h3>
+        <p>
+          Program eksklusif untuk kedai kopi yang ingin berkembang bersama kami. 
+          Dapatkan akses ke produk terbaru, harga khusus, dan komunitas kedai kopi.
+        </p>
+        <ul class="service-list">
+          <li>Harga khusus untuk mitra setia</li>
+          <li>Akses prioritas ke limited edition beans</li>
+          <li>Undangan event cupping dan cupping competition</li>
+          <li>Kolaborasi marketing dan social media</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS — 3 kolom -->
+<section class="section testi-section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Testimoni" data-en="Testimonials">Testimoni</div>
+      <h2 class="section-title" data-id="Kata Mereka, Sahabat Kami" data-en="What They Say, Our Friends">Kata Mereka, <em>Sahabat Kami</em></h2>
+      <p class="section-desc" data-id="Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co." data-en="Coffee shops around Depok and West Java who have collaborated with Q.co.">Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-text">
+          Q.co bukan sekadar supplier — mereka benar-benar partner. Dari konsultasi menu 
+          sampai training barista, mereka selalu hadir. Beans-nya konsisten dan 
+          roasting profile-nya pas untuk karakter kedai kami.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">AR</div>
+          <div>
+            <div class="testi-name">Andi Raharjo</div>
+            <div class="testi-role">Owner, Kopi Nusantara — Depok</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-text">
+          Saya suka transparansi Q.co. Mereka selalu cerita dari mana beans-nya, 
+          prosesnya gimana, dan kenapa profil rasanya seperti itu. Pelanggan kami 
+          appreciate cerita di balik setiap cangkir.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">DS</div>
+          <div>
+            <div class="testi-name">Dewi Sartika</div>
+            <div class="testi-role">Founder, Brew & Bloom — Bogor</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-text">
+          Dari awal buka kedai, Q.co sudah dampingi kami. Custom roast profile 
+          untuk signature drink kami, training tim barista, dan selalu responsif. 
+          Sahabat Kedai Kopi memang bukan cuma tagline — mereka buktiin.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">RF</div>
+          <div>
+            <div class="testi-name">Rizky Fadillah</div>
+            <div class="testi-role">Co-Founder, Kopi Tiga Saudara — Tangerang</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA — Full width, menarik -->
+<section class="cta-section">
+  <div class="section-wrap">
+    <h2 data-id="Jadi Sahabat Kedai Kopi Kami" data-en="Become Our Coffee Shop Best Friend">Jadi <em>Sahabat Kedai Kopi</em> Kami</h2>
+    <p data-id="Apakah Anda pemilik kedai kopi, barista, atau pecinta kopi yang ingin berkolaborasi? Kami siap mendampingi perjalanan kopi Anda — dari beans selection hingga cangkir terakhir."
+       data-en="Are you a coffee shop owner, barista, or coffee enthusiast looking to collaborate? We are ready to accompany your coffee journey — from bean selection to the last cup.">
+      Apakah Anda pemilik kedai kopi, barista, atau pecinta kopi yang ingin berkolaborasi? 
+      Kami siap mendampingi perjalanan kopi Anda — dari beans selection hingga cangkir terakhir.
+    </p>
+    <a href="mailto:hello@qco.coffee" class="cta-btn" data-id="Hubungi Kami →" data-en="Contact Us →">Hubungi Kami →</a>
+    <p style="margin-top:24px; font-size:0.85rem; color:rgba(255,255,255,0.4);">
+      atau DM kami di Instagram <a href="https://instagram.com/qkopi.co" target="_blank" style="color:var(--accent-light);">@qkopi.co</a>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Q.co <span>Coffee Lab</span></div>
+        <p class="footer-desc">Sahabat Kedai Kopi — Roastery & Coffee Lab di Depok, Jawa Barat. Lebih dari supplier, partner untuk kolaborasi.</p>
+        <div class="footer-entities">
+          <div class="footer-entity"><strong>CV Kemari Sukses Makmur</strong>Depok, Jawa Barat, Indonesia</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-id="Platform" data-en="Platforms">Platform</h4>
+        <a href="index.html">Beranda</a>
+        <a href="qbridge.html">QBridge</a>
+        <a href="qaffiliator.html">QAffiliator</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-id="Produk" data-en="Products">Produk</h4>
+        <a href="#products">Single Origin</a>
+        <a href="#products">House Blend</a>
+        <a href="#products">Custom Roast</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
+        <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
+        <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
+        <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+        <a href="investors.html">Investor Relations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Q.co Coffee Lab & Roastery</span>
+      <span>Depok, Jawa Barat, Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== LANGUAGE SWITCHER =====
+let currentLang = localStorage.getItem('qco-lang') || 'id';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('qco-lang', lang);
+  document.querySelectorAll('[data-id][data-en]').forEach(el => {
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = el.getAttribute('data-' + lang);
+    } else {
+      el.textContent = el.getAttribute('data-' + lang);
+    }
+  });
+  document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
+    el.classList.toggle('active', lang === 'id');
+  });
+  document.querySelectorAll('#lang-en, #lang-en-m').forEach(el => {
+    el.classList.toggle('active', lang === 'en');
+  });
+  document.documentElement.lang = lang === 'id' ? 'id' : 'en';
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'id' ? 'en' : 'id');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang(currentLang);
+  productionInit();
+});
+
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+
+
+// ===== LIVE PRODUCTION DASHBOARD =====
+const PROD_API_URL = 'https://script.google.com/macros/s/AKfycbz1KfZDPsWCpRSI39Ylqbs0DchguLFVfgcVMTCa3h8yQD9ocd7kDqfoAuE2I7ooSWU/exec?action=getProduction';
+let prodDataCache = null;
+
+function productionInit() {
+  productionFetch();
+}
+
+function productionRefresh() {
+  prodDataCache = null;
+  productionFetch();
+}
+
+function productionFetch() {
+  const container = document.getElementById('prodCalendar');
+  if (!container) return;
+  container.innerHTML = `
+    <div class="prod-loading">
+      <div class="prod-loading-spinner"></div>
+      <p>${currentLang === 'id' ? 'Memuat data produksi...' : 'Loading production data...'}</p>
+    </div>
+  `;
+
+  // Strategy 1: Try fetch API first (works if CORS allows)
+  fetch(PROD_API_URL)
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      prodDataCache = data;
+      productionRender(data);
+    })
+    .catch(err => {
+      console.log('Fetch failed, trying JSONP:', err.message);
+      // Strategy 2: JSONP fallback
+      productionFetchJSONP();
+    });
+
+  // Strategy 3: Mock data fallback after 5 seconds
+  setTimeout(() => {
+    if (!prodDataCache && container.querySelector('.prod-loading')) {
+      console.log('All strategies failed, showing mock data');
+      productionRenderMock();
+    }
+  }, 5000);
+}
+
+function productionFetchJSONP() {
+  const container = document.getElementById('prodCalendar');
+  const script = document.createElement('script');
+  const callbackName = 'prodCb_' + Date.now();
+
+  window[callbackName] = function(data) {
+    prodDataCache = data;
+    productionRender(data);
+    delete window[callbackName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+  };
+
+  script.src = PROD_API_URL + '&callback=' + callbackName;
+  script.onerror = function() {
+    console.log('JSONP also failed');
+    delete window[callbackName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+    // Don't show error yet — mock fallback will kick in after 5s
+  };
+
+  document.head.appendChild(script);
+}
+
+
+
+function sanitizeText(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/EDC/gi, 'E*C')
+    .replace(/Kembali ke Alam/gi, 'Kembali ke A***m');
+}
+
+function productionRender(data) {
+  if (!data || !data.success) {
+    productionRenderError(data && data.error ? data.error : 'Unknown error');
+    return;
+  }
+
+  const sumRB = document.getElementById('sumTotalRB');
+  const sumHB = document.getElementById('sumTotalHB');
+  const sumBest = document.getElementById('sumBest');
+  const sumMatured = document.getElementById('sumMatured');
+  if (sumRB) sumRB.textContent = data.summary.totalRB || 0;
+  if (sumHB) sumHB.textContent = data.summary.totalHB || 0;
+  if (sumBest) sumBest.textContent = data.summary.best || 0;
+  if (sumMatured) sumMatured.textContent = data.summary.peak || 0;
+
+  const container = document.getElementById('prodCalendar');
+  const products = groupByProduct(data.calendar || [], data.stock);
+  if (products.length === 0) {
+    container.innerHTML = `
+      <div class="prod-empty">
+        <div style="font-size:3rem; margin-bottom:12px;">☕</div>
+        <p>${currentLang === 'id' ? 'Tidak ada produksi dalam 30 hari terakhir.' : 'No production in the last 30 days.'}</p>
+      </div>
+    `;
+  } else {
+    container.innerHTML = '<div class="prod-calendar">' + products.map(p => productionProductCard(p)).join('') + '</div>';
+  }
+}
+
+function groupByProduct(calendar, stock) {
+  const map = {};
+  calendar.forEach(day => {
+    const dayMeta = { date: day.date, dateDisplay: day.dateDisplay, ageDays: day.ageDays, cluster: day.cluster, clusterLabel: day.clusterLabel };
+    (day.rb || []).forEach(item => {
+      const key = sanitizeText(item.name);
+      if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'RB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || '') });
+    });
+    (day.hb || []).forEach(item => {
+      const key = sanitizeText(item.name);
+      if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'HB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || '') });
+    });
+  });
+
+  const stockMap = {};
+  if (stock) {
+    (stock.rb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+    (stock.hb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+    (stock.gb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+  }
+
+  const products = Object.values(map).map(p => {
+    const batchMap = {};
+    p.batches.forEach(b => {
+      if (batchMap[b.batchNo]) {
+        const existing = batchMap[b.batchNo];
+        if (b.rawMaterial && b.rawMaterial !== existing.rawMaterial) {
+          const mats = new Set([existing.rawMaterial, b.rawMaterial].filter(Boolean));
+          existing.rawMaterial = sanitizeText(Array.from(mats).join(', '));
+        }
+        if (new Date(b.date) > new Date(existing.date)) {
+          existing.date = b.date;
+          existing.dateDisplay = b.dateDisplay;
+          existing.ageDays = b.ageDays;
+          existing.cluster = b.cluster;
+          existing.clusterLabel = b.clusterLabel;
+        }
+      } else {
+        batchMap[b.batchNo] = { ...b };
+      }
+    });
+    p.batches = Object.values(batchMap);
+
+    p.batches.forEach(b => {
+      const sisa = stockMap[b.batchNo];
+      b.stock = (sisa !== undefined && sisa > 0) ? sisa : 0;
+      b.hasStock = sisa !== undefined && sisa > 0;
+    });
+    p.batches.sort((a, b) => new Date(b.date) - new Date(a.date));
+    p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'resting';
+    return p;
+  });
+
+  products.sort((a, b) => {
+    const dateA = a.batches[0] ? new Date(a.batches[0].date) : new Date(0);
+    const dateB = b.batches[0] ? new Date(b.batches[0].date) : new Date(0);
+    if (dateB - dateA !== 0) return dateB - dateA;
+    return a.name.localeCompare(b.name);
+  });
+
+  return products;
+}
+
+function productionProductCard(product) {
+  const clusterClass = product.overallCluster;
+  const badgeClass = 'badge-' + product.overallCluster;
+  const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Resting';
+  const typeIcon = product.type === 'HB' ? '🫘' : '☕';
+  const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';
+
+  const batchesHtml = product.batches.map(batch => {
+    const ageText = currentLang === 'id'
+      ? (batch.ageDays === 0 ? 'Hari ini' : batch.ageDays + ' hari yang lalu')
+      : (batch.ageDays === 0 ? 'Today' : batch.ageDays + ' days ago');
+    const batchClusterClass = 'badge-' + batch.cluster;
+    const stockHtml = batch.hasStock
+      ? `<span class="prod-batch-stock in">${batch.stock} kg</span>`
+      : `<span class="prod-batch-stock out">Sold Out</span>`;
+
+    return `
+      <div class="prod-batch-row">
+        <div class="prod-batch-main">
+          <div class="prod-batch-date">${batch.dateDisplay}</div>
+          <div class="prod-batch-age">${ageText}</div>
+        </div>
+        <div class="prod-batch-detail">
+          <div class="prod-batch-line">
+            <span class="prod-batch-label">Batch:</span>
+            <span class="prod-batch-val">${escapeHtml(batch.batchNo)}</span>
+          </div>
+          <div class="prod-batch-line">
+            <span class="prod-batch-label">${currentLang === 'id' ? 'Berat' : 'Weight'}:</span>
+            <span class="prod-batch-val">${batch.weight} kg</span>
+          </div>
+          ${batch.rawMaterial ? `
+            <div class="prod-batch-line">
+              <span class="prod-batch-label">${currentLang === 'id' ? 'Bahan' : 'Material'}:</span>
+              <span class="prod-batch-val">${escapeHtml(batch.rawMaterial)}</span>
+            </div>
+          ` : ''}
+        </div>
+        <div class="prod-batch-right">
+          <span class="prod-batch-badge ${batchClusterClass}">${batch.clusterLabel}</span>
+          ${stockHtml}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="prod-day ${clusterClass} collapsed" onclick="toggleProductCard(this)">
+      <div class="prod-day-header">
+        <div style="flex:1; min-width:0;">
+          <div class="prod-day-date">${typeIcon} ${escapeHtml(product.name)}</div>
+          <div class="prod-day-age">${typeLabel} • ${product.batches.length} ${currentLang === 'id' ? 'batch' : 'batches'}</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="prod-day-badge ${badgeClass}">${clusterLabel}</span>
+          <span class="prod-toggle-icon">▶</span>
+        </div>
+      </div>
+      <div class="prod-day-body">
+        ${batchesHtml}
+      </div>
+    </div>
+  `;
+}
+
+function toggleProductCard(card) {
+  card.classList.toggle('collapsed');
+  card.classList.toggle('expanded');
+}
+
+function productionRenderError(msg) {
+  const container = document.getElementById('prodCalendar');
+  if (!container) return;
+  container.innerHTML = `
+    <div class="prod-error">
+      <strong>${currentLang === 'id' ? 'Error' : 'Error'}</strong><br>
+      ${escapeHtml(msg)}<br><br>
+      <button class="prod-refresh" onclick="productionRefresh()">
+        <span>↻</span> ${currentLang === 'id' ? 'Coba Lagi' : 'Retry'}
+      </button>
+    </div>
+  `;
+}
+
+function productionRenderMock() {
+  const mockData = {
+    success: true,
+    calendar: [
+      {
+        date: '2026-08-08', dateDisplay: '08 Agu 2026', ageDays: 0, cluster: 'resting', clusterLabel: 'Resting',
+        rb: [{ batchNo: '0808-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung' }],
+        hb: []
+      },
+      {
+        date: '2026-08-06', dateDisplay: '06 Agu 2026', ageDays: 2, cluster: 'resting', clusterLabel: 'Resting',
+        rb: [{ batchNo: '0608-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung' }],
+        hb: [{ batchNo: '0608-MAS594793938', name: 'Houseblend 40% Robusta Temanggung 60% Arabika Gayo Premium', weight: 20, rawMaterial: 'RB Robusta Temanggung' }]
+      },
+      {
+        date: '2026-08-04', dateDisplay: '04 Agu 2026', ageDays: 4, cluster: 'resting', clusterLabel: 'Resting',
+        rb: [{ batchNo: '0408-RB05', name: 'RB Gayo', weight: 25.8, rawMaterial: 'GB Gayo' }],
+        hb: [{ batchNo: '0408-HB01207030C', name: 'RB Houseblend 70% Robusta 30% Arabika Classic', weight: 2, rawMaterial: 'RB Robusta Temanggung' }]
+      },
+      {
+        date: '2026-08-03', dateDisplay: '03 Agu 2026', ageDays: 5, cluster: 'optimum', clusterLabel: 'Optimum',
+        rb: [],
+        hb: [{ batchNo: '0308-MAS192093463', name: 'Houseblend 70% Arabika Jawa Barat 30% Arabika Bali Natural', weight: 1, rawMaterial: 'RB Arabika Jawa Barat105' }]
+      },
+      {
+        date: '2026-07-24', dateDisplay: '24 Jul 2026', ageDays: 15, cluster: 'peak', clusterLabel: 'Peak',
+        rb: [
+          { batchNo: '2407-RB20', name: 'RB Arabika Jawa Barat105', weight: 13.3, rawMaterial: 'GB Arabika Jawa Barat105' },
+          { batchNo: '2407-RB01', name: 'RB Robusta Temanggung', weight: 25.4, rawMaterial: 'GB Robusta Temanggung' }
+        ],
+        hb: [
+          { batchNo: '2407-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural' }
+        ]
+      },
+      {
+        date: '2026-07-21', dateDisplay: '21 Jul 2026', ageDays: 18, cluster: 'peak', clusterLabel: 'Peak',
+        rb: [{ batchNo: '2107-RB01', name: 'RB Robusta Temanggung', weight: 13.3, rawMaterial: 'GB Robusta Temanggung' }],
+        hb: [
+          { batchNo: '2107-HB01205050C', name: 'RB Houseblend 50% Robusta 50% Arabika Classic', weight: 5, rawMaterial: 'RB Robusta Temanggung' },
+          { batchNo: '2107-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural' }
+        ]
+      }
+    ],
+    stock: {
+      rb: [
+        { name: 'RB Arabika Jawa Barat', batchNo: '0808-RB01', sisa: 12.5 },
+        { name: 'RB Robusta Temanggung', batchNo: '0608-RB01', sisa: 26.6 },
+        { name: 'RB Gayo', batchNo: '0408-RB05', sisa: 13.25 },
+        { name: 'RB Arabika Jawa Barat105', batchNo: '2407-RB20', sisa: 39.1 },
+        { name: 'RB Arabica Ciwidey Natural', batchNo: '2407-HB20144060', sisa: 5 }
+      ],
+      hb: [
+        { name: 'RB Houseblend 70% Robusta 30% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 10 },
+        { name: 'RB Houseblend 50% Robusta 50% Arabika Classic', batchNo: '2107-HB01205050C', sisa: 0.5 },
+        { name: 'RB Houseblend 40% Robusta 60% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 3 },
+        { name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', batchNo: '2407-HB20144060', sisa: 5 }
+      ],
+      gb: [
+        { name: 'GB Arabika Jawa Barat Asalan', batchNo: 'GB001', sisa: 54.7 },
+        { name: 'GB Robusta Temanggung', batchNo: 'GB002', sisa: 87.4 },
+        { name: 'GB Gayo', batchNo: 'GB003', sisa: 100.65 },
+        { name: 'GB Arabika Jawa Barat105', batchNo: 'GB004', sisa: 10 }
+      ]
+    },
+    summary: { totalRB: 4, totalHB: 5, optimum: 1, peak: 2 }
+  };
+  productionRender(mockData);
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+</script>
+</body>
+</html>
