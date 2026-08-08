@@ -328,9 +328,133 @@ input[type=range]::-moz-range-track{ height:6px; border-radius:4px; background:v
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:.001s !important; transition-duration:.001s !important; }
 }
+
+/* ===== TOP NAVBAR ===== */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+  background: rgba(28, 26, 22, 0.96); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(222, 210, 185, 0.15);
+}
+.topnav-wrap {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; height: 60px;
+}
+.topnav-logo {
+  font-family: 'IBM Plex Serif', serif; font-size: 1.3rem; font-weight: 600;
+  color: #EFE4D5; letter-spacing: -0.02em; text-decoration: none;
+}
+.topnav-links {
+  display: flex; gap: 24px; align-items: center;
+}
+.topnav-links a {
+  font-size: 0.8rem; font-weight: 500; color: #CFC0AA;
+  text-decoration: none; transition: color 0.2s;
+}
+.topnav-links a:hover { color: #fff; }
+.topnav-links a.active { color: #D4B565; font-weight: 600; }
+.topnav-cta {
+  font-size: 0.75rem; font-weight: 600; color: #D4B565;
+  padding: 6px 16px; border-radius: 100px;
+  border: 1.5px solid rgba(212, 181, 101, 0.4); background: transparent;
+  text-decoration: none; transition: all 0.25s;
+}
+.topnav-cta:hover { background: rgba(212, 181, 101, 0.15); border-color: #D4B565; }
+.topnav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  font-size: 1.4rem; color: #EFE4D5;
+}
+
+/* Language Switcher */
+.topnav .lang-switch {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 0.7rem; font-weight: 600; color: #8B7A62;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(222,210,185,0.2);
+  border-radius: 100px; padding: 2px; cursor: pointer;
+}
+.topnav .lang-switch span {
+  padding: 3px 9px; border-radius: 100px; transition: all 0.2s;
+  color: #8B7A62;
+}
+.topnav .lang-switch span.active {
+  background: rgba(255,255,255,0.1); color: #EFE4D5;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+  background: #1C1A16; z-index: 1999; padding: 20px 24px;
+  flex-direction: column; gap: 2px;
+}
+.mobile-menu.active { display: flex; }
+.mobile-menu a {
+  font-size: 1.05rem; font-weight: 500; padding: 12px 0;
+  border-bottom: 1px solid rgba(222,210,185,0.1); color: #CFC0AA;
+  text-decoration: none;
+}
+.mobile-menu a:hover { color: #fff; }
+.lang-switch-mobile {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 0.75rem; font-weight: 600; color: #8B7A62;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(222,210,185,0.2);
+  border-radius: 100px; padding: 2px; margin-bottom: 12px; width: fit-content;
+}
+.lang-switch-mobile span {
+  padding: 4px 10px; border-radius: 100px; color: #8B7A62;
+}
+.lang-switch-mobile span.active {
+  background: rgba(255,255,255,0.1); color: #EFE4D5;
+}
+
+@media (max-width: 900px) {
+  .topnav-links { display: none; }
+  .topnav-toggle { display: block; }
+}
+
+/* Adjust app for navbar */
+.app { padding-top: 60px; }
+.rail { top: 60px; height: calc(100vh - 60px); }
+@media (max-width: 900px) {
+  .app { padding-top: 60px; }
+  .rail { position: static; height: auto; }
+}
 </style>
+<base target="_blank">
 </head>
 <body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="topnav">
+  <div class="topnav-wrap">
+    <a href="index.html" class="topnav-logo">Q.co</a>
+    <div class="topnav-links">
+      <a href="coffee-lab.html" class="active">Q.co Lab</a>
+      <a href="roasting.html">Q.co Roasting</a>
+      <a href="qbridge.html">QBridge</a>
+      <a href="qaffiliator.html">QAffiliator</a>
+      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+      <div class="lang-switch" onclick="toggleLang()">
+        <span class="active" id="lang-id">ID</span>
+        <span id="lang-en">EN</span>
+      </div>
+      <a href="investors.html" class="topnav-cta">Investor</a>
+    </div>
+    <button class="topnav-toggle" onclick="toggleMobile()" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="lang-switch-mobile" onclick="toggleLang()">
+    <span class="active" id="lang-id-m">ID</span>
+    <span id="lang-en-m">EN</span>
+  </div>
+  <a href="coffee-lab.html">Q.co Lab</a>
+  <a href="roasting.html">Q.co Roasting</a>
+  <a href="qbridge.html">QBridge</a>
+  <a href="qaffiliator.html">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+  <a href="investors.html">Investor Portal</a>
+</div>
 
 <div class="app">
 
@@ -1201,6 +1325,11 @@ function renderTable(){
 /* =====================================================================
    9. START
 ===================================================================== */
+
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+
 loadData();
 </script>
 </body>
