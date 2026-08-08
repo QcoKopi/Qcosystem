@@ -468,7 +468,60 @@ a { text-decoration:none; color:inherit; }
   cursor: pointer; transition: all 0.2s;
 }
 .prod-refresh:hover { background: var(--accent-light, #e8d5b5); color: var(--text, #1a1a1a); }
+
+/* ===== PRODUCT CARD (per produk, bukan per tanggal) ===== */
+.prod-stock-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.prod-stock-badge.in {
+  background: #e8f5e9; color: #2e7d32; border: 1.5px solid #a5d6a7;
+}
+.prod-stock-badge.out {
+  background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a;
+}
+
+.prod-batch-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px; background: var(--bg-warm, #f5f3ee);
+  border-radius: 8px; margin-bottom: 8px;
+  border: 1px solid var(--border, #e8e6e1); transition: all 0.2s;
+  position: relative;
+}
+.prod-batch-row:hover { background: #e8e4da; }
+
+.prod-batch-main {
+  min-width: 130px; flex-shrink: 0;
+}
+.prod-batch-date {
+  font-family: var(--font-head, Georgia, serif); font-size: 0.9rem;
+  color: var(--text, #1a1a1a); font-weight: 600;
+}
+.prod-batch-age {
+  font-size: 0.75rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
+}
+
+.prod-batch-detail {
+  flex: 1; display: flex; flex-direction: column; gap: 3px;
+}
+.prod-batch-line {
+  display: flex; gap: 6px; font-size: 0.8rem;
+}
+.prod-batch-label {
+  color: var(--text-muted, #9a9a9a); min-width: 55px; flex-shrink: 0;
+}
+.prod-batch-val {
+  color: var(--text-sec, #5c5c5c); font-weight: 500;
+  font-family: monospace; font-size: 0.78rem;
+}
+
+.prod-batch-badge {
+  font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 100px;
+  text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+  align-self: flex-start; margin-top: 2px;
+}
 </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -708,11 +761,7 @@ a { text-decoration:none; color:inherit; }
       </div>
     </div>
 
-    <!-- Stock Panel -->
-    <div class="prod-stock-panel" id="prodStockPanel" style="display:none;">
-      <h3 data-id="Stok Tersedia (Sisa)" data-en="Current Stock (Remaining)">Current Stock (Remaining)</h3>
-      <div class="prod-stock-grid" id="prodStockGrid"></div>
-    </div>
+
   </div>
 </section>
 
@@ -1021,8 +1070,8 @@ function productionRender(data) {
   if (sumMatured) sumMatured.textContent = data.summary.matured || 0;
 
   const container = document.getElementById('prodCalendar');
-  const calendar = data.calendar || [];
-  if (calendar.length === 0) {
+  const products = groupByProduct(data.calendar || [], data.stock);
+  if (products.length === 0) {
     container.innerHTML = `
       <div class="prod-empty">
         <div style="font-size:3rem; margin-bottom:12px;">☕</div>
@@ -1030,115 +1079,116 @@ function productionRender(data) {
       </div>
     `;
   } else {
-    container.innerHTML = '<div class="prod-calendar">' + calendar.map(day => productionDayCard(day)).join('') + '</div>';
+    container.innerHTML = '<div class="prod-calendar">' + products.map(p => productionProductCard(p)).join('') + '</div>';
   }
-  productionRenderStock(data.stock);
 }
 
-function productionDayCard(day) {
-  const clusterClass = day.cluster;
-  const badgeClass = 'badge-' + day.cluster;
-  const ageText = currentLang === 'id'
-    ? (day.ageDays === 0 ? 'Hari ini' : day.ageDays + ' hari yang lalu')
-    : (day.ageDays === 0 ? 'Today' : day.ageDays + ' days ago');
-  let rbHtml = '';
-  if (day.rb && day.rb.length > 0) {
-    rbHtml = `
-      <div class="prod-section-title">☕ ${currentLang === 'id' ? 'Roasted Beans (RB)' : 'Roasted Beans (RB)'}</div>
-      ${day.rb.map(item => `
-        <div class="prod-item">
-          <div>
-            <div class="prod-item-name">${escapeHtml(item.name)}</div>
-            <div class="prod-item-batch">${escapeHtml(item.batchNo)}</div>
-            ${item.rawMaterial ? `<div class="prod-item-meta">${currentLang === 'id' ? 'Bahan: ' : 'Material: '}${escapeHtml(item.rawMaterial)}</div>` : ''}
-          </div>
-          <div class="prod-item-qty">${item.weight || 0}<span>kg</span></div>
-        </div>
-      `).join('')}
-    `;
+function groupByProduct(calendar, stock) {
+  const map = {};
+  // Flatten all rb and hb items from calendar
+  calendar.forEach(day => {
+    const dayMeta = { date: day.date, dateDisplay: day.dateDisplay, ageDays: day.ageDays, cluster: day.cluster, clusterLabel: day.clusterLabel };
+    (day.rb || []).forEach(item => {
+      const key = item.name;
+      if (!map[key]) map[key] = { name: item.name, type: 'RB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: item.rawMaterial || '' });
+    });
+    (day.hb || []).forEach(item => {
+      const key = item.name;
+      if (!map[key]) map[key] = { name: item.name, type: 'HB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: item.rawMaterial || '' });
+    });
+  });
+
+  // Attach stock (exact match by name)
+  const stockMap = {};
+  if (stock) {
+    (stock.rb || []).forEach(s => { stockMap[s.name] = s.sisa; });
+    (stock.hb || []).forEach(s => { stockMap[s.name] = s.sisa; });
+    (stock.gb || []).forEach(s => { stockMap[s.name] = s.sisa; });
   }
-  let hbHtml = '';
-  if (day.hb && day.hb.length > 0) {
-    hbHtml = `
-      <div class="prod-section-title" style="margin-top:12px;">🫘 ${currentLang === 'id' ? 'Houseblend (HB)' : 'Houseblend (HB)'}</div>
-      ${day.hb.map(item => `
-        <div class="prod-item">
-          <div>
-            <div class="prod-item-name">${escapeHtml(item.name)}</div>
-            <div class="prod-item-batch">${escapeHtml(item.batchNo)}</div>
-            ${item.rawMaterial ? `<div class="prod-item-meta">${currentLang === 'id' ? 'Bahan: ' : 'Material: '}${escapeHtml(item.rawMaterial)}</div>` : ''}
-          </div>
-          <div class="prod-item-qty">${item.weight || 0}<span>kg</span></div>
+
+  const products = Object.values(map).map(p => {
+    const sisa = stockMap[p.name];
+    p.stock = (sisa !== undefined && sisa > 0) ? sisa : 0;
+    p.hasStock = sisa !== undefined && sisa > 0;
+    // Sort batches by date descending
+    p.batches.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Determine overall cluster from newest batch
+    p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'fresh';
+    return p;
+  });
+
+  // Sort: products with newest batch first, then by name
+  products.sort((a, b) => {
+    const dateA = a.batches[0] ? new Date(a.batches[0].date) : new Date(0);
+    const dateB = b.batches[0] ? new Date(b.batches[0].date) : new Date(0);
+    if (dateB - dateA !== 0) return dateB - dateA;
+    return a.name.localeCompare(b.name);
+  });
+
+  return products;
+}
+
+function productionProductCard(product) {
+  const clusterClass = product.overallCluster;
+  const badgeClass = 'badge-' + product.overallCluster;
+  const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Too Fresh';
+  const typeIcon = product.type === 'HB' ? '🫘' : '☕';
+  const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';
+  const stockHtml = product.hasStock
+    ? `<span class="prod-stock-badge in">${product.stock} kg</span>`
+    : `<span class="prod-stock-badge out">Sold Out</span>`;
+
+  const batchesHtml = product.batches.map(batch => {
+    const ageText = currentLang === 'id'
+      ? (batch.ageDays === 0 ? 'Hari ini' : batch.ageDays + ' hari yang lalu')
+      : (batch.ageDays === 0 ? 'Today' : batch.ageDays + ' days ago');
+    const batchClusterClass = 'badge-' + batch.cluster;
+    return `
+      <div class="prod-batch-row">
+        <div class="prod-batch-main">
+          <div class="prod-batch-date">${batch.dateDisplay}</div>
+          <div class="prod-batch-age">${ageText}</div>
         </div>
-      `).join('')}
+        <div class="prod-batch-detail">
+          <div class="prod-batch-line">
+            <span class="prod-batch-label">Batch:</span>
+            <span class="prod-batch-val">${escapeHtml(batch.batchNo)}</span>
+          </div>
+          <div class="prod-batch-line">
+            <span class="prod-batch-label">${currentLang === 'id' ? 'Berat' : 'Weight'}:</span>
+            <span class="prod-batch-val">${batch.weight} kg</span>
+          </div>
+          ${batch.rawMaterial ? `
+            <div class="prod-batch-line">
+              <span class="prod-batch-label">${currentLang === 'id' ? 'Bahan' : 'Material'}:</span>
+              <span class="prod-batch-val">${escapeHtml(batch.rawMaterial)}</span>
+            </div>
+          ` : ''}
+        </div>
+        <span class="prod-batch-badge ${batchClusterClass}">${batch.clusterLabel}</span>
+      </div>
     `;
-  }
+  }).join('');
+
   return `
     <div class="prod-day ${clusterClass}">
       <div class="prod-day-header">
-        <div>
-          <div class="prod-day-date">${day.dateDisplay}</div>
-          <div class="prod-day-age">${ageText}</div>
+        <div style="flex:1;">
+          <div class="prod-day-date">${typeIcon} ${escapeHtml(product.name)}</div>
+          <div class="prod-day-age">${typeLabel} • ${product.batches.length} ${currentLang === 'id' ? 'batch' : 'batches'}</div>
         </div>
-        <span class="prod-day-badge ${badgeClass}">${day.clusterLabel}</span>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+          <span class="prod-day-badge ${badgeClass}">${clusterLabel}</span>
+          ${stockHtml}
+        </div>
       </div>
       <div class="prod-day-body">
-        ${rbHtml}
-        ${hbHtml}
+        ${batchesHtml}
       </div>
     </div>
   `;
-}
-
-function productionRenderStock(stock) {
-  if (!stock) return;
-  const panel = document.getElementById('prodStockPanel');
-  const grid = document.getElementById('prodStockGrid');
-  if (!panel || !grid) return;
-  const hasStock = (stock.rb && stock.rb.length > 0) || (stock.hb && stock.hb.length > 0) || (stock.gb && stock.gb.length > 0);
-  if (!hasStock) { panel.style.display = 'none'; return; }
-  panel.style.display = 'block';
-  const cols = [];
-  if (stock.rb && stock.rb.length > 0) {
-    cols.push(`
-      <div class="prod-stock-col">
-        <h4>☕ Roasted Beans (RB)</h4>
-        ${stock.rb.map(s => `
-          <div class="prod-stock-row">
-            <span class="prod-stock-name">${escapeHtml(s.name)}</span>
-            <span class="prod-stock-qty">${s.sisa} kg</span>
-          </div>
-        `).join('')}
-      </div>
-    `);
-  }
-  if (stock.hb && stock.hb.length > 0) {
-    cols.push(`
-      <div class="prod-stock-col">
-        <h4>🫘 Houseblend (HB)</h4>
-        ${stock.hb.map(s => `
-          <div class="prod-stock-row">
-            <span class="prod-stock-name">${escapeHtml(s.name)}</span>
-            <span class="prod-stock-qty">${s.sisa} kg</span>
-          </div>
-        `).join('')}
-      </div>
-    `);
-  }
-  if (stock.gb && stock.gb.length > 0) {
-    cols.push(`
-      <div class="prod-stock-col">
-        <h4>🌿 Green Beans (GB)</h4>
-        ${stock.gb.map(s => `
-          <div class="prod-stock-row">
-            <span class="prod-stock-name">${escapeHtml(s.name)}</span>
-            <span class="prod-stock-qty">${s.sisa} kg</span>
-          </div>
-        `).join('')}
-      </div>
-    `);
-  }
-  grid.innerHTML = cols.join('');
 }
 
 function productionRenderError(msg) {
