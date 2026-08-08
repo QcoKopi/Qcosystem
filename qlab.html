@@ -470,20 +470,38 @@ a { text-decoration:none; color:inherit; }
 .prod-refresh:hover { background: var(--accent-light, #e8d5b5); color: var(--text, #1a1a1a); }
 
 /* ===== PRODUCT CARD (per produk, bukan per tanggal) ===== */
-.prod-stock-badge {
-  display: inline-block; padding: 3px 10px; border-radius: 100px;
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+
+/* Fix header layout — prevent overflow */
+.prod-day-header {
+  padding: 14px 18px 10px;
+  gap: 10px;
 }
-.prod-stock-badge.in {
-  background: #e8f5e9; color: #2e7d32; border: 1.5px solid #a5d6a7;
+.prod-day-date {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.3;
+  word-break: break-word;
 }
-.prod-stock-badge.out {
-  background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a;
+.prod-day-badge {
+  font-size: 0.6rem;
+  padding: 3px 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
+/* Wider cards */
+.prod-calendar {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+@media (max-width: 400px) {
+  .prod-calendar {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Batch row with stock per batch */
 .prod-batch-row {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 12px; background: var(--bg-warm, #f5f3ee);
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px; background: var(--bg-warm, #f5f3ee);
   border-radius: 8px; margin-bottom: 8px;
   border: 1px solid var(--border, #e8e6e1); transition: all 0.2s;
   position: relative;
@@ -491,34 +509,54 @@ a { text-decoration:none; color:inherit; }
 .prod-batch-row:hover { background: #e8e4da; }
 
 .prod-batch-main {
-  min-width: 130px; flex-shrink: 0;
+  min-width: 110px; flex-shrink: 0;
 }
 .prod-batch-date {
-  font-family: var(--font-head, Georgia, serif); font-size: 0.9rem;
+  font-family: var(--font-head, Georgia, serif); font-size: 0.85rem;
   color: var(--text, #1a1a1a); font-weight: 600;
 }
 .prod-batch-age {
-  font-size: 0.75rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
+  font-size: 0.7rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
 }
 
 .prod-batch-detail {
-  flex: 1; display: flex; flex-direction: column; gap: 3px;
+  flex: 1; display: flex; flex-direction: column; gap: 2px;
+  min-width: 0;
 }
 .prod-batch-line {
-  display: flex; gap: 6px; font-size: 0.8rem;
+  display: flex; gap: 6px; font-size: 0.78rem;
 }
 .prod-batch-label {
-  color: var(--text-muted, #9a9a9a); min-width: 55px; flex-shrink: 0;
+  color: var(--text-muted, #9a9a9a); min-width: 50px; flex-shrink: 0;
 }
 .prod-batch-val {
   color: var(--text-sec, #5c5c5c); font-weight: 500;
-  font-family: monospace; font-size: 0.78rem;
+  font-family: monospace; font-size: 0.75rem;
+  word-break: break-all;
+}
+
+.prod-batch-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 4px;
+  flex-shrink: 0; min-width: 70px;
 }
 
 .prod-batch-badge {
-  font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 100px;
+  font-size: 0.6rem; font-weight: 700; padding: 2px 7px; border-radius: 100px;
   text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
-  align-self: flex-start; margin-top: 2px;
+}
+
+/* Stock per batch */
+.prod-batch-stock {
+  display: inline-block; padding: 2px 8px; border-radius: 100px;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.prod-batch-stock.in {
+  background: #e8f5e9; color: #2e7d32; border: 1.5px solid #a5d6a7;
+}
+.prod-batch-stock.out {
+  background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a;
 }
 </style>
 <base target="_blank">
@@ -1100,21 +1138,24 @@ function groupByProduct(calendar, stock) {
     });
   });
 
-  // Attach stock (exact match by name)
+  // Build stock map by batchNo (exact match)
   const stockMap = {};
   if (stock) {
-    (stock.rb || []).forEach(s => { stockMap[s.name] = s.sisa; });
-    (stock.hb || []).forEach(s => { stockMap[s.name] = s.sisa; });
-    (stock.gb || []).forEach(s => { stockMap[s.name] = s.sisa; });
+    (stock.rb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+    (stock.hb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+    (stock.gb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
   }
 
   const products = Object.values(map).map(p => {
-    const sisa = stockMap[p.name];
-    p.stock = (sisa !== undefined && sisa > 0) ? sisa : 0;
-    p.hasStock = sisa !== undefined && sisa > 0;
+    // Attach stock per batch
+    p.batches.forEach(b => {
+      const sisa = stockMap[b.batchNo];
+      b.stock = (sisa !== undefined && sisa > 0) ? sisa : 0;
+      b.hasStock = sisa !== undefined && sisa > 0;
+    });
     // Sort batches by date descending
     p.batches.sort((a, b) => new Date(b.date) - new Date(a.date));
-    // Determine overall cluster from newest batch
+    // Overall cluster from newest batch
     p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'fresh';
     return p;
   });
@@ -1136,15 +1177,16 @@ function productionProductCard(product) {
   const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Too Fresh';
   const typeIcon = product.type === 'HB' ? '🫘' : '☕';
   const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';
-  const stockHtml = product.hasStock
-    ? `<span class="prod-stock-badge in">${product.stock} kg</span>`
-    : `<span class="prod-stock-badge out">Sold Out</span>`;
 
   const batchesHtml = product.batches.map(batch => {
     const ageText = currentLang === 'id'
       ? (batch.ageDays === 0 ? 'Hari ini' : batch.ageDays + ' hari yang lalu')
       : (batch.ageDays === 0 ? 'Today' : batch.ageDays + ' days ago');
     const batchClusterClass = 'badge-' + batch.cluster;
+    const stockHtml = batch.hasStock
+      ? `<span class="prod-batch-stock in">${batch.stock} kg</span>`
+      : `<span class="prod-batch-stock out">Sold Out</span>`;
+
     return `
       <div class="prod-batch-row">
         <div class="prod-batch-main">
@@ -1167,7 +1209,10 @@ function productionProductCard(product) {
             </div>
           ` : ''}
         </div>
-        <span class="prod-batch-badge ${batchClusterClass}">${batch.clusterLabel}</span>
+        <div class="prod-batch-right">
+          <span class="prod-batch-badge ${batchClusterClass}">${batch.clusterLabel}</span>
+          ${stockHtml}
+        </div>
       </div>
     `;
   }).join('');
@@ -1175,14 +1220,11 @@ function productionProductCard(product) {
   return `
     <div class="prod-day ${clusterClass}">
       <div class="prod-day-header">
-        <div style="flex:1;">
+        <div style="flex:1; min-width:0;">
           <div class="prod-day-date">${typeIcon} ${escapeHtml(product.name)}</div>
           <div class="prod-day-age">${typeLabel} • ${product.batches.length} ${currentLang === 'id' ? 'batch' : 'batches'}</div>
         </div>
-        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-          <span class="prod-day-badge ${badgeClass}">${clusterLabel}</span>
-          ${stockHtml}
-        </div>
+        <span class="prod-day-badge ${badgeClass}">${clusterLabel}</span>
       </div>
       <div class="prod-day-body">
         ${batchesHtml}
@@ -1256,31 +1298,29 @@ function productionRenderMock() {
     ],
     stock: {
       rb: [
-        { name: 'RB Arabika Jawa Barat', sisa: 12.5 },
-        { name: 'RB Robusta Temanggung', sisa: 26.6 },
-        { name: 'RB Gayo', sisa: 13.25 },
-        { name: 'RB Arabika Jawa Barat105', sisa: 39.1 },
-        { name: 'RB Arabica Ciwidey Natural', sisa: 5 }
+        { name: 'RB Arabika Jawa Barat', batchNo: '0808-RB01', sisa: 12.5 },
+        { name: 'RB Robusta Temanggung', batchNo: '0608-RB01', sisa: 26.6 },
+        { name: 'RB Gayo', batchNo: '0408-RB05', sisa: 13.25 },
+        { name: 'RB Arabika Jawa Barat105', batchNo: '2407-RB20', sisa: 39.1 },
+        { name: 'RB Arabica Ciwidey Natural', batchNo: '2407-HB20144060', sisa: 5 }
       ],
       hb: [
-        { name: 'RB Houseblend 70% Robusta 30% Arabika NEW', sisa: 10 },
-        { name: 'RB Houseblend 50% Robusta 50% Arabika Classic', sisa: 0.5 },
-        { name: 'RB Houseblend 40% Robusta 60% Arabika NEW', sisa: 3 },
-        { name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% EDC', sisa: 5 }
+        { name: 'RB Houseblend 70% Robusta 30% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 10 },
+        { name: 'RB Houseblend 50% Robusta 50% Arabika Classic', batchNo: '2107-HB01205050C', sisa: 0.5 },
+        { name: 'RB Houseblend 40% Robusta 60% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 3 },
+        { name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% EDC', batchNo: '2407-HB20144060', sisa: 5 }
       ],
       gb: [
-        { name: 'GB Arabika Jawa Barat Asalan', sisa: 54.7 },
-        { name: 'GB Robusta Temanggung', sisa: 87.4 },
-        { name: 'GB Gayo', sisa: 100.65 },
-        { name: 'GB Arabika Jawa Barat105', sisa: 10 }
+        { name: 'GB Arabika Jawa Barat Asalan', batchNo: 'GB001', sisa: 54.7 },
+        { name: 'GB Robusta Temanggung', batchNo: 'GB002', sisa: 87.4 },
+        { name: 'GB Gayo', batchNo: 'GB003', sisa: 100.65 },
+        { name: 'GB Arabika Jawa Barat105', batchNo: 'GB004', sisa: 10 }
       ]
     },
     summary: { totalRB: 5, totalHB: 8, best: 2, matured: 2 }
   };
   productionRender(mockData);
-}
-
-function escapeHtml(text) {
+}function escapeHtml(text) {
   if (!text) return '';
   const div = document.createElement('div');
   div.textContent = text;
