@@ -1147,6 +1147,30 @@ function groupByProduct(calendar, stock) {
   }
 
   const products = Object.values(map).map(p => {
+    // Deduplicate batches by batchNo (HB can have multiple rows for multiple raw materials)
+    const batchMap = {};
+    p.batches.forEach(b => {
+      if (batchMap[b.batchNo]) {
+        // Merge raw materials (avoid duplicates)
+        const existing = batchMap[b.batchNo];
+        if (b.rawMaterial && b.rawMaterial !== existing.rawMaterial) {
+          const mats = new Set([existing.rawMaterial, b.rawMaterial].filter(Boolean));
+          existing.rawMaterial = Array.from(mats).join(', ');
+        }
+        // Use the latest date/cluster if same batch appears on different days (shouldn't happen, but safe)
+        if (new Date(b.date) > new Date(existing.date)) {
+          existing.date = b.date;
+          existing.dateDisplay = b.dateDisplay;
+          existing.ageDays = b.ageDays;
+          existing.cluster = b.cluster;
+          existing.clusterLabel = b.clusterLabel;
+        }
+      } else {
+        batchMap[b.batchNo] = { ...b };
+      }
+    });
+    p.batches = Object.values(batchMap);
+
     // Attach stock per batch
     p.batches.forEach(b => {
       const sisa = stockMap[b.batchNo];
@@ -1169,9 +1193,7 @@ function groupByProduct(calendar, stock) {
   });
 
   return products;
-}
-
-function productionProductCard(product) {
+}function productionProductCard(product) {
   const clusterClass = product.overallCluster;
   const badgeClass = 'badge-' + product.overallCluster;
   const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Too Fresh';
