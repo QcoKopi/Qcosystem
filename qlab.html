@@ -737,6 +737,338 @@ a { text-decoration:none; color:inherit; }
   border-radius: 3px;
 }
 
+/* ===== AGE PROFILE EXPLORER ===== */
+.age-section {
+  background: var(--bg);
+  padding: 100px 0;
+}
+.age-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.age-panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+.age-select-wrap {
+  margin-bottom: 32px;
+}
+.age-select-wrap label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.age-cluster-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+.age-cluster-badge.resting { background: #e8f5e9; color: #2e7d32; }
+.age-cluster-badge.optimum { background: #fff8e1; color: #8a6d3b; }
+.age-cluster-badge.peak { background: #efebe9; color: #5d4037; }
+.age-cluster-badge.after { background: #f5f5f5; color: #9e9e9e; border: 1px solid #e0e0e0; }
+
+.age-slider-wrap {
+  margin-bottom: 40px;
+}
+.age-slider-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-sec);
+  margin-bottom: 12px;
+}
+.age-slider-label span {
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+}
+.age-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, 
+    #e8f5e9 0%, #e8f5e9 14%,
+    #fff8e1 14%, #fff8e1 40%,
+    #efebe9 40%, #efebe9 86%,
+    #f5f5f5 86%, #f5f5f5 100%
+  );
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.age-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 3px solid var(--accent);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.age-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+.age-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 3px solid var(--accent);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+
+.age-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.age-chart-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.age-chart-label {
+  min-width: 90px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-sec);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.age-chart-track {
+  flex: 1;
+  height: 28px;
+  background: var(--bg-cream);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.age-chart-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+.age-chart-fill span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+
+/* ===== REVERSE BLEND FINDER ===== */
+.reverse-section {
+  background: var(--bg-warm);
+  padding: 100px 0;
+}
+.reverse-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.reverse-panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+.reverse-targets {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+@media (max-width: 768px) {
+  .reverse-targets { grid-template-columns: repeat(2, 1fr); }
+}
+.reverse-target-group label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.reverse-target-val {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  color: var(--accent-dark);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.reverse-target-slider {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bg-cream);
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.reverse-target-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--card);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+.reverse-options {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.reverse-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-sec);
+  cursor: pointer;
+}
+.reverse-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.reverse-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.reverse-btn:hover {
+  background: #3a3a3a;
+  transform: translateY(-2px);
+}
+.reverse-results {
+  margin-top: 32px;
+}
+.reverse-result-card {
+  background: var(--bg-warm);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.2s;
+}
+.reverse-result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.reverse-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reverse-result-rank {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  color: var(--accent-dark);
+}
+.reverse-result-match {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.reverse-result-match.medium {
+  background: #fff8e1;
+  color: #8a6d3b;
+}
+.reverse-result-match.low {
+  background: #ffebee;
+  color: #c62828;
+}
+.reverse-result-composition {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.reverse-result-item {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.reverse-result-item strong {
+  color: var(--text);
+  display: block;
+  font-size: 0.9rem;
+}
+.reverse-result-item span {
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+.reverse-result-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.reverse-result-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.reverse-result-bar-label {
+  min-width: 80px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.reverse-result-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-cream);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.reverse-result-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
 /* ===== COLLAPSE / EXPAND ===== */
 .prod-day {
   transition: all 0.3s ease;
@@ -1295,6 +1627,91 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
+<!-- REVERSE BLEND FINDER -->
+<section class="section reverse-section" id="reverse-blend">
+  <div class="reverse-container">
+    <div class="section-header" style="margin-bottom:40px;">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Tools" data-en="Tools">Tools</div>
+      <h2 class="section-title" data-id="Cari Komposisi Blend" data-en="Find Blend Composition">Cari <em>Komposisi Blend</em></h2>
+      <p class="section-desc" data-id="Tentukan profil rasa target Anda, dan kami akan mencari kombinasi kopi serta persentase yang paling mendekati." data-en="Set your target flavor profile, and we will find the coffee combination and percentages that come closest.">
+        Tentukan profil rasa target Anda, dan kami akan mencari kombinasi kopi serta persentase yang paling mendekati.
+      </p>
+    </div>
+    <div class="reverse-panel">
+      <div class="reverse-targets">
+        <div class="reverse-target-group">
+          <label>Sweetness</label>
+          <div class="reverse-target-val" id="targetValSweetness">5.0</div>
+          <input type="range" class="reverse-target-slider" id="targetSweetness" min="0" max="10" step="0.5" value="5" oninput="updateTargetLabel('Sweetness')">
+        </div>
+        <div class="reverse-target-group">
+          <label>Acidity</label>
+          <div class="reverse-target-val" id="targetValAcidity">5.0</div>
+          <input type="range" class="reverse-target-slider" id="targetAcidity" min="0" max="10" step="0.5" value="5" oninput="updateTargetLabel('Acidity')">
+        </div>
+        <div class="reverse-target-group">
+          <label>Bitterness</label>
+          <div class="reverse-target-val" id="targetValBitterness">5.0</div>
+          <input type="range" class="reverse-target-slider" id="targetBitterness" min="0" max="10" step="0.5" value="5" oninput="updateTargetLabel('Bitterness')">
+        </div>
+        <div class="reverse-target-group">
+          <label>Body</label>
+          <div class="reverse-target-val" id="targetValBody">5.0</div>
+          <input type="range" class="reverse-target-slider" id="targetBody" min="0" max="10" step="0.5" value="5" oninput="updateTargetLabel('Body')">
+        </div>
+        <div class="reverse-target-group">
+          <label>Intensity</label>
+          <div class="reverse-target-val" id="targetValIntensity">5.0</div>
+          <input type="range" class="reverse-target-slider" id="targetIntensity" min="0" max="10" step="0.5" value="5" oninput="updateTargetLabel('Intensity')">
+        </div>
+      </div>
+      <div class="reverse-options">
+        <label class="reverse-checkbox">
+          <input type="checkbox" id="useThreeCoffees">
+          <span data-id="Gunakan hingga 3 kopi" data-en="Use up to 3 coffees">Gunakan hingga 3 kopi</span>
+        </label>
+        <button class="reverse-btn" onclick="findReverseBlend()" data-id="Cari Kombinasi" data-en="Find Combination">Cari Kombinasi</button>
+      </div>
+      <div class="reverse-results" id="reverseResults"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AGE PROFILE EXPLORER -->
+<section class="section age-section" id="age-profile">
+  <div class="age-container">
+    <div class="section-header" style="margin-bottom:40px;">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Tools" data-en="Tools">Tools</div>
+      <h2 class="section-title" data-id="Eksplorasi Umur Kopi" data-en="Coffee Age Explorer">Eksplorasi <em>Umur Kopi</em></h2>
+      <p class="section-desc" data-id="Geser untuk melihat bagaimana profil rasa kopi berubah dari hari ke-0 (Resting) hingga setelah puncaknya." data-en="Drag to see how the coffee flavor profile changes from day 0 (Resting) to beyond its peak.">
+        Geser untuk melihat bagaimana profil rasa kopi berubah dari hari ke-0 (Resting) hingga setelah puncaknya.
+      </p>
+    </div>
+    <div class="age-panel">
+      <div class="age-select-wrap">
+        <label>Pilih Kopi</label>
+        <select class="blend-select" id="ageSelectCoffee" onchange="updateAgeProfile()"></select>
+      </div>
+      <div style="text-align:center;">
+        <span class="age-cluster-badge resting" id="ageClusterBadge">Resting</span>
+      </div>
+      <div class="age-slider-wrap">
+        <div class="age-slider-label">
+          <span>Hari ke-0</span>
+          <span id="ageDayLabel">Hari ke-0</span>
+          <span>Hari ke-35</span>
+        </div>
+        <input type="range" class="age-slider" id="ageSlider" min="0" max="35" value="0" oninput="updateAgeProfile()">
+      </div>
+      <div class="age-chart" id="ageChart">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- LIVE PRODUCTION DASHBOARD -->
 <section class="section prod-dashboard" id="productionDashboard">
   <div class="prod-dashboard-container">
@@ -1561,6 +1978,7 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLang(currentLang);
   productionInit();
   initBlendSimulator();
+  initAgeProfile();
 });
 
 function toggleMobile() {
@@ -1644,6 +2062,7 @@ const COFFEE_DATA = {"Robusta Temanggung": {"fresh": {"sweetness": {"low": 4.5, 
 function initBlendSimulator() {
   const selectA = document.getElementById('blendSelectA');
   const selectB = document.getElementById('blendSelectB');
+  const ageSelect = document.getElementById('ageSelectCoffee');
   if (!selectA || !selectB) return;
   const names = Object.keys(COFFEE_DATA);
   names.forEach(n => {
@@ -1653,10 +2072,22 @@ function initBlendSimulator() {
     const optB = document.createElement('option');
     optB.value = n; optB.textContent = n;
     selectB.appendChild(optB);
+    if (ageSelect) {
+      const optAge = document.createElement('option');
+      optAge.value = n; optAge.textContent = n;
+      ageSelect.appendChild(optAge);
+    }
   });
   selectA.selectedIndex = 0;
   selectB.selectedIndex = 1;
   updateBlendSimulator();
+}
+
+function initAgeProfile() {
+  const ageSelect = document.getElementById('ageSelectCoffee');
+  if (ageSelect && ageSelect.options.length > 0) {
+    updateAgeProfile();
+  }
 }
 
 function updateBlendSimulator() {
@@ -1711,6 +2142,206 @@ function updateBlendSimulator() {
             </div>
           </div>
         </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateTargetLabel(attr) {
+  const slider = document.getElementById('target' + attr);
+  const label = document.getElementById('targetVal' + attr);
+  if (slider && label) label.textContent = parseFloat(slider.value).toFixed(1);
+}
+
+function getCoffeeAtAge(coffeeName, day) {
+  const data = COFFEE_DATA[coffeeName];
+  if (!data) return null;
+  let cluster, label;
+  if (day < 5) { cluster = 'resting'; label = 'Resting'; }
+  else if (day < 15) { cluster = 'optimum'; label = 'Optimum'; }
+  else if (day <= 30) { cluster = 'peak'; label = 'Peak'; }
+  else { cluster = 'peak'; label = 'After Peak'; }
+
+  const scores = data[cluster];
+  let factor = 1;
+  if (day > 30) factor = Math.max(0.5, 1 - ((day - 30) * 0.03));
+
+  return {
+    label: label,
+    day: day,
+    sweetness: scores.sweetness.mid * factor,
+    acidity: scores.acidity.mid * factor,
+    bitterness: scores.bitterness.mid * factor,
+    body: scores.body.mid * factor,
+    intensity: scores.intensity.mid * factor
+  };
+}
+
+function updateAgeProfile() {
+  const select = document.getElementById('ageSelectCoffee');
+  const slider = document.getElementById('ageSlider');
+  const chart = document.getElementById('ageChart');
+  const badge = document.getElementById('ageClusterBadge');
+  const dayLabel = document.getElementById('ageDayLabel');
+  if (!select || !slider || !chart) return;
+
+  const day = parseInt(slider.value);
+  const profile = getCoffeeAtAge(select.value, day);
+  if (!profile) return;
+
+  dayLabel.textContent = 'Hari ke-' + day;
+  badge.textContent = profile.label;
+  badge.className = 'age-cluster-badge ' + (day > 30 ? 'after' : (day < 5 ? 'resting' : (day < 15 ? 'optimum' : 'peak')));
+
+  const attrs = [
+    { key: 'sweetness', label: 'Sweetness', color: '#c8a97e' },
+    { key: 'acidity', label: 'Acidity', color: '#e8d5b5' },
+    { key: 'bitterness', label: 'Bitterness', color: '#8b6f4e' },
+    { key: 'body', label: 'Body', color: '#b8926a' },
+    { key: 'intensity', label: 'Intensity', color: '#5c5c5c' },
+  ];
+
+  chart.innerHTML = attrs.map(attr => {
+    const val = profile[attr.key];
+    const pct = Math.round((val / 10) * 100);
+    return `
+      <div class="age-chart-row">
+        <div class="age-chart-label">${attr.label}</div>
+        <div class="age-chart-track">
+          <div class="age-chart-fill" style="width:${pct}%; background:${attr.color};">
+            <span>${val.toFixed(1)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function findReverseBlend() {
+  const targets = {
+    sweetness: parseFloat(document.getElementById('targetSweetness').value),
+    acidity: parseFloat(document.getElementById('targetAcidity').value),
+    bitterness: parseFloat(document.getElementById('targetBitterness').value),
+    body: parseFloat(document.getElementById('targetBody').value),
+    intensity: parseFloat(document.getElementById('targetIntensity').value),
+  };
+  const useThree = document.getElementById('useThreeCoffees').checked;
+  const names = Object.keys(COFFEE_DATA);
+  const results = [];
+
+  function getProfile(name) {
+    const d = COFFEE_DATA[name].optimum;
+    return { sweetness: d.sweetness.mid, acidity: d.acidity.mid, bitterness: d.bitterness.mid, body: d.body.mid, intensity: d.intensity.mid };
+  }
+
+  // Step 1: Cari dengan 2 kopi dulu (default)
+  for (let i = 0; i < names.length; i++) {
+    for (let j = i + 1; j < names.length; j++) {
+      const pA = getProfile(names[i]);
+      const pB = getProfile(names[j]);
+      for (let a = 0; a <= 100; a += 10) {
+        const b = 100 - a;
+        const blend = {
+          sweetness: pA.sweetness * (a/100) + pB.sweetness * (b/100),
+          acidity: pA.acidity * (a/100) + pB.acidity * (b/100),
+          bitterness: pA.bitterness * (a/100) + pB.bitterness * (b/100),
+          body: pA.body * (a/100) + pB.body * (b/100),
+          intensity: pA.intensity * (a/100) + pB.intensity * (b/100),
+        };
+        const err = Math.sqrt(
+          Math.pow(blend.sweetness - targets.sweetness, 2) +
+          Math.pow(blend.acidity - targets.acidity, 2) +
+          Math.pow(blend.bitterness - targets.bitterness, 2) +
+          Math.pow(blend.body - targets.body, 2) +
+          Math.pow(blend.intensity - targets.intensity, 2)
+        );
+        results.push({ coffees: [{name: names[i], pct: a}, {name: names[j], pct: b}], blend: blend, error: err, count: 2 });
+      }
+    }
+  }
+
+  // Step 2: Kalau user ceklis "3 kopi", tambahkan kombinasi 3 kopi
+  if (useThree) {
+    for (let i = 0; i < names.length; i++) {
+      for (let j = i + 1; j < names.length; j++) {
+        for (let k = j + 1; k < names.length; k++) {
+          const pA = getProfile(names[i]);
+          const pB = getProfile(names[j]);
+          const pC = getProfile(names[k]);
+          for (let a = 0; a <= 100; a += 10) {
+            for (let b = 0; b <= 100 - a; b += 10) {
+              const c = 100 - a - b;
+              if (c < 0) continue;
+              const blend = {
+                sweetness: pA.sweetness*(a/100) + pB.sweetness*(b/100) + pC.sweetness*(c/100),
+                acidity: pA.acidity*(a/100) + pB.acidity*(b/100) + pC.acidity*(c/100),
+                bitterness: pA.bitterness*(a/100) + pB.bitterness*(b/100) + pC.bitterness*(c/100),
+                body: pA.body*(a/100) + pB.body*(b/100) + pC.body*(c/100),
+                intensity: pA.intensity*(a/100) + pB.intensity*(b/100) + pC.intensity*(c/100),
+              };
+              const err = Math.sqrt(
+                Math.pow(blend.sweetness - targets.sweetness, 2) +
+                Math.pow(blend.acidity - targets.acidity, 2) +
+                Math.pow(blend.bitterness - targets.bitterness, 2) +
+                Math.pow(blend.body - targets.body, 2) +
+                Math.pow(blend.intensity - targets.intensity, 2)
+              );
+              const comp = [{name: names[i], pct: a}, {name: names[j], pct: b}];
+              if (c > 0) comp.push({name: names[k], pct: c});
+              results.push({ coffees: comp, blend: blend, error: err, count: 3 });
+            }
+          }
+        }
+      }
+    }
+  }
+
+  results.sort((a, b) => a.error - b.error);
+  const top3 = results.slice(0, 3);
+
+  const container = document.getElementById('reverseResults');
+  if (top3.length === 0) {
+    container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Tidak ada hasil.</p>';
+    return;
+  }
+
+  const attrColors = { sweetness: '#c8a97e', acidity: '#e8d5b5', bitterness: '#8b6f4e', body: '#b8926a', intensity: '#5c5c5c' };
+
+  container.innerHTML = top3.map((res, idx) => {
+    const matchPct = Math.max(0, Math.round(100 - (res.error * 8)));
+    const matchClass = matchPct >= 80 ? '' : (matchPct >= 50 ? 'medium' : 'low');
+    const matchText = matchPct >= 80 ? 'Cocok' : (matchPct >= 50 ? 'Cukup Cocok' : 'Kurang Cocok');
+    const countBadge = res.count === 3 ? '<span style="font-size:0.65rem; background:var(--accent-light); color:var(--accent-dark); padding:2px 8px; border-radius:100px; margin-left:8px;">3 Kopi</span>' : '';
+
+    const compHtml = res.coffees.map(c => `
+      <div class="reverse-result-item">
+        <strong>${escapeHtml(c.name)}</strong>
+        <span>${c.pct}%</span>
+      </div>
+    `).join('');
+
+    const barsHtml = Object.keys(targets).map(key => {
+      const val = res.blend[key];
+      const pct = Math.round((val / 10) * 100);
+      return `
+        <div class="reverse-result-bar-row">
+          <div class="reverse-result-bar-label">${key}</div>
+          <div class="reverse-result-bar-track">
+            <div class="reverse-result-bar-fill" style="width:${pct}%; background:${attrColors[key]};"></div>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-muted); min-width:36px; text-align:right;">${val.toFixed(1)}</span>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <div class="reverse-result-card">
+        <div class="reverse-result-header">
+          <div class="reverse-result-rank">#${idx + 1} ${escapeHtml(res.coffees.map(c => c.name.split('(')[0].trim()).join(' + '))}${countBadge}</div>
+          <div class="reverse-result-match ${matchClass}">${matchText} (${matchPct}%)</div>
+        </div>
+        <div class="reverse-result-composition">${compHtml}</div>
+        <div class="reverse-result-bars">${barsHtml}</div>
       </div>
     `;
   }).join('');
