@@ -411,36 +411,6 @@ a { text-decoration:none; color:inherit; }
   display: block;
 }
 
-/* Stock Panel */
-.prod-stock-panel {
-  background: var(--card, #fff); border-radius: var(--radius, 12px);
-  border: 1px solid var(--border, #e8e6e1); padding: 24px;
-  margin-top: 32px;
-}
-.prod-stock-panel h3 {
-  font-family: var(--font-head, Georgia, serif); font-size: 1.2rem;
-  margin-bottom: 16px; color: var(--text, #1a1a1a);
-}
-.prod-stock-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-}
-@media (max-width: 768px) {
-  .prod-stock-grid { grid-template-columns: 1fr; }
-}
-.prod-stock-col h4 {
-  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--text-muted, #9a9a9a);
-  margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border, #e8e6e1);
-}
-.prod-stock-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 6px 0; font-size: 0.85rem;
-  border-bottom: 1px dashed var(--border, #e8e6e1);
-}
-.prod-stock-row:last-child { border-bottom: none; }
-.prod-stock-name { color: var(--text-sec, #5c5c5c); }
-.prod-stock-qty { font-weight: 600; color: var(--text, #1a1a1a); }
-
 /* Loading & Error */
 .prod-loading {
   text-align: center; padding: 60px 20px; color: var(--text-muted, #9a9a9a);
@@ -469,9 +439,7 @@ a { text-decoration:none; color:inherit; }
 }
 .prod-refresh:hover { background: var(--accent-light, #e8d5b5); color: var(--text, #1a1a1a); }
 
-/* ===== PRODUCT CARD (per produk, bukan per tanggal) ===== */
-
-/* Fix header layout — prevent overflow */
+/* ===== PRODUCT CARD (per produk) ===== */
 .prod-day-header {
   padding: 14px 18px 10px;
   gap: 10px;
@@ -488,7 +456,6 @@ a { text-decoration:none; color:inherit; }
   flex-shrink: 0;
 }
 
-/* Wider cards */
 .prod-calendar {
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
 }
@@ -498,7 +465,6 @@ a { text-decoration:none; color:inherit; }
   }
 }
 
-/* Batch row with stock per batch */
 .prod-batch-row {
   display: flex; align-items: flex-start; gap: 10px;
   padding: 10px 12px; background: var(--bg-warm, #f5f3ee);
@@ -546,7 +512,6 @@ a { text-decoration:none; color:inherit; }
   text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
 }
 
-/* Stock per batch */
 .prod-batch-stock {
   display: inline-block; padding: 2px 8px; border-radius: 100px;
   font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
@@ -1092,6 +1057,13 @@ function productionFetchJSONP() {
   document.head.appendChild(script);
 }
 
+function sanitizeText(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/EDC/gi, 'E*C')
+    .replace(/Kembali ke Alam/gi, 'Kembali ke A***m');
+}
+
 function productionRender(data) {
   if (!data || !data.success) {
     productionRenderError(data && data.error ? data.error : 'Unknown error');
@@ -1123,22 +1095,20 @@ function productionRender(data) {
 
 function groupByProduct(calendar, stock) {
   const map = {};
-  // Flatten all rb and hb items from calendar
   calendar.forEach(day => {
     const dayMeta = { date: day.date, dateDisplay: day.dateDisplay, ageDays: day.ageDays, cluster: day.cluster, clusterLabel: day.clusterLabel };
     (day.rb || []).forEach(item => {
-      const key = item.name;
-      if (!map[key]) map[key] = { name: item.name, type: 'RB', batches: [] };
-      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: item.rawMaterial || '' });
+      const key = sanitizeText(item.name);
+      if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'RB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || '') });
     });
     (day.hb || []).forEach(item => {
-      const key = item.name;
-      if (!map[key]) map[key] = { name: item.name, type: 'HB', batches: [] };
-      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: item.rawMaterial || '' });
+      const key = sanitizeText(item.name);
+      if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'HB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || '') });
     });
   });
 
-  // Build stock map by batchNo (exact match)
   const stockMap = {};
   if (stock) {
     (stock.rb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
@@ -1147,17 +1117,14 @@ function groupByProduct(calendar, stock) {
   }
 
   const products = Object.values(map).map(p => {
-    // Deduplicate batches by batchNo (HB can have multiple rows for multiple raw materials)
     const batchMap = {};
     p.batches.forEach(b => {
       if (batchMap[b.batchNo]) {
-        // Merge raw materials (avoid duplicates)
         const existing = batchMap[b.batchNo];
         if (b.rawMaterial && b.rawMaterial !== existing.rawMaterial) {
           const mats = new Set([existing.rawMaterial, b.rawMaterial].filter(Boolean));
-          existing.rawMaterial = Array.from(mats).join(', ');
+          existing.rawMaterial = sanitizeText(Array.from(mats).join(', '));
         }
-        // Use the latest date/cluster if same batch appears on different days (shouldn't happen, but safe)
         if (new Date(b.date) > new Date(existing.date)) {
           existing.date = b.date;
           existing.dateDisplay = b.dateDisplay;
@@ -1171,20 +1138,16 @@ function groupByProduct(calendar, stock) {
     });
     p.batches = Object.values(batchMap);
 
-    // Attach stock per batch
     p.batches.forEach(b => {
       const sisa = stockMap[b.batchNo];
       b.stock = (sisa !== undefined && sisa > 0) ? sisa : 0;
       b.hasStock = sisa !== undefined && sisa > 0;
     });
-    // Sort batches by date descending
     p.batches.sort((a, b) => new Date(b.date) - new Date(a.date));
-    // Overall cluster from newest batch
     p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'fresh';
     return p;
   });
 
-  // Sort: products with newest batch first, then by name
   products.sort((a, b) => {
     const dateA = a.batches[0] ? new Date(a.batches[0].date) : new Date(0);
     const dateB = b.batches[0] ? new Date(b.batches[0].date) : new Date(0);
@@ -1193,7 +1156,9 @@ function groupByProduct(calendar, stock) {
   });
 
   return products;
-}function productionProductCard(product) {
+}
+
+function productionProductCard(product) {
   const clusterClass = product.overallCluster;
   const badgeClass = 'badge-' + product.overallCluster;
   const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Too Fresh';
@@ -1294,19 +1259,13 @@ function productionRenderMock() {
         hb: [{ batchNo: '0308-MAS192093463', name: 'Houseblend 70% Arabika Jawa Barat 30% Arabika Bali Natural', weight: 1, rawMaterial: 'RB Arabika Jawa Barat105' }]
       },
       {
-        date: '2026-07-29', dateDisplay: '29 Jul 2026', ageDays: 10, cluster: 'best', clusterLabel: 'Best',
-        rb: [{ batchNo: '2907-RB15-250', name: '250 gr - RB Arabika Bali Kintamani Natural', weight: 1, rawMaterial: 'RB Arabika Bali Kintamani Natural' }],
-        hb: [{ batchNo: '2907-HB01074060RNEW', name: 'RB Houseblend 40% Robusta 60% Arabika NEW', weight: 3, rawMaterial: 'RB Arabika Jawa Barat' }]
-      },
-      {
         date: '2026-07-24', dateDisplay: '24 Jul 2026', ageDays: 15, cluster: 'mature', clusterLabel: 'Matured',
         rb: [
           { batchNo: '2407-RB20', name: 'RB Arabika Jawa Barat105', weight: 13.3, rawMaterial: 'GB Arabika Jawa Barat105' },
           { batchNo: '2407-RB01', name: 'RB Robusta Temanggung', weight: 25.4, rawMaterial: 'GB Robusta Temanggung' }
         ],
         hb: [
-          { batchNo: '2407-HB02075050R-250', name: '250 gr - RB Houseblend 50% Robusta 50% Arabika Reguler', weight: 1, rawMaterial: 'RB Houseblend 50% Robusta 50% Arabika Reguler' },
-          { batchNo: '2407-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% EDC', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural' }
+          { batchNo: '2407-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural' }
         ]
       },
       {
@@ -1314,7 +1273,7 @@ function productionRenderMock() {
         rb: [{ batchNo: '2107-RB01', name: 'RB Robusta Temanggung', weight: 13.3, rawMaterial: 'GB Robusta Temanggung' }],
         hb: [
           { batchNo: '2107-HB01205050C', name: 'RB Houseblend 50% Robusta 50% Arabika Classic', weight: 5, rawMaterial: 'RB Robusta Temanggung' },
-          { batchNo: '2107-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% EDC', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural' }
+          { batchNo: '2107-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural' }
         ]
       }
     ],
@@ -1330,7 +1289,7 @@ function productionRenderMock() {
         { name: 'RB Houseblend 70% Robusta 30% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 10 },
         { name: 'RB Houseblend 50% Robusta 50% Arabika Classic', batchNo: '2107-HB01205050C', sisa: 0.5 },
         { name: 'RB Houseblend 40% Robusta 60% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 3 },
-        { name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% EDC', batchNo: '2407-HB20144060', sisa: 5 }
+        { name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', batchNo: '2407-HB20144060', sisa: 5 }
       ],
       gb: [
         { name: 'GB Arabika Jawa Barat Asalan', batchNo: 'GB001', sisa: 54.7 },
@@ -1339,10 +1298,12 @@ function productionRenderMock() {
         { name: 'GB Arabika Jawa Barat105', batchNo: 'GB004', sisa: 10 }
       ]
     },
-    summary: { totalRB: 5, totalHB: 8, best: 2, matured: 2 }
+    summary: { totalRB: 4, totalHB: 5, best: 1, matured: 2 }
   };
   productionRender(mockData);
-}function escapeHtml(text) {
+}
+
+function escapeHtml(text) {
   if (!text) return '';
   const div = document.createElement('div');
   div.textContent = text;
