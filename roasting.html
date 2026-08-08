@@ -1424,6 +1424,9 @@ function productionFetch() {
     </div>
   `;
 
+  // Clear any previous timeout
+  if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
+
   // Strategy 1: Try fetch API first (works if CORS allows)
   fetch(PROD_API_URL)
     .then(r => {
@@ -1432,6 +1435,7 @@ function productionFetch() {
     })
     .then(data => {
       prodDataCache = data;
+      if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
       productionRender(data);
     })
     .catch(err => {
@@ -1441,7 +1445,7 @@ function productionFetch() {
     });
 
   // Strategy 3: Mock data fallback after 5 seconds
-  setTimeout(() => {
+  window._prodTimeout = setTimeout(() => {
     if (!prodDataCache && container.querySelector('.prod-loading')) {
       console.log('All strategies failed, showing mock data');
       productionRenderMock();
@@ -1456,6 +1460,7 @@ function productionFetchJSONP() {
 
   window[callbackName] = function(data) {
     prodDataCache = data;
+    if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
     productionRender(data);
     delete window[callbackName];
     if (script.parentNode) script.parentNode.removeChild(script);
@@ -1466,7 +1471,6 @@ function productionFetchJSONP() {
     console.log('JSONP also failed');
     delete window[callbackName];
     if (script.parentNode) script.parentNode.removeChild(script);
-    // Don't show error yet — mock fallback will kick in after 5s
   };
 
   document.head.appendChild(script);
