@@ -2107,8 +2107,8 @@ function updateBlendSimulator() {
   labelA.textContent = nameA + ': ' + pctA + '%';
   labelB.textContent = nameB + ': ' + pctB + '%';
 
-  const dataA = COFFEE_DATA[nameA].best;
-  const dataB = COFFEE_DATA[nameB].best;
+  const dataA = COFFEE_DATA[nameA].optimum;
+  const dataB = COFFEE_DATA[nameB].optimum;
 
   const attrs = [
     { key: 'sweetness', label: 'Sweetness', colorA: '#c8a97e', colorB: '#8b6f4e', colorBlend: '#2c2c2c' },
