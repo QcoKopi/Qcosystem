@@ -1191,10 +1191,12 @@ function updateAgeDay(day){
   ATTRS.forEach(k=> p[k] = ageCurveData.series[k][day] );
   const vec = ATTRS.map(k=>p[k]);
 
+  const ageRadarOpts = radarBaseOptions(true);
+  ageRadarOpts.scales.r.pointLabels.color = '#6B3A24';
   upsertChart('ageRadar', {
     type:'radar',
-    data:{ labels:ATTRS.map(k=>ATTR_LABELS[k]), datasets:[{ label:'Hari '+day, data:vec, borderColor:'#F3EFE3', backgroundColor:'rgba(243,239,227,.18)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#F3EFE3' }] },
-    options: radarBaseOptions(true)
+    data:{ labels:ATTRS.map(k=>ATTR_LABELS[k]), datasets:[{ label:'Hari '+day, data:vec, borderColor:'#6B3A24', backgroundColor:'rgba(107,58,36,.25)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#6B3A24' }] },
+    options: ageRadarOpts
   });
 
   const refRec = cluster===CLUSTERS[0] ? ageCurveData.recR : cluster===CLUSTERS[1] ? ageCurveData.recO : ageCurveData.recM;
