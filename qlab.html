@@ -315,9 +315,9 @@ a { text-decoration:none; color:inherit; }
 .prod-legend-dot {
   width: 12px; height: 12px; border-radius: 50%; display: inline-block;
 }
-.dot-fresh { background: #a8d5ba; border: 2px solid #7bc093; }
-.dot-best  { background: #e8d5b5; border: 2px solid #c8a97e; }
-.dot-mature{ background: #c4a882; border: 2px solid #a08060; }
+.dot-resting { background: #a8d5ba; border: 2px solid #7bc093; }
+.dot-optimum  { background: #e8d5b5; border: 2px solid #c8a97e; }
+.dot-peak{ background: #c4a882; border: 2px solid #a08060; }
 
 /* Summary Cards */
 .prod-summary {
@@ -353,9 +353,9 @@ a { text-decoration:none; color:inherit; }
   transition: all 0.3s; position: relative;
 }
 .prod-day:hover { box-shadow: var(--shadow, 0 4px 20px rgba(0,0,0,0.06)); transform: translateY(-2px); }
-.prod-day.fresh { border-top: 4px solid #7bc093; }
-.prod-day.best   { border-top: 4px solid #c8a97e; }
-.prod-day.mature { border-top: 4px solid #a08060; }
+.prod-day.resting { border-top: 4px solid #7bc093; }
+.prod-day.optimum   { border-top: 4px solid #c8a97e; }
+.prod-day.peak { border-top: 4px solid #a08060; }
 
 .prod-day-header {
   padding: 16px 20px 12px; border-bottom: 1px solid var(--border, #e8e6e1);
@@ -369,9 +369,9 @@ a { text-decoration:none; color:inherit; }
   font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 100px;
   text-transform: uppercase; letter-spacing: 0.04em;
 }
-.badge-fresh { background: #e8f5e9; color: #2e7d32; }
-.badge-best  { background: #fff8e1; color: #8a6d3b; }
-.badge-mature{ background: #efebe9; color: #5d4037; }
+.badge-resting { background: #e8f5e9; color: #2e7d32; }
+.badge-optimum  { background: #fff8e1; color: #8a6d3b; }
+.badge-peak{ background: #efebe9; color: #5d4037; }
 .prod-day-age {
   font-size: 0.75rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
 }
@@ -524,6 +524,219 @@ a { text-decoration:none; color:inherit; }
   background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a;
 }
 
+/* ===== COFFEE SCORE BARS ===== */
+.coffee-scores {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.coffee-score-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.coffee-score-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  min-width: 70px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.coffee-score-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-cream);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.coffee-score-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+/* ===== BLEND SIMULATOR ===== */
+.blend-section {
+  background: var(--bg-warm);
+  padding: 100px 0;
+}
+.blend-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.blend-panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+.blend-controls {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 40px;
+}
+@media (max-width: 600px) {
+  .blend-controls { grid-template-columns: 1fr; }
+}
+.blend-control-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.blend-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.blend-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.blend-vs {
+  text-align: center;
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  color: var(--accent);
+  padding-bottom: 8px;
+}
+.blend-slider-wrap {
+  margin-bottom: 40px;
+}
+.blend-slider-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-sec);
+  margin-bottom: 10px;
+}
+.blend-slider-label span {
+  font-weight: 700;
+  color: var(--text);
+}
+.blend-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, var(--accent-light) 0%, var(--accent) 100%);
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.blend-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2.5px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.blend-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+.blend-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2.5px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  cursor: pointer;
+}
+
+.blend-result-title {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.blend-result-title em {
+  color: var(--accent-dark);
+  font-style: italic;
+}
+.blend-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.blend-chart-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.blend-chart-label {
+  min-width: 90px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-sec);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.blend-chart-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.blend-chart-track {
+  position: relative;
+  height: 24px;
+  background: var(--bg-cream);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.blend-chart-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+}
+.blend-chart-fill span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.blend-legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.blend-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-sec);
+}
+.blend-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
 /* ===== COLLAPSE / EXPAND ===== */
 .prod-day {
   transition: all 0.3s ease;
@@ -662,85 +875,421 @@ a { text-decoration:none; color:inherit; }
     <div class="section-header">
       <div class="accent-line"></div>
       <div class="section-label" data-id="Produk Kami" data-en="Our Products">Produk Kami</div>
-      <h2 class="section-title" data-id="Roasted Beans, Dari Hati ke Cangkir" data-en="Roasted Beans, From Heart to Cup">Roasted Beans, <em>Dari Hati ke Cangkir</em></h2>
-      <p class="section-desc" data-id="Setiap batch di-roast dengan presisi, di-cup oleh Q Grader bersertifikat, dan disesuaikan dengan profil rasa yang Anda inginkan. Dari single origin hingga house blend signature."
-         data-en="Every batch is roasted with precision, cupped by a certified Q Grader, and tailored to your desired flavor profile. From single origin to signature house blend.">
-        Setiap batch di-roast dengan presisi, di-cup oleh Q Grader bersertifikat, dan disesuaikan 
-        dengan profil rasa yang Anda inginkan. Dari single origin hingga house blend signature.
+      <h2 class="section-title" data-id="Karakteristik Kopi Q.co" data-en="Q.co Coffee Characteristics">Karakteristik Kopi <em>Q.co</em></h2>
+      <p class="section-desc" data-id="Setiap biji kopi memiliki karakter unik. Pahami profil rasa dan pilih yang sesuai dengan karakter kedai Anda." data-en="Every coffee bean has a unique character. Understand the flavor profile and choose what suits your shop.">
+        Setiap biji kopi memiliki karakter unik. Pahami profil rasa dan pilih yang sesuai dengan karakter kedai Anda.
       </p>
     </div>
     <div class="products-grid">
+
       <div class="product-card">
-        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Single Origin</span>
+        </div>
         <div class="product-info">
           <span class="product-tag">Single Origin</span>
-          <h3>Arabika Gayo</h3>
-          <p>Full-washed Arabika dari dataran tinggi Gayo, Aceh. Profil rasa: dark chocolate, herbal, spicy, clean aftertaste.</p>
+          <h3>Robusta Temanggung</h3>
+          <p>Sangat dominan di Body yang tebal dan Bitterness yang tegas khas robusta berkualitas tinggi (sering ada notes earthy, tobacco, atau dark chocolate). Acidity sangat rendah, namun Temanggung dikenal memiliki sweetness yang cukup baik untuk ukuran robusta.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:60%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:28%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
           <div class="product-meta">
-            <span>☕ Medium Roast</span>
-            <span>📍 Aceh</span>
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
           </div>
         </div>
       </div>
+
       <div class="product-card">
-        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Full Washed</span>
+        </div>
         <div class="product-info">
-          <span class="product-tag">Single Origin</span>
-          <h3>Arabika Toraja</h3>
-          <p>Dari Sulawesi Selatan. Profil rasa: caramel, nutty, fruity acidity, syrupy body. Cocok untuk espresso dan milk-based.</p>
+          <span class="product-tag">Full Washed</span>
+          <h3>Arabika Jawa Barat (Full Wash)</h3>
+          <p>Memiliki keseimbangan yang baik (well-balanced). Acidity-nya cerah (biasanya cenderung citrus atau floral tergantung daerah tanam seperti Puntang atau Malabar), dengan Body medium yang bersih dan clean aftertaste.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:48%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:65%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:78%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
           <div class="product-meta">
-            <span>☕ Medium-Dark</span>
-            <span>📍 Sulawesi</span>
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
           </div>
         </div>
       </div>
+
       <div class="product-card">
-        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Natural Process</span>
+        </div>
         <div class="product-info">
-          <span class="product-tag">House Blend</span>
-          <h3>Q.co Signature Blend</h3>
-          <p>Blend khas kami yang diracik untuk balance sempurna antara acidity, body, dan sweetness. Ideal untuk all-day brewing.</p>
+          <span class="product-tag">Natural Process</span>
+          <h3>Arabika Jawa Barat (Natural)</h3>
+          <p>Proses natural mendongkrak skor Sweetness dan Intensity secara signifikan. Menghasilkan flavor notes buah-buahan matang (ripen fruits / tropical berry), Acidity yang kompleks, serta Body yang lebih padat dibanding proses wash-nya.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
           <div class="product-meta">
-            <span>☕ Medium Roast</span>
-            <span>🎯 Best Seller</span>
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
           </div>
         </div>
       </div>
+
       <div class="product-card">
-        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Semi Washed</span>
+        </div>
         <div class="product-info">
-          <span class="product-tag">Single Origin</span>
-          <h3>Arabika Flores</h3>
-          <p>Dari Manggarai, NTT. Profil rasa: floral, citrus, honey sweetness, light body. Sempurna untuk pour-over dan filter.</p>
+          <span class="product-tag">Semi Washed</span>
+          <h3>Arabika Gayo (Semi-Washed)</h3>
+          <p>Memiliki Body yang sangat berat dan syrupy serta Bitterness yang sedikit lebih tinggi dibanding arabika biasa. Acidity-nya cenderung rendah-sedang, dengan dominasi rasa herbal, spicy, earthy, dan dark chocolate yang pekat.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:70%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:60%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
           <div class="product-meta">
-            <span>☕ Light-Medium</span>
-            <span>📍 Flores</span>
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
           </div>
         </div>
       </div>
+
       <div class="product-card">
-        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Natural Process</span>
+        </div>
         <div class="product-info">
-          <span class="product-tag">Single Origin</span>
-          <h3>Robusta Lampung</h3>
-          <p>Robusta premium dari Lampung. Profil rasa: bold, earthy, dark chocolate, heavy body. Pilihan untuk espresso yang kuat.</p>
+          <span class="product-tag">Natural Process</span>
+          <h3>Arabika Bali (Natural)</h3>
+          <p>Dikenal dengan sweetness yang menonjol dan aroma buah-buahan tropis atau jeruk manis (sering ada sentuhan citrus dan fruity yang bersih). Acidity-nya sedang-tinggi tetapi tetap terasa smooth diimbangi body yang cukup tebal.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:70%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
           <div class="product-meta">
-            <span>☕ Dark Roast</span>
-            <span>📍 Lampung</span>
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
           </div>
         </div>
       </div>
+
       <div class="product-card">
-        <div class="product-img img-placeholder"><span class="placeholder-icon">☕</span><span class="placeholder-label">Foto Produk</span></div>
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Full Washed</span>
+        </div>
         <div class="product-info">
-          <span class="product-tag">Custom</span>
-          <h3>Custom Roast Profile</h3>
-          <p>Butuh roasting profile khusus untuk karakter kedai Anda? Kami bisa custom roast berdasarkan permintaan — konsultasi gratis.</p>
-          <div class="product-meta">
-            <span>🔥 Custom Roast</span>
-            <span>💬 Konsultasi</span>
+          <span class="product-tag">Full Washed</span>
+          <h3>Arabika Argopuro (Full Wash)</h3>
+          <p>Kopi asal Jawa Timur ini memiliki clean cup yang sangat baik dengan acidity yang cerah dan segar (cenderung citrus atau floral). Body-nya medium dengan keseimbangan rasa yang bersih.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:75%; background:#c8a97e;"></div>
           </div>
         </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:45%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:70%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img img-placeholder">
+          <span class="placeholder-icon">☕</span>
+          <span class="placeholder-label">Natural Process</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag">Natural Process</span>
+          <h3>Arabika Argopuro (Natural)</h3>
+          <p>Versi proses natural dari Argopuro terkenal sangat ekspresif. Memiliki tingkat sweetness dan intensity yang sangat tinggi (sering memunculkan notes buah matang yang kompleks, berry-like, atau winey), serta body yang lebih juicy dan padat.</p>
+          <div class="coffee-scores">
+            
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Sweetness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:85%; background:#c8a97e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Acidity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#e8d5b5;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Bitterness</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:52%; background:#8b6f4e;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Body</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:80%; background:#b8926a;"></div>
+          </div>
+        </div>
+        <div class="coffee-score-row">
+          <span class="coffee-score-label">Intensity</span>
+          <div class="coffee-score-bar-wrap">
+            <div class="coffee-score-bar" style="width:90%; background:#5c5c5c;"></div>
+          </div>
+        </div>
+          </div>
+          <div class="product-meta">
+            <span>☕ Optimum (5–14 hari)</span>
+            <span>📍 Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" style="border:2px solid var(--accent-light);">
+        <div class="product-img img-placeholder" style="background:linear-gradient(135deg, var(--accent-light), var(--accent));">
+          <span class="placeholder-icon" style="font-size:3rem;">🫘</span>
+          <span class="placeholder-label" style="background:rgba(255,255,255,0.9); color:var(--accent-dark);">House Blend</span>
+        </div>
+        <div class="product-info">
+          <span class="product-tag" style="background:var(--accent); color:#fff;">House Blend</span>
+          <h3>Q.co Signature HouseBlend</h3>
+          <p>Racikan khas Q.co yang dirancang untuk keseimbangan sempurna. Gunakan tools simulasi blending untuk menciptakan profil rasa sesuai keinginan — dari fruity & bright hingga bold & chocolatey.</p>
+          <div class="coffee-scores" style="opacity:0.5;">
+            <div class="coffee-score-row"><span class="coffee-score-label">Custom</span><div class="coffee-score-bar-wrap"><div class="coffee-score-bar" style="width:50%; background:var(--accent);"></div></div></div>
+            <div class="coffee-score-row"><span class="coffee-score-label">Blend</span><div class="coffee-score-bar-wrap"><div class="coffee-score-bar" style="width:50%; background:var(--accent);"></div></div></div>
+          </div>
+          <div class="product-meta">
+            <a href="#blend-simulator" class="btn btn-pri" style="font-size:0.8rem; padding:8px 18px;">🧪 Simulasi Blending</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLEND SIMULATOR -->
+<section class="section blend-section" id="blend-simulator">
+  <div class="blend-container">
+    <div class="section-header" style="margin-bottom:40px;">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Tools" data-en="Tools">Tools</div>
+      <h2 class="section-title" data-id="Simulasi HouseBlend" data-en="HouseBlend Simulator">Simulasi <em>HouseBlend</em></h2>
+      <p class="section-desc" data-id="Ciptakan profil rasa signature Anda dengan mencampur dua kopi pilihan. Geser slider untuk menyesuaikan komposisi." data-en="Create your signature flavor profile by blending two selected coffees. Drag the slider to adjust the composition.">
+        Ciptakan profil rasa signature Anda dengan mencampur dua kopi pilihan. Geser slider untuk menyesuaikan komposisi.
+      </p>
+    </div>
+    <div class="blend-panel">
+      <div class="blend-controls">
+        <div class="blend-control-group">
+          <label>Kopi A</label>
+          <select class="blend-select" id="blendSelectA" onchange="updateBlendSimulator()"></select>
+        </div>
+        <div class="blend-vs">vs</div>
+        <div class="blend-control-group">
+          <label>Kopi B</label>
+          <select class="blend-select" id="blendSelectB" onchange="updateBlendSimulator()"></select>
+        </div>
+      </div>
+      <div class="blend-slider-wrap">
+        <div class="blend-slider-label">
+          <span id="blendLabelA">Kopi A: 50%</span>
+          <span id="blendLabelB">Kopi B: 50%</span>
+        </div>
+        <input type="range" class="blend-slider" id="blendSlider" min="0" max="100" value="50" oninput="updateBlendSimulator()">
+      </div>
+      <div class="blend-result-title">Prediksi Profil Rasa <em>Blend</em></div>
+      <div class="blend-chart" id="blendChart">
+        <!-- Generated by JS -->
+      </div>
+      <div class="blend-legend">
+        <div class="blend-legend-item"><span class="blend-legend-dot" style="background:#b8926a;"></span> Kopi A</div>
+        <div class="blend-legend-item"><span class="blend-legend-dot" style="background:#8b6f4e;"></span> Kopi B</div>
+        <div class="blend-legend-item"><span class="blend-legend-dot" style="background:#2c2c2c;"></span> Hasil Blend</div>
+      </div>
+      <div class="blend-disclaimer" style="margin-top:28px; padding:16px 20px; background:var(--bg-warm); border-radius:8px; border:1px solid var(--border); text-align:center;">
+        <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.6; margin:0;" data-id="Hasil simulasi ini merupakan prediksi matematis berdasarkan profil cupping masing-masing kopi pada kondisi Optimum (5–14 hari pasca-roast). Rasa aktual pada cup dapat dipengaruhi oleh variabel lain: metode seduh, suhu air, grind size, tipe air, kondisi penyimpanan, dan preferensi pribadi. Gunakan sebagai acuan awal, bukan nilai mutlak." data-en="This simulation result is a mathematical prediction based on each coffee's cupping profile at Optimum condition (5–14 days post-roast). Actual taste in the cup is influenced by other variables: brewing method, water temperature, grind size, water type, storage condition, and personal preference. Use as a starting reference, not an absolute value.">
+          Hasil simulasi ini merupakan <strong>prediksi matematis</strong> berdasarkan profil cupping masing-masing kopi pada kondisi <strong>Optimum (5–14 hari pasca-roast)</strong>. Rasa aktual pada cup dapat dipengaruhi oleh variabel lain: metode seduh, suhu air, grind size, tipe air, kondisi penyimpanan, dan preferensi pribadi. Gunakan sebagai <strong>acuan awal</strong>, bukan nilai mutlak.
+        </p>
       </div>
     </div>
   </div>
@@ -758,9 +1307,9 @@ a { text-decoration:none; color:inherit; }
     <div class="prod-header">
       <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
         <div class="prod-legend">
-          <div class="prod-legend-item"><span class="prod-legend-dot dot-fresh"></span> <span data-id="Too Fresh (< 5 hari)" data-en="Too Fresh (< 5 days)">Too Fresh (< 5 days)</span></div>
-          <div class="prod-legend-item"><span class="prod-legend-dot dot-best"></span> <span data-id="Best (5–14 hari)" data-en="Best (5–14 days)">Best (5–14 days)</span></div>
-          <div class="prod-legend-item"><span class="prod-legend-dot dot-mature"></span> <span data-id="Matured (14–30 hari)" data-en="Matured (14–30 days)">Matured (14–30 days)</span></div>
+          <div class="prod-legend-item"><span class="prod-legend-dot dot-fresh"></span> <span data-id="Resting (< 5 hari)" data-en="Resting (< 5 days)">Resting (< 5 days)</span></div>
+          <div class="prod-legend-item"><span class="prod-legend-dot dot-best"></span> <span data-id="Optimum (5–14 hari)" data-en="Optimum (5–14 days)">Optimum (5–14 days)</span></div>
+          <div class="prod-legend-item"><span class="prod-legend-dot dot-mature"></span> <span data-id="Peak (14–30 hari)" data-en="Peak (14–30 days)">Peak (14–30 days)</span></div>
         </div>
       </div>
       <button class="prod-refresh" onclick="productionRefresh()" title="Refresh data">
@@ -780,7 +1329,7 @@ a { text-decoration:none; color:inherit; }
       </div>
       <div class="prod-summary-card">
         <div class="num" id="sumBest">—</div>
-        <div class="label" data-id="Best Window" data-en="Best Window">Best Window</div>
+        <div class="label" data-id="Optimum Window" data-en="Optimum Window">Optimum Window</div>
       </div>
       <div class="prod-summary-card">
         <div class="num" id="sumMatured">—</div>
@@ -1011,6 +1560,7 @@ function toggleLang() {
 document.addEventListener('DOMContentLoaded', () => {
   applyLang(currentLang);
   productionInit();
+  initBlendSimulator();
 });
 
 function toggleMobile() {
@@ -1087,6 +1637,83 @@ function productionFetchJSONP() {
   };
 
   document.head.appendChild(script);
+}
+
+const COFFEE_DATA = {"Robusta Temanggung": {"fresh": {"sweetness": {"low": 4.5, "high": 5.5, "mid": 5.0}, "acidity": {"low": 2.5, "high": 4.0, "mid": 3.25}, "bitterness": {"low": 7.0, "high": 8.0, "mid": 7.5}, "body": {"low": 7.5, "high": 8.5, "mid": 8.0}, "intensity": {"low": 6.5, "high": 7.5, "mid": 7.0}}, "best": {"sweetness": {"low": 5.5, "high": 6.5, "mid": 6.0}, "acidity": {"low": 2.0, "high": 3.5, "mid": 2.75}, "bitterness": {"low": 7.5, "high": 8.5, "mid": 8.0}, "body": {"low": 8.0, "high": 9.0, "mid": 8.5}, "intensity": {"low": 7.0, "high": 8.0, "mid": 7.5}}, "matured": {"sweetness": {"low": 5.0, "high": 6.0, "mid": 5.5}, "acidity": {"low": 1.5, "high": 3.0, "mid": 2.25}, "bitterness": {"low": 8.0, "high": 9.0, "mid": 8.5}, "body": {"low": 7.5, "high": 8.5, "mid": 8.0}, "intensity": {"low": 6.5, "high": 7.5, "mid": 7.0}}}, "Arabika Jawa Barat (Full Wash)": {"fresh": {"sweetness": {"low": 6.0, "high": 7.0, "mid": 6.5}, "acidity": {"low": 7.5, "high": 9.0, "mid": 8.25}, "bitterness": {"low": 3.5, "high": 5.0, "mid": 4.25}, "body": {"low": 5.5, "high": 6.5, "mid": 6.0}, "intensity": {"low": 6.5, "high": 7.5, "mid": 7.0}}, "best": {"sweetness": {"low": 7.0, "high": 8.0, "mid": 7.5}, "acidity": {"low": 7.0, "high": 8.0, "mid": 7.5}, "bitterness": {"low": 4.0, "high": 5.5, "mid": 4.75}, "body": {"low": 6.0, "high": 7.0, "mid": 6.5}, "intensity": {"low": 7.0, "high": 8.5, "mid": 7.75}}, "matured": {"sweetness": {"low": 6.0, "high": 7.0, "mid": 6.5}, "acidity": {"low": 5.5, "high": 7.0, "mid": 6.25}, "bitterness": {"low": 4.5, "high": 6.0, "mid": 5.25}, "body": {"low": 5.5, "high": 6.5, "mid": 6.0}, "intensity": {"low": 6.0, "high": 7.0, "mid": 6.5}}}, "Arabika Jawa Barat (Natural)": {"fresh": {"sweetness": {"low": 6.5, "high": 7.5, "mid": 7.0}, "acidity": {"low": 8.0, "high": 9.5, "mid": 8.75}, "bitterness": {"low": 4.0, "high": 5.5, "mid": 4.75}, "body": {"low": 6.5, "high": 7.5, "mid": 7.0}, "intensity": {"low": 7.5, "high": 8.5, "mid": 8.0}}, "best": {"sweetness": {"low": 7.5, "high": 8.5, "mid": 8.0}, "acidity": {"low": 7.5, "high": 8.5, "mid": 8.0}, "bitterness": {"low": 4.5, "high": 6.0, "mid": 5.25}, "body": {"low": 7.0, "high": 8.0, "mid": 7.5}, "intensity": {"low": 8.0, "high": 9.0, "mid": 8.5}}, "matured": {"sweetness": {"low": 6.5, "high": 7.5, "mid": 7.0}, "acidity": {"low": 6.0, "high": 7.5, "mid": 6.75}, "bitterness": {"low": 5.0, "high": 6.5, "mid": 5.75}, "body": {"low": 6.5, "high": 7.5, "mid": 7.0}, "intensity": {"low": 7.0, "high": 8.0, "mid": 7.5}}}, "Arabika Gayo (Semi-Washed)": {"fresh": {"sweetness": {"low": 5.5, "high": 6.5, "mid": 6.0}, "acidity": {"low": 5.0, "high": 6.5, "mid": 5.75}, "bitterness": {"low": 5.0, "high": 6.0, "mid": 5.5}, "body": {"low": 7.5, "high": 8.5, "mid": 8.0}, "intensity": {"low": 7.0, "high": 8.0, "mid": 7.5}}, "best": {"sweetness": {"low": 6.5, "high": 7.5, "mid": 7.0}, "acidity": {"low": 4.5, "high": 6.0, "mid": 5.25}, "bitterness": {"low": 5.5, "high": 6.5, "mid": 6.0}, "body": {"low": 8.0, "high": 9.0, "mid": 8.5}, "intensity": {"low": 7.5, "high": 8.5, "mid": 8.0}}, "matured": {"sweetness": {"low": 6.0, "high": 7.0, "mid": 6.5}, "acidity": {"low": 4.0, "high": 5.5, "mid": 4.75}, "bitterness": {"low": 6.0, "high": 7.0, "mid": 6.5}, "body": {"low": 7.5, "high": 8.5, "mid": 8.0}, "intensity": {"low": 6.5, "high": 7.5, "mid": 7.0}}}, "Arabika Bali (Natural)": {"fresh": {"sweetness": {"low": 6.5, "high": 7.5, "mid": 7.0}, "acidity": {"low": 7.0, "high": 8.5, "mid": 7.75}, "bitterness": {"low": 4.0, "high": 5.5, "mid": 4.75}, "body": {"low": 7.0, "high": 8.0, "mid": 7.5}, "intensity": {"low": 7.5, "high": 8.5, "mid": 8.0}}, "best": {"sweetness": {"low": 7.5, "high": 8.5, "mid": 8.0}, "acidity": {"low": 6.5, "high": 7.5, "mid": 7.0}, "bitterness": {"low": 4.5, "high": 6.0, "mid": 5.25}, "body": {"low": 7.5, "high": 8.5, "mid": 8.0}, "intensity": {"low": 8.0, "high": 9.0, "mid": 8.5}}, "matured": {"sweetness": {"low": 6.5, "high": 7.5, "mid": 7.0}, "acidity": {"low": 5.5, "high": 6.5, "mid": 6.0}, "bitterness": {"low": 5.0, "high": 6.5, "mid": 5.75}, "body": {"low": 7.0, "high": 8.0, "mid": 7.5}, "intensity": {"low": 7.0, "high": 8.0, "mid": 7.5}}}, "Arabika Argopuro (Full Wash)": {"fresh": {"sweetness": {"low": 6.0, "high": 7.0, "mid": 6.5}, "acidity": {"low": 8.0, "high": 9.0, "mid": 8.5}, "bitterness": {"low": 3.5, "high": 4.5, "mid": 4.0}, "body": {"low": 6.0, "high": 7.0, "mid": 6.5}, "intensity": {"low": 7.0, "high": 8.0, "mid": 7.5}}, "best": {"sweetness": {"low": 7.0, "high": 8.0, "mid": 7.5}, "acidity": {"low": 7.5, "high": 8.5, "mid": 8.0}, "bitterness": {"low": 4.0, "high": 5.0, "mid": 4.5}, "body": {"low": 6.5, "high": 7.5, "mid": 7.0}, "intensity": {"low": 7.5, "high": 8.5, "mid": 8.0}}, "matured": {"sweetness": {"low": 6.0, "high": 7.0, "mid": 6.5}, "acidity": {"low": 6.0, "high": 7.0, "mid": 6.5}, "bitterness": {"low": 4.5, "high": 5.5, "mid": 5.0}, "body": {"low": 6.0, "high": 7.0, "mid": 6.5}, "intensity": {"low": 6.5, "high": 7.5, "mid": 7.0}}}, "Arabika Argopuro (Natural)": {"fresh": {"sweetness": {"low": 7.0, "high": 8.0, "mid": 7.5}, "acidity": {"low": 8.0, "high": 9.0, "mid": 8.5}, "bitterness": {"low": 4.0, "high": 5.5, "mid": 4.75}, "body": {"low": 7.0, "high": 8.0, "mid": 7.5}, "intensity": {"low": 8.0, "high": 9.0, "mid": 8.5}}, "best": {"sweetness": {"low": 8.0, "high": 9.0, "mid": 8.5}, "acidity": {"low": 7.5, "high": 8.5, "mid": 8.0}, "bitterness": {"low": 4.5, "high": 6.0, "mid": 5.25}, "body": {"low": 7.5, "high": 8.5, "mid": 8.0}, "intensity": {"low": 8.5, "high": 9.5, "mid": 9.0}}, "matured": {"sweetness": {"low": 7.0, "high": 8.0, "mid": 7.5}, "acidity": {"low": 6.5, "high": 7.5, "mid": 7.0}, "bitterness": {"low": 5.0, "high": 6.5, "mid": 5.75}, "body": {"low": 7.0, "high": 8.0, "mid": 7.5}, "intensity": {"low": 7.5, "high": 8.5, "mid": 8.0}}}};
+
+function initBlendSimulator() {
+  const selectA = document.getElementById('blendSelectA');
+  const selectB = document.getElementById('blendSelectB');
+  if (!selectA || !selectB) return;
+  const names = Object.keys(COFFEE_DATA);
+  names.forEach(n => {
+    const optA = document.createElement('option');
+    optA.value = n; optA.textContent = n;
+    selectA.appendChild(optA);
+    const optB = document.createElement('option');
+    optB.value = n; optB.textContent = n;
+    selectB.appendChild(optB);
+  });
+  selectA.selectedIndex = 0;
+  selectB.selectedIndex = 1;
+  updateBlendSimulator();
+}
+
+function updateBlendSimulator() {
+  const selectA = document.getElementById('blendSelectA');
+  const selectB = document.getElementById('blendSelectB');
+  const slider = document.getElementById('blendSlider');
+  const chart = document.getElementById('blendChart');
+  const labelA = document.getElementById('blendLabelA');
+  const labelB = document.getElementById('blendLabelB');
+  if (!selectA || !selectB || !slider || !chart) return;
+
+  const nameA = selectA.value;
+  const nameB = selectB.value;
+  const pctA = parseInt(slider.value);
+  const pctB = 100 - pctA;
+
+  labelA.textContent = nameA + ': ' + pctA + '%';
+  labelB.textContent = nameB + ': ' + pctB + '%';
+
+  const dataA = COFFEE_DATA[nameA].best;
+  const dataB = COFFEE_DATA[nameB].best;
+
+  const attrs = [
+    { key: 'sweetness', label: 'Sweetness', colorA: '#c8a97e', colorB: '#8b6f4e', colorBlend: '#2c2c2c' },
+    { key: 'acidity', label: 'Acidity', colorA: '#e8d5b5', colorB: '#a08060', colorBlend: '#2c2c2c' },
+    { key: 'bitterness', label: 'Bitterness', colorA: '#b8926a', colorB: '#7a5c3c', colorBlend: '#2c2c2c' },
+    { key: 'body', label: 'Body', colorA: '#d4b896', colorB: '#9a7a5a', colorBlend: '#2c2c2c' },
+    { key: 'intensity', label: 'Intensity', colorA: '#a89070', colorB: '#6a5030', colorBlend: '#2c2c2c' },
+  ];
+
+  chart.innerHTML = attrs.map(attr => {
+    const valA = dataA[attr.key].mid;
+    const valB = dataB[attr.key].mid;
+    const valBlend = (valA * (pctA / 100)) + (valB * (pctB / 100));
+    const pctValA = Math.round((valA / 10) * 100);
+    const pctValB = Math.round((valB / 10) * 100);
+    const pctBlend = Math.round((valBlend / 10) * 100);
+
+    return `
+      <div class="blend-chart-row">
+        <div class="blend-chart-label">${attr.label}</div>
+        <div class="blend-chart-bars">
+          <div class="blend-chart-track">
+            <div class="blend-chart-fill" style="width:${pctValA}%; background:${attr.colorA}; opacity:0.35;"></div>
+          </div>
+          <div class="blend-chart-track">
+            <div class="blend-chart-fill" style="width:${pctValB}%; background:${attr.colorB}; opacity:0.35;"></div>
+          </div>
+          <div class="blend-chart-track" style="background:#f0ebe3;">
+            <div class="blend-chart-fill" style="width:${pctBlend}%; background:${attr.colorBlend};">
+              <span>${valBlend.toFixed(1)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 function sanitizeText(text) {
@@ -1176,7 +1803,7 @@ function groupByProduct(calendar, stock) {
       b.hasStock = sisa !== undefined && sisa > 0;
     });
     p.batches.sort((a, b) => new Date(b.date) - new Date(a.date));
-    p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'fresh';
+    p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'resting';
     return p;
   });
 
@@ -1193,7 +1820,7 @@ function groupByProduct(calendar, stock) {
 function productionProductCard(product) {
   const clusterClass = product.overallCluster;
   const badgeClass = 'badge-' + product.overallCluster;
-  const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Too Fresh';
+  const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Resting';
   const typeIcon = product.type === 'HB' ? '🫘' : '☕';
   const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';
 
@@ -1279,27 +1906,27 @@ function productionRenderMock() {
     success: true,
     calendar: [
       {
-        date: '2026-08-08', dateDisplay: '08 Agu 2026', ageDays: 0, cluster: 'fresh', clusterLabel: 'Too Fresh',
+        date: '2026-08-08', dateDisplay: '08 Agu 2026', ageDays: 0, cluster: 'resting', clusterLabel: 'Resting',
         rb: [{ batchNo: '0808-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung' }],
         hb: []
       },
       {
-        date: '2026-08-06', dateDisplay: '06 Agu 2026', ageDays: 2, cluster: 'fresh', clusterLabel: 'Too Fresh',
+        date: '2026-08-06', dateDisplay: '06 Agu 2026', ageDays: 2, cluster: 'resting', clusterLabel: 'Resting',
         rb: [{ batchNo: '0608-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung' }],
         hb: [{ batchNo: '0608-MAS594793938', name: 'Houseblend 40% Robusta Temanggung 60% Arabika Gayo Premium', weight: 20, rawMaterial: 'RB Robusta Temanggung' }]
       },
       {
-        date: '2026-08-04', dateDisplay: '04 Agu 2026', ageDays: 4, cluster: 'fresh', clusterLabel: 'Too Fresh',
+        date: '2026-08-04', dateDisplay: '04 Agu 2026', ageDays: 4, cluster: 'resting', clusterLabel: 'Resting',
         rb: [{ batchNo: '0408-RB05', name: 'RB Gayo', weight: 25.8, rawMaterial: 'GB Gayo' }],
         hb: [{ batchNo: '0408-HB01207030C', name: 'RB Houseblend 70% Robusta 30% Arabika Classic', weight: 2, rawMaterial: 'RB Robusta Temanggung' }]
       },
       {
-        date: '2026-08-03', dateDisplay: '03 Agu 2026', ageDays: 5, cluster: 'best', clusterLabel: 'Best',
+        date: '2026-08-03', dateDisplay: '03 Agu 2026', ageDays: 5, cluster: 'optimum', clusterLabel: 'Optimum',
         rb: [],
         hb: [{ batchNo: '0308-MAS192093463', name: 'Houseblend 70% Arabika Jawa Barat 30% Arabika Bali Natural', weight: 1, rawMaterial: 'RB Arabika Jawa Barat105' }]
       },
       {
-        date: '2026-07-24', dateDisplay: '24 Jul 2026', ageDays: 15, cluster: 'mature', clusterLabel: 'Matured',
+        date: '2026-07-24', dateDisplay: '24 Jul 2026', ageDays: 15, cluster: 'peak', clusterLabel: 'Peak',
         rb: [
           { batchNo: '2407-RB20', name: 'RB Arabika Jawa Barat105', weight: 13.3, rawMaterial: 'GB Arabika Jawa Barat105' },
           { batchNo: '2407-RB01', name: 'RB Robusta Temanggung', weight: 25.4, rawMaterial: 'GB Robusta Temanggung' }
@@ -1309,7 +1936,7 @@ function productionRenderMock() {
         ]
       },
       {
-        date: '2026-07-21', dateDisplay: '21 Jul 2026', ageDays: 18, cluster: 'mature', clusterLabel: 'Matured',
+        date: '2026-07-21', dateDisplay: '21 Jul 2026', ageDays: 18, cluster: 'peak', clusterLabel: 'Peak',
         rb: [{ batchNo: '2107-RB01', name: 'RB Robusta Temanggung', weight: 13.3, rawMaterial: 'GB Robusta Temanggung' }],
         hb: [
           { batchNo: '2107-HB01205050C', name: 'RB Houseblend 50% Robusta 50% Arabika Classic', weight: 5, rawMaterial: 'RB Robusta Temanggung' },
@@ -1338,7 +1965,7 @@ function productionRenderMock() {
         { name: 'GB Arabika Jawa Barat105', batchNo: 'GB004', sisa: 10 }
       ]
     },
-    summary: { totalRB: 4, totalHB: 5, best: 1, matured: 2 }
+    summary: { totalRB: 4, totalHB: 5, optimum: 1, peak: 2 }
   };
   productionRender(mockData);
 }
