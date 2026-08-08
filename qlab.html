@@ -2297,17 +2297,28 @@ function findReverseBlend() {
   }
 
   results.sort((a, b) => a.error - b.error);
-  const top3 = results.slice(0, 3);
+
+  // Deduplicate: hanya 1 hasil terbaik per SET kopi (urutan tidak penting)
+  const seen = new Set();
+  const uniqueResults = [];
+  for (const r of results) {
+    const key = r.coffees.map(c => c.name).sort().join(' | ');
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniqueResults.push(r);
+      if (uniqueResults.length >= 3) break;
+    }
+  }
 
   const container = document.getElementById('reverseResults');
-  if (top3.length === 0) {
+  if (uniqueResults.length === 0) {
     container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Tidak ada hasil.</p>';
     return;
   }
 
   const attrColors = { sweetness: '#c8a97e', acidity: '#e8d5b5', bitterness: '#8b6f4e', body: '#b8926a', intensity: '#5c5c5c' };
 
-  container.innerHTML = top3.map((res, idx) => {
+  container.innerHTML = uniqueResults.map((res, idx) => {
     const matchPct = Math.max(0, Math.round(100 - (res.error * 8)));
     const matchClass = matchPct >= 80 ? '' : (matchPct >= 50 ? 'medium' : 'low');
     const matchText = matchPct >= 80 ? 'Cocok' : (matchPct >= 50 ? 'Cukup Cocok' : 'Kurang Cocok');
