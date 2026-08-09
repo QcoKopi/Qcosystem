@@ -383,6 +383,7 @@ a { color: inherit; text-decoration: none; }
   background-size: 60px 60px;
 }
 </style>
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -682,38 +683,57 @@ function unlockPortal() {
   btn.textContent = currentLang === 'id' ? 'Memverifikasi...' : 'Verifying...';
   btn.disabled = true;
 
-  // Server-side validation via GAS
-  fetch(GATE_API_URL + '?action=validatePortal&hash=' + encodeURIComponent(hash))
-    .then(r => r.json())
-    .then(data => {
-      btn.textContent = originalText;
-      btn.disabled = false;
+  // JSONP callback name
+  const cbName = '_qcoGateCb_' + Date.now();
 
-      if (data.success && data.token) {
-        overlay.classList.add('hidden');
-        content.classList.add('unlocked');
-        localStorage.setItem('_qco_portal_token', data.token);
-        localStorage.setItem('_qco_portal_exp', Date.now() + (data.expiresIn || 3600) * 1000);
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'login', { 'method': 'password_gate' });
-        }
-      } else {
-        error.textContent = currentLang === 'id' ? 'Kode akses tidak valid. Silakan coba lagi.' : 'Invalid access code. Please try again.';
-        input.classList.add('error');
-        input.value = '';
-        input.focus();
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'exception', { 'description': 'password_gate_failed' });
-        }
+  // Cleanup function
+  function cleanup() {
+    btn.textContent = originalText;
+    btn.disabled = false;
+    const old = document.getElementById('_qcoGateScript');
+    if (old) old.remove();
+    delete window[cbName];
+  }
+
+  // Set callback
+  window[cbName] = function(data) {
+    cleanup();
+    console.log('Gate response:', data);
+
+    if (data && data.success && data.token) {
+      overlay.classList.add('hidden');
+      content.classList.add('unlocked');
+      localStorage.setItem('_qco_portal_token', data.token);
+      localStorage.setItem('_qco_portal_exp', Date.now() + (data.expiresIn || 3600) * 1000);
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'login', { 'method': 'password_gate' });
       }
-    })
-    .catch(err => {
-      btn.textContent = originalText;
-      btn.disabled = false;
-      console.error('Gate validation error:', err);
-      error.textContent = currentLang === 'id' ? 'Gagal memverifikasi. Coba lagi.' : 'Verification failed. Please try again.';
+    } else {
+      const msg = data && data.error ? data.error : (currentLang === 'id' ? 'Kode akses tidak valid.' : 'Invalid access code.');
+      error.textContent = msg;
       input.classList.add('error');
-    });
+      input.value = '';
+      input.focus();
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', { 'description': 'password_gate_failed' });
+      }
+    }
+  };
+
+  // Timeout fallback
+  setTimeout(function() {
+    if (window[cbName]) {
+      cleanup();
+      error.textContent = currentLang === 'id' ? 'Gagal memverifikasi (timeout). Cek console.' : 'Verification timeout. Check console.';
+      input.classList.add('error');
+    }
+  }, 8000);
+
+  // Inject JSONP script
+  const script = document.createElement('script');
+  script.id = '_qcoGateScript';
+  script.src = GATE_API_URL + '?action=validatePortal&hash=' + encodeURIComponent(hash) + '&callback=' + cbName;
+  document.head.appendChild(script);
 }
 
 function togglePasswordVisibility() {
@@ -737,21 +757,24 @@ function togglePasswordVisibility() {
     localStorage.removeItem('_qco_portal_exp');
     return;
   }
-  // Verify token with server
-  fetch(GATE_API_URL + '?action=checkToken&token=' + encodeURIComponent(token))
-    .then(r => r.json())
-    .then(data => {
-      if (data.valid) {
-        document.getElementById('gateOverlay').classList.add('hidden');
-        document.getElementById('mainContent').classList.add('unlocked');
-      } else {
-        localStorage.removeItem('_qco_portal_token');
-        localStorage.removeItem('_qco_portal_exp');
-      }
-    })
-    .catch(() => {
-      // Network error — keep gate shown
-    });
+  // Verify token with server via JSONP
+  const cbName = '_qcoCheckCb_' + Date.now();
+  window[cbName] = function(data) {
+    const old = document.getElementById('_qcoCheckScript');
+    if (old) old.remove();
+    delete window[cbName];
+    if (data && data.valid) {
+      document.getElementById('gateOverlay').classList.add('hidden');
+      document.getElementById('mainContent').classList.add('unlocked');
+    } else {
+      localStorage.removeItem('_qco_portal_token');
+      localStorage.removeItem('_qco_portal_exp');
+    }
+  };
+  const script = document.createElement('script');
+  script.id = '_qcoCheckScript';
+  script.src = GATE_API_URL + '?action=checkToken&token=' + encodeURIComponent(token) + '&callback=' + cbName;
+  document.head.appendChild(script);
 })();
 function trackDownload(type) {
   if (typeof gtag !== 'undefined') {
