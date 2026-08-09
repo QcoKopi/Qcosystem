@@ -1410,7 +1410,6 @@ function productionInit() {
 }
 
 function productionRefresh() {
-  prodDataCache = null;
   productionFetch();
 }
 
@@ -1427,7 +1426,6 @@ function productionFetch() {
   // Clear any previous timeout
   if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
 
-  // Strategy 1: Try fetch API first (works if CORS allows)
   fetch(PROD_API_URL)
     .then(r => {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -1439,42 +1437,13 @@ function productionFetch() {
       productionRender(data);
     })
     .catch(err => {
-      console.log('Fetch failed, trying JSONP:', err.message);
-      // Strategy 2: JSONP fallback
-      productionFetchJSONP();
-    });
-
-  // Strategy 3: Mock data fallback after 5 seconds
-  window._prodTimeout = setTimeout(() => {
-    if (!prodDataCache && container.querySelector('.prod-loading')) {
-      console.log('All strategies failed, showing mock data');
+      console.log('Fetch failed, using mock data:', err.message);
+      if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
       productionRenderMock();
-    }
-  }, 5000);
+    });
 }
 
-function productionFetchJSONP() {
-  const container = document.getElementById('prodCalendar');
-  const script = document.createElement('script');
-  const callbackName = 'prodCb_' + Date.now();
 
-  window[callbackName] = function(data) {
-    prodDataCache = data;
-    if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
-    productionRender(data);
-    delete window[callbackName];
-    if (script.parentNode) script.parentNode.removeChild(script);
-  };
-
-  script.src = PROD_API_URL + '&callback=' + callbackName;
-  script.onerror = function() {
-    console.log('JSONP also failed');
-    delete window[callbackName];
-    if (script.parentNode) script.parentNode.removeChild(script);
-  };
-
-  document.head.appendChild(script);
-}
 
 
 
