@@ -134,17 +134,6 @@ a { text-decoration:none; color:inherit; }
 .service-list li:last-child { border-bottom:none; }
 .service-list li::before { content:'→'; color:var(--accent); font-weight:700; flex-shrink:0; }
 
-/* ===== TESTIMONIALS ===== */
-.testi-section { background:var(--bg); }
-.testi-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
-.testi-card { background:var(--card); border-radius:var(--radius); padding:36px; border:1px solid var(--border); position:relative; }
-.testi-card::before { content:'"'; font-family:var(--font-head); font-size:4rem; color:var(--accent-light); position:absolute; top:16px; left:24px; line-height:1; }
-.testi-text { font-family:var(--font-head); font-size:1.05rem; color:var(--text-sec); font-style:italic; line-height:1.7; margin-bottom:24px; padding-top:20px; position:relative; z-index:1; }
-.testi-author { display:flex; align-items:center; gap:14px; }
-.testi-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--accent-light), var(--accent)); display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-size:1rem; color:#fff; font-weight:600; flex-shrink:0; }
-.testi-name { font-size:0.9rem; font-weight:600; }
-.testi-role { font-size:0.75rem; color:var(--text-muted); }
-
 /* ===== CTA ===== */
 .cta-section { background:var(--primary); color:#fff; padding:100px 0; text-align:center; }
 .cta-section h2 { font-family:var(--font-head); font-size:clamp(1.8rem, 3vw, 2.6rem); font-weight:400; margin-bottom:16px; }
@@ -1253,61 +1242,6 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
-<!-- TESTIMONIALS — 3 kolom -->
-<section class="section testi-section">
-  <div class="section-wrap">
-    <div class="section-header">
-      <div class="accent-line"></div>
-      <div class="section-label" data-id="Testimoni" data-en="Testimonials">Testimoni</div>
-      <h2 class="section-title" data-id="Kata Mereka, Sahabat Kami" data-en="What They Say, Our Friends">Kata Mereka, <em>Sahabat Kami</em></h2>
-      <p class="section-desc" data-id="Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co." data-en="Coffee shops around Depok and West Java who have collaborated with Q.co.">Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co.</p>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <p class="testi-text">
-          Q.co bukan sekadar supplier — mereka benar-benar partner. Dari konsultasi menu 
-          sampai training barista, mereka selalu hadir. Beans-nya konsisten dan 
-          roasting profile-nya pas untuk karakter kedai kami.
-        </p>
-        <div class="testi-author">
-          <div class="testi-avatar">AR</div>
-          <div>
-            <div class="testi-name">Andi Raharjo</div>
-            <div class="testi-role">Owner, Kopi Nusantara — Depok</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-text">
-          Saya suka transparansi Q.co. Mereka selalu cerita dari mana beans-nya, 
-          prosesnya gimana, dan kenapa profil rasanya seperti itu. Pelanggan kami 
-          appreciate cerita di balik setiap cangkir.
-        </p>
-        <div class="testi-author">
-          <div class="testi-avatar">DS</div>
-          <div>
-            <div class="testi-name">Dewi Sartika</div>
-            <div class="testi-role">Founder, Brew & Bloom — Bogor</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-text">
-          Dari awal buka kedai, Q.co sudah dampingi kami. Custom roast profile 
-          untuk signature drink kami, training tim barista, dan selalu responsif. 
-          Sahabat Kedai Kopi memang bukan cuma tagline — mereka buktiin.
-        </p>
-        <div class="testi-author">
-          <div class="testi-avatar">RF</div>
-          <div>
-            <div class="testi-name">Rizky Fadillah</div>
-            <div class="testi-role">Co-Founder, Kopi Tiga Saudara — Tangerang</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- CTA — Full width, menarik -->
 <section class="cta-section">
