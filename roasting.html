@@ -170,16 +170,6 @@ a { text-decoration:none; color:inherit; }
 .service-list li::before { content:'→'; color:var(--accent); font-weight:700; flex-shrink:0; }
 
 /* ===== TESTIMONIALS ===== */
-.testi-section { background:var(--bg); }
-.testi-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
-.testi-card { background:var(--card); border-radius:var(--radius); padding:36px; border:1px solid var(--border); position:relative; }
-.testi-card::before { content:'"'; font-family:var(--font-head); font-size:4rem; color:var(--accent-light); position:absolute; top:16px; left:24px; line-height:1; }
-.testi-text { font-family:var(--font-head); font-size:1.05rem; color:var(--text-sec); font-style:italic; line-height:1.7; margin-bottom:24px; padding-top:20px; position:relative; z-index:1; }
-.testi-author { display:flex; align-items:center; gap:14px; }
-.testi-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--accent-light), var(--accent)); display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-size:1rem; color:#fff; font-weight:600; flex-shrink:0; }
-.testi-name { font-size:0.9rem; font-weight:600; }
-.testi-role { font-size:0.75rem; color:var(--text-muted); }
-
 /* ===== CTA ===== */
 .cta-section { background:var(--primary); color:#fff; padding:100px 0; text-align:center; }
 .cta-section h2 { font-family:var(--font-head); font-size:clamp(1.8rem, 3vw, 2.6rem); font-weight:400; margin-bottom:16px; }
@@ -731,7 +721,7 @@ a { text-decoration:none; color:inherit; }
   <div class="blob blob-2"></div>
   <div class="hero-inner">
     <h1>Q.co <em>Roasting</em></h1>
-   <img src="https://i.imgur.com/niM0pSz.png" alt="Q.co Roasting" class="hero-img" loading="eager">
+    <img src="https://i.imgur.com/niM0pSz.png" alt="Q.co Roasting" class="hero-img" loading="eager">
     <p class="hero-tagline" data-id="Kopi terbaik lahir dari kolaborasi, bukan kompetisi."
        data-en="The best coffee is born from collaboration, not competition.">Kopi terbaik lahir dari kolaborasi, bukan kompetisi.</p>
     <p class="hero-desc" data-id="Lebih dari sekadar supplier roasted beans. Kami adalah Sahabat Kedai Kopi — partner yang tumbuh bersama, berbagi pengetahuan, dan berkolaborasi untuk menciptakan pengalaman kopi terbaik di setiap cangkir."
@@ -1286,77 +1276,7 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
-<!-- TESTIMONIALS — 3 kolom -->
-<section class="section testi-section">
-  <div class="section-wrap">
-    <div class="section-header">
-      <div class="accent-line"></div>
-      <div class="section-label" data-id="Testimoni" data-en="Testimonials">Testimoni</div>
-      <h2 class="section-title" data-id="Kata Mereka, Sahabat Kami" data-en="What They Say, Our Friends">Kata Mereka, <em>Sahabat Kami</em></h2>
-      <p class="section-desc" data-id="Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co." data-en="Coffee shops around Depok and West Java who have collaborated with Q.co.">Kedai kopi di sekitar Depok dan Jawa Barat yang telah berkolaborasi dengan Q.co.</p>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <p class="testi-text">
-          Q.co bukan sekadar supplier — mereka benar-benar partner. Dari konsultasi menu 
-          sampai training barista, mereka selalu hadir. Beans-nya konsisten dan 
-          roasting profile-nya pas untuk karakter kedai kami.
-        </p>
-        <div class="testi-author">
-          <div class="testi-avatar">AR</div>
-          <div>
-            <div class="testi-name">Andi Raharjo</div>
-            <div class="testi-role">Owner, Kopi Nusantara — Depok</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-text">
-          Saya suka transparansi Q.co. Mereka selalu cerita dari mana beans-nya, 
-          prosesnya gimana, dan kenapa profil rasanya seperti itu. Pelanggan kami 
-          appreciate cerita di balik setiap cangkir.
-        </p>
-        <div class="testi-author">
-          <div class="testi-avatar">DS</div>
-          <div>
-            <div class="testi-name">Dewi Sartika</div>
-            <div class="testi-role">Founder, Brew & Bloom — Bogor</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-text">
-          Dari awal buka kedai, Q.co sudah dampingi kami. Custom roast profile 
-          untuk signature drink kami, training tim barista, dan selalu responsif. 
-          Sahabat Kedai Kopi memang bukan cuma tagline — mereka buktiin.
-        </p>
-        <div class="testi-author">
-          <div class="testi-avatar">RF</div>
-          <div>
-            <div class="testi-name">Rizky Fadillah</div>
-            <div class="testi-role">Co-Founder, Kopi Tiga Saudara — Tangerang</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- CTA — Full width, menarik -->
-<section class="cta-section">
-  <div class="section-wrap">
-    <h2 data-id="Jadi Sahabat Kedai Kopi Kami" data-en="Become Our Coffee Shop Best Friend">Jadi <em>Sahabat Kedai Kopi</em> Kami</h2>
-    <p data-id="Apakah Anda pemilik kedai kopi, barista, atau pecinta kopi yang ingin berkolaborasi? Kami siap mendampingi perjalanan kopi Anda — dari beans selection hingga cangkir terakhir."
-       data-en="Are you a coffee shop owner, barista, or coffee enthusiast looking to collaborate? We are ready to accompany your coffee journey — from bean selection to the last cup.">
-      Apakah Anda pemilik kedai kopi, barista, atau pecinta kopi yang ingin berkolaborasi? 
-      Kami siap mendampingi perjalanan kopi Anda — dari beans selection hingga cangkir terakhir.
-    </p>
-    <a href="mailto:hello@qco.coffee" class="cta-btn" data-id="Hubungi Kami →" data-en="Contact Us →">Hubungi Kami →</a>
-    <p style="margin-top:24px; font-size:0.85rem; color:rgba(255,255,255,0.4);">
-      atau DM kami di Instagram <a href="https://instagram.com/qkopi.co" target="_blank" style="color:var(--accent-light);">@qkopi.co</a>
-    </p>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer class="footer">
