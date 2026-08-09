@@ -329,6 +329,31 @@ input[type=range]::-moz-range-track{ height:6px; border-radius:4px; background:v
   *{ animation-duration:.001s !important; transition-duration:.001s !important; }
 }
 
+/* ===== DISCLAIMER ===== */
+.disclaimer-box {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brass);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 0 0 18px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  box-shadow: var(--shadow-panel);
+}
+.disclaimer-box .disclaimer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brass);
+  margin-bottom: 6px;
+  display: block;
+  font-weight: 600;
+}
+.disclaimer-box b { color: var(--ink); }
+
 /* ===== TOP NAVBAR ===== */
 .topnav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
@@ -493,6 +518,14 @@ input[type=range]::-moz-range-track{ height:6px; border-radius:4px; background:v
     </div>
 
     <div class="statrow" id="statRow"><!-- diisi JS --></div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-box">
+      <span class="disclaimer-label" data-id="PENTING" data-en="IMPORTANT">PENTING</span>
+      <p data-id="Semua nilai sensori dan prediksi blend pada simulator ini merupakan estimasi berdasarkan data normatif internal Q.co Coffee Lab. Hasil akhir di cangkir sangat dipengaruhi oleh variabel eksternal — kualitas dan suhu air, derajat giling, metode ekstraksi, peralatan, serta keahlian barista. Gunakan hasil simulasi sebagai acuan awal, bukan sebagai standar mutlak." data-en="All sensory values and blend predictions in this simulator are estimates based on Q.co Coffee Lab's internal normative data. The final result in your cup is highly influenced by external variables — water quality and temperature, grind size, extraction method, equipment, and barista skill. Use simulation results as a preliminary reference, not as an absolute standard.">
+        Semua nilai sensori dan prediksi blend pada simulator ini merupakan estimasi berdasarkan data normatif internal <b>Q.co Coffee Lab</b>. Hasil akhir di cangkir sangat dipengaruhi oleh variabel eksternal — kualitas dan suhu air, derajat giling, metode ekstraksi, peralatan, serta keahlian barista. Gunakan hasil simulasi sebagai acuan awal, bukan sebagai standar mutlak.
+      </p>
+    </div>
 
     <!-- ========== PANEL: OVERVIEW ========== -->
     <section class="panel active" id="panel-overview">
