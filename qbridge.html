@@ -6,6 +6,33 @@
 <title>QBridge — Infrastruktur Kepercayaan Kopi Indonesia</title>
 <meta name="description" content="QBridge: Platform traceability berbasis blockchain dengan verifikasi tiga-lapis untuk processor kopi Indonesia. Diterima di ICC Italia, Oktober 2026.">
 <style>
+/* ===== NAV ===== */
+.nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(250,249,246,0.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-wrap { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:68px; }
+.nav-logo { font-family:var(--font-head); font-size:1.3rem; font-weight:600; }
+.nav-logo span { color:var(--accent); font-weight:400; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { font-size:0.85rem; font-weight:500; color:var(--text-sec); transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a.active { color:var(--accent-dark); font-weight:600; }
+.nav-cta { font-size:0.8rem; font-weight:600; color:var(--accent-dark); padding:8px 18px; border-radius:100px; border:1.5px solid var(--accent-light); background:transparent; transition:all 0.25s; cursor:pointer; }
+.nav-cta:hover { background:var(--accent-light); color:var(--primary); border-color:var(--accent); }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
+.mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
+.mobile-menu.active { display:flex; }
+.mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+.lang-switch { display:flex; align-items:center; gap:4px; font-size:0.75rem; font-weight:600; color:var(--text-muted); background:var(--bg-warm); border:1px solid var(--border); border-radius:100px; padding:3px; cursor:pointer; transition:all 0.2s; }
+.lang-switch span { padding:4px 10px; border-radius:100px; transition:all 0.2s; }
+.lang-switch span.active { background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+.lang-switch span:not(.active):hover { color:var(--text); }
+.lang-switch-mobile { display:flex; align-items:center; gap:4px; font-size:0.8rem; font-weight:600; color:var(--text-muted); background:var(--bg-warm); border:1px solid var(--border); border-radius:100px; padding:3px; margin-bottom:16px; width:fit-content; }
+.lang-switch-mobile span { padding:5px 12px; border-radius:100px; transition:all 0.2s; }
+.lang-switch-mobile span.active { background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+}
+
 :root {
   --bg: #faf9f6;
   --bg-warm: #f5f3ee;
@@ -254,11 +281,12 @@ a { text-decoration:none; color:inherit; }
 
 <nav class="nav">
   <div class="nav-wrap">
-    <a href="index.html" class="nav-logo">QBridge</a>
+    <a href="index.html" class="nav-logo">Q.co <span>Coffee Lab</span></a>
     <div class="nav-links">
       <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
-      <a href="qlab.html">Q.co Coffee Lab</a>
-      <a href="qbridge.html" class="active">QBridge</a>
+      <a href="coffee-lab.html">Q.co Lab</a>
+      <a href="roasting.html">Q.co Roasting</a>
+      <a href="qbridge.html" data-id="QBridge" data-en="QBridge" class="active">QBridge</a>
       <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
       <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
       <div class="lang-switch" onclick="toggleLang()">
@@ -270,6 +298,15 @@ a { text-decoration:none; color:inherit; }
     <button class="nav-toggle" onclick="toggleMobile()">☰</button>
   </div>
 </nav>
+
+  <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
+  <a href="coffee-lab.html">Q.co Lab</a>
+  <a href="roasting.html">Q.co Roasting</a>
+  <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+  <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+  <a href="investors.html" data-id="Investor Portal" data-en="Investor Portal">Investor Portal</a>
+</div>
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Beranda</a>
   <a href="qlab.html">Q.co Coffee Lab</a>
