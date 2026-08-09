@@ -71,15 +71,15 @@ a { text-decoration:none; color:inherit; }
 .nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
 
 /* ===== HERO ===== */
-.hero { min-height:85vh; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:68px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
+.hero { min-height:auto; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:68px; padding-bottom:40px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
 .hero::before { content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px; background:radial-gradient(circle, rgba(184,146,106,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
-.hero-inner { max-width:800px; text-align:center; padding:60px 24px; position:relative; z-index:1; }
-.hero-badge { display:inline-flex; align-items:center; gap:8px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-dark); background:rgba(184,146,106,0.12); padding:6px 16px; border-radius:100px; margin-bottom:24px; }
-.hero-badge-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; }
+.hero-inner { max-width:800px; text-align:center; padding:40px 24px 20px; position:relative; z-index:1; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-dark); background:rgba(184,146,106,0.12); padding:4px 12px; border-radius:100px; margin-bottom:16px; white-space:nowrap; }
+.hero-badge-dot { width:5px; height:5px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; flex-shrink:0; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.hero h1 { font-family:var(--font-head); font-size:clamp(2.2rem, 5vw, 3.8rem); line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:16px; }
+.hero h1 { font-family:var(--font-head); font-size:clamp(1.5rem, 3.5vw, 2.6rem); line-height:1.15; font-weight:400; color:var(--primary); margin-bottom:8px; }
 .hero h1 em { font-style:italic; color:var(--accent-dark); }
-.hero-sub { font-size:clamp(1rem, 2vw, 1.2rem); color:var(--text-sec); max-width:600px; margin:0 auto 36px; line-height:1.7; }
+.hero-sub { font-size:clamp(0.8rem, 1.5vw, 0.95rem); color:var(--text-sec); max-width:520px; margin:0 auto 24px; line-height:1.6; }
 .hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
 .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:100px; font-size:0.9rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none; }
 .btn-pri { background:var(--primary); color:#fff; }
@@ -278,6 +278,7 @@ a { text-decoration:none; color:inherit; }
   color: var(--accent-dark); z-index: 0; line-height: 1;
 }
 </style>
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -332,6 +333,7 @@ a { text-decoration:none; color:inherit; }
       <span data-id="Diterima ScienceOpen - Research & Publishing for ICC Italia, Oktober 2026" data-en="Accepted ScienceOpen - Research & Publishing for ICC Italy, October 2026">Diterima ScienceOpen - Research & Publishing for ICC Italia, Oktober 2026</span>
     </div>
     <h1 data-id="Infrastruktur Kepercayaan untuk Kopi Indonesia" data-en="Trust Infrastructure for Indonesian Coffee">Infrastruktur <em>Kepercayaan</em><br>untuk Kopi Indonesia</h1>
+    <img src="https://i.imgur.com/54eTSe2.png" alt="QBridge" style="max-width:580px;width:92%;height:auto;margin:12px auto 16px;display:block;border-radius:var(--radius);box-shadow:var(--shadow);">
     <p class="hero-sub" data-id="QBridge bukan marketplace. Kami adalah penyedia informasi — infrastruktur kepercayaan yang memverifikasi processor kopi Indonesia melalui tiga lapisan independen, menciptakan sinyal kepercayaan yang global buyer dapat andalkan."
        data-en="QBridge is not a marketplace. We are an information provider — a trust infrastructure that verifies Indonesian coffee processors through three independent layers, creating a trust signal that global buyers can rely on.">
       QBridge bukan marketplace. Kami adalah penyedia informasi — infrastruktur kepercayaan 
@@ -519,9 +521,7 @@ a { text-decoration:none; color:inherit; }
       <div>
         <div class="footer-brand">QBridge</div>
         <p class="footer-desc">Infrastruktur kepercayaan untuk processor kopi Indonesia. Verifikasi tiga-lapis, blockchain traceability, dan welfare scoring.</p>
-        <div class="footer-entities">
-          <div class="footer-entity"><strong>CV Kemari Sukses Makmur</strong>Indonesia · Platform Development</div>
-        </div>
+
       </div>
       <div class="footer-col">
         <h4 data-id="Platform" data-en="Platforms">Platform</h4>
@@ -535,8 +535,7 @@ a { text-decoration:none; color:inherit; }
         <a href="https://qbridge-id.com/" target="_blank" rel="noopener noreferrer">QBridge Live</a>
         <a href="https://affiliate.qcoid.com/" target="_blank" rel="noopener noreferrer">QAffiliator Live</a>
   <a href="investors.html">Investor Portal</a>
-        <a href="investors.html">Pitch Deck</a>
-        <a href="investors.html">Data Room</a>
+
       </div>
       <div class="footer-col">
         <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
