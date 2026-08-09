@@ -2,6 +2,9 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.imgur.com https://*.googleusercontent.com data: blob:; connect-src 'self' https://script.google.com https://www.google-analytics.com;">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Investor Portal | Q.co Ecosystem</title>
 <meta name="description" content="Confidential investor materials for Q.co Ecosystem — Q.co Coffee Lab, QBridge, and QAffiliator.">
@@ -398,8 +401,7 @@ a { color: inherit; text-decoration: none; }
     <p class="gate-note">
       <span data-id="Portal ini berisi informasi keuangan dan strategis yang rahasia." data-en="This portal contains confidential financial and strategic information.">This portal contains confidential financial and strategic information.</span><br>
       <span data-id="Dengan mengakses, Anda setuju untuk menganggap semua materi sebagai sangat rahasia." data-en="By accessing, you agree to treat all materials as strictly confidential.">By accessing, you agree to treat all materials as strictly confidential.</span><br><br>
-      <strong data-id="Password saat ini: QBridge2026" data-en="Current password: QBridge2026">Current password: QBridge2026</strong><br>
-      <span style="font-size:0.7rem; color:rgba(255,255,255,0.2);" data-id="Ubah di JS sebelum deployment." data-en="Change in JS before deployment.">Change in JS before deployment.</span>
+      <span style="font-size:0.7rem; color:rgba(255,255,255,0.3);" data-id="Hubungi tim IR untuk kode akses." data-en="Contact IR team for access code.">Contact IR team for access code.</span>
     </p>
   </div>
 </div>
@@ -417,7 +419,7 @@ a { color: inherit; text-decoration: none; }
       <a href="roasting.html">Q.co Roasting</a>
       <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
       <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
-      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+      <a href="https://blog.qcoid.com/" target="_blank" rel="noopener noreferrer">Blog</a>
       <div class="lang-switch" onclick="toggleLang()">
         <span class="active" id="lang-id">ID</span>
         <span id="lang-en">EN</span>
@@ -433,7 +435,7 @@ a { color: inherit; text-decoration: none; }
   <a href="roasting.html">Q.co Roasting</a>
   <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
   <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
-  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+  <a href="https://blog.qcoid.com/" target="_blank" rel="noopener noreferrer">Blog</a>
   <a href="investors.html" data-id="Investor Portal" data-en="Investor Portal">Investor Portal</a>
 </div>
 
@@ -628,9 +630,9 @@ a { color: inherit; text-decoration: none; }
       <a href="qlab.html" style="color:rgba(255,255,255,0.55);">Q.co Coffee Lab</a> · 
       <a href="qbridge.html" style="color:rgba(255,255,255,0.55);">QBridge</a> · 
       <a href="qaffiliator.html" style="color:rgba(255,255,255,0.55);">QAffiliator</a> · 
-      <a href="https://blog.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);" data-id="Blog" data-en="Blog">Blog</a> · 
-      <a href="https://qbridge-id.com/" target="_blank" style="color:rgba(255,255,255,0.55);">QBridge Live</a> · 
-      <a href="https://affiliate.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);">QAffiliator Live</a>
+      <a href="https://blog.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);" data-id="Blog" data-en="Blog" rel="noopener noreferrer">Blog</a> · 
+      <a href="https://qbridge-id.com/" target="_blank" style="color:rgba(255,255,255,0.55);" rel="noopener noreferrer">QBridge Live</a> · 
+      <a href="https://affiliate.qcoid.com/" target="_blank" style="color:rgba(255,255,255,0.55);" rel="noopener noreferrer">QAffiliator Live</a>
     </div>
   </div>
 </footer>
@@ -642,7 +644,7 @@ a { color: inherit; text-decoration: none; }
 // PASSWORD GATE — Works on ALL contexts (HTTPS, HTTP, file://)
 // ============================================================
 
-const CORRECT_HASH = '1879973c';
+const GATE_API_URL = 'https://script.google.com/macros/s/AKfycbz1KfZDPsWCpRSI39Ylqbs0DchguLFVfgcVMTCa3h8yQD9ocd7kDqfoAuE2I7ooSWU/exec';
 
 function simpleHash(str) {
   let hash = 0;
@@ -675,23 +677,43 @@ function unlockPortal() {
   }
 
   const hash = simpleHash(password);
+  const btn = document.querySelector('.gate-btn');
+  const originalText = btn.textContent;
+  btn.textContent = currentLang === 'id' ? 'Memverifikasi...' : 'Verifying...';
+  btn.disabled = true;
 
-  if (hash === CORRECT_HASH) {
-    overlay.classList.add('hidden');
-    content.classList.add('unlocked');
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'login', { 'method': 'password_gate' });
-    }
-    sessionStorage.setItem('portalUnlocked', 'true');
-  } else {
-    error.textContent = currentLang === 'id' ? 'Kode akses tidak valid. Silakan coba lagi.' : 'Invalid access code. Please try again.';
-    input.classList.add('error');
-    input.value = '';
-    input.focus();
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'exception', { 'description': 'password_gate_failed' });
-    }
-  }
+  // Server-side validation via GAS
+  fetch(GATE_API_URL + '?action=validatePortal&hash=' + encodeURIComponent(hash))
+    .then(r => r.json())
+    .then(data => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+
+      if (data.success && data.token) {
+        overlay.classList.add('hidden');
+        content.classList.add('unlocked');
+        localStorage.setItem('_qco_portal_token', data.token);
+        localStorage.setItem('_qco_portal_exp', Date.now() + (data.expiresIn || 3600) * 1000);
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'login', { 'method': 'password_gate' });
+        }
+      } else {
+        error.textContent = currentLang === 'id' ? 'Kode akses tidak valid. Silakan coba lagi.' : 'Invalid access code. Please try again.';
+        input.classList.add('error');
+        input.value = '';
+        input.focus();
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'exception', { 'description': 'password_gate_failed' });
+        }
+      }
+    })
+    .catch(err => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      console.error('Gate validation error:', err);
+      error.textContent = currentLang === 'id' ? 'Gagal memverifikasi. Coba lagi.' : 'Verification failed. Please try again.';
+      input.classList.add('error');
+    });
 }
 
 function togglePasswordVisibility() {
@@ -706,11 +728,31 @@ function togglePasswordVisibility() {
   }
 }
 
-if (sessionStorage.getItem('portalUnlocked') === 'true') {
-  document.getElementById('gateOverlay').classList.add('hidden');
-  document.getElementById('mainContent').classList.add('unlocked');
-}
-
+// Check existing token on load
+(function _checkPortalToken() {
+  const token = localStorage.getItem('_qco_portal_token');
+  const exp = parseInt(localStorage.getItem('_qco_portal_exp') || '0', 10);
+  if (!token || Date.now() > exp) {
+    localStorage.removeItem('_qco_portal_token');
+    localStorage.removeItem('_qco_portal_exp');
+    return;
+  }
+  // Verify token with server
+  fetch(GATE_API_URL + '?action=checkToken&token=' + encodeURIComponent(token))
+    .then(r => r.json())
+    .then(data => {
+      if (data.valid) {
+        document.getElementById('gateOverlay').classList.add('hidden');
+        document.getElementById('mainContent').classList.add('unlocked');
+      } else {
+        localStorage.removeItem('_qco_portal_token');
+        localStorage.removeItem('_qco_portal_exp');
+      }
+    })
+    .catch(() => {
+      // Network error — keep gate shown
+    });
+})();
 function trackDownload(type) {
   if (typeof gtag !== 'undefined') {
     gtag('event', 'download', {
@@ -792,7 +834,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <a href="qlab.html">Q.co Coffee Lab</a>
   <a href="qbridge.html">QBridge</a>
   <a href="qaffiliator.html">QAffiliator</a>
-  <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog">Blog</a>
+  <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog" rel="noopener noreferrer">Blog</a>
   <a href="index.html" data-id="← Kembali ke Situs Publik" data-en="← Back to Public Site">← Back to Public Site</a>
 </div>
 

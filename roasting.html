@@ -2,6 +2,9 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.imgur.com https://*.googleusercontent.com data: blob:; connect-src 'self' https://script.google.com https://www.google-analytics.com;">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Q.co Roasting — Sahabat Kedai Kopi</title>
 <meta name="description" content="Q.co Roasting — Sahabat Kedai Kopi. Supplier roasted beans dan houseblend berkualitas dari Q.co Coffee Lab.">
@@ -673,7 +676,6 @@ a { text-decoration:none; color:inherit; }
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
-<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -687,7 +689,7 @@ a { text-decoration:none; color:inherit; }
       <a href="roasting.html" class="active">Q.co Roasting</a>
       <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
       <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
-      <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+      <a href="https://blog.qcoid.com/" target="_blank" rel="noopener noreferrer">Blog</a>
       <div class="lang-switch" onclick="toggleLang()">
         <span class="active" id="lang-id">ID</span>
         <span id="lang-en">EN</span>
@@ -707,7 +709,7 @@ a { text-decoration:none; color:inherit; }
     <a href="roasting.html">Q.co Roasting</a>
   <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
   <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
-  <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
+  <a href="https://blog.qcoid.com/" target="_blank" rel="noopener noreferrer">Blog</a>
   <a href="investors.html" data-id="Investor Portal" data-en="Investor Portal">Investor Portal</a>
 </div>
 
@@ -1301,10 +1303,10 @@ a { text-decoration:none; color:inherit; }
       <div class="footer-col">
         <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
         <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
-        <a href="https://instagram.com/qkopi.co" target="_blank">@qkopi.co</a>
-        <a href="https://blog.qcoid.com/" target="_blank">Blog</a>
-        <a href="https://qbridge-id.com/" target="_blank">QBridge Live</a>
-        <a href="https://affiliate.qcoid.com/" target="_blank">QAffiliator Live</a>
+        <a href="https://instagram.com/qkopi.co" target="_blank" rel="noopener noreferrer">@qkopi.co</a>
+        <a href="https://blog.qcoid.com/" target="_blank" rel="noopener noreferrer">Blog</a>
+        <a href="https://qbridge-id.com/" target="_blank" rel="noopener noreferrer">QBridge Live</a>
+        <a href="https://affiliate.qcoid.com/" target="_blank" rel="noopener noreferrer">QAffiliator Live</a>
         <a href="investors.html">Investor Relations</a>
       </div>
     </div>
@@ -1510,9 +1512,9 @@ function groupByProduct(calendar, stock) {
 function productionProductCard(product) {
   const clusterClass = product.overallCluster;
   const badgeClass = 'badge-' + product.overallCluster;
-  const clusterLabel = product.batches[0] ? product.batches[0].clusterLabel : 'Resting';
+  const clusterLabel = escapeHtml(product.batches[0] ? product.batches[0].clusterLabel : 'Resting');
   const typeIcon = product.type === 'HB' ? '🫘' : '☕';
-  const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';
+  const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';  // static, safe
 
   const batchesHtml = product.batches.map(batch => {
     const ageText = currentLang === 'id'
@@ -1661,10 +1663,13 @@ function productionRenderMock() {
 }
 
 function escapeHtml(text) {
-  if (!text) return '';
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+  if (text == null) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 </script>
