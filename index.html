@@ -126,6 +126,31 @@ a { text-decoration:none; color:inherit; }
 .btn-sec { background:transparent; color:var(--text); border:1.5px solid var(--border); }
 .btn-sec:hover { border-color:var(--accent); color:var(--accent-dark); }
 
+/* ===== HERO IMAGE ===== */
+.hero-img {
+  display: block;
+  max-width: 90%;
+  width: auto;
+  max-height: clamp(300px, 45vh, 520px);
+  height: auto;
+  margin: 24px auto 32px;
+  border-radius: var(--radius);
+  object-fit: contain;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.10);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-img:hover {
+  transform: scale(1.012);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+}
+@media (max-width: 768px) {
+  .hero-img {
+    max-width: 96%;
+    max-height: clamp(220px, 38vh, 360px);
+    margin: 16px auto 24px;
+  }
+}
+
 /* ===== ECOSYSTEM CARDS ===== */
 .eco-section { padding:80px 0; }
 .eco-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
@@ -346,6 +371,7 @@ a { text-decoration:none; color:inherit; }
 }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -393,6 +419,7 @@ a { text-decoration:none; color:inherit; }
   <div class="blob blob-2"></div>
   <div class="hero-inner">
     <h1>Q.co <em>Ecosystem</em></h1>
+    <img src="https://i.imgur.com/Fa5zkKn.png" alt="Q.co Ecosystem" class="hero-img" loading="eager">
     <p class="hero-desc" data-id="Tiga platform yang saling menguatkan. Satu visi: membangun infrastruktur kopi Indonesia yang transparan, terpercaya, dan berkelanjutan — dari petani di kebun hingga cangkir di meja konsumen."
        data-en="Three interconnected platforms. One vision: building Indonesia's coffee infrastructure that is transparent, trustworthy, and sustainable — from farmers in the field to cups on consumers' tables.">
       Tiga platform yang saling menguatkan. Satu visi: membangun infrastruktur kopi Indonesia yang transparan, terpercaya, dan berkelanjutan — dari petani di kebun hingga cangkir di meja konsumen.
