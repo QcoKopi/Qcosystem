@@ -641,12 +641,10 @@ a { color: inherit; text-decoration: none; }
 const GATE_API_URL = 'https://script.google.com/macros/s/AKfycbz1KfZDPsWCpRSI39Ylqbs0DchguLFVfgcVMTCa3h8yQD9ocd7kDqfoAuE2I7ooSWU/exec';
 
 function simpleHash(str) {
-  const salt = 'qco_gate_secret_2026_x7k9m2'; // MUST match GATE_SECRET in GAS Script Properties
-  const raw = str + '|' + salt;
   let hash = 0;
-  if (raw.length === 0) return hash.toString(16);
-  for (let i = 0; i < raw.length; i++) {
-    const char = raw.charCodeAt(i);
+  if (str.length === 0) return hash.toString(16);
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
     hash = hash & hash;
   }
