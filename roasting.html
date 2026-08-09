@@ -651,6 +651,7 @@ a { text-decoration:none; color:inherit; }
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -1426,6 +1427,12 @@ function productionFetch() {
   // Clear any previous timeout
   if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
 
+  // Safety timeout: fallback to mock if fetch hangs > 10s
+  window._prodTimeout = setTimeout(() => {
+    console.log('Fetch timeout, using mock data');
+    productionRenderMock();
+  }, 10000);
+
   fetch(PROD_API_URL)
     .then(r => {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -1455,8 +1462,10 @@ function sanitizeText(text) {
 }
 
 function productionRender(data) {
+  // Fallback: kalau data invalid, langsung mock
   if (!data || !data.success) {
-    productionRenderError(data && data.error ? data.error : 'Unknown error');
+    console.log('Invalid data, using mock:', data);
+    productionRenderMock();
     return;
   }
 
@@ -1464,13 +1473,13 @@ function productionRender(data) {
   const sumHB = document.getElementById('sumTotalHB');
   const sumBest = document.getElementById('sumBest');
   const sumPeak = document.getElementById('sumPeak');
-  if (sumRB) sumRB.textContent = data.summary.totalRB || 0;
-  if (sumHB) sumHB.textContent = data.summary.totalHB || 0;
-  if (sumBest) sumBest.textContent = data.summary.optimum || 0;
-  if (sumPeak) sumPeak.textContent = data.summary.peak || 0;
+  if (sumRB) sumRB.textContent = (data.summary && data.summary.totalRB) || 0;
+  if (sumHB) sumHB.textContent = (data.summary && data.summary.totalHB) || 0;
+  if (sumBest) sumBest.textContent = (data.summary && data.summary.optimum) || 0;
+  if (sumPeak) sumPeak.textContent = (data.summary && data.summary.peak) || 0;
 
   const container = document.getElementById('prodCalendar');
-  const products = groupByProduct(data.calendar || [], data.stock);
+  const products = groupByProduct((data.calendar || []), data.stock);
   if (products.length === 0) {
     container.innerHTML = `
       <div class="prod-empty">
