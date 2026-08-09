@@ -71,15 +71,15 @@ a { text-decoration:none; color:inherit; }
 .nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
 
 /* ===== HERO ===== */
-.hero { min-height:85vh; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:68px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
+.hero { min-height:auto; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:68px; padding-bottom:32px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
 .hero::before { content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px; background:radial-gradient(circle, rgba(184,146,106,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
-.hero-inner { max-width:800px; text-align:center; padding:60px 24px; position:relative; z-index:1; }
+.hero-inner { max-width:800px; text-align:center; padding:36px 24px 16px; position:relative; z-index:1; }
 .hero-badge { display:inline-flex; align-items:center; gap:8px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-dark); background:rgba(184,146,106,0.12); padding:6px 16px; border-radius:100px; margin-bottom:24px; }
 .hero-badge-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.hero h1 { font-family:var(--font-head); font-size:clamp(2.2rem, 5vw, 3.8rem); line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:16px; }
+.hero h1 { font-family:var(--font-head); font-size:clamp(1.5rem, 3.5vw, 2.6rem); line-height:1.15; font-weight:400; color:var(--primary); margin-bottom:8px; }
 .hero h1 em { font-style:italic; color:var(--accent-dark); }
-.hero-sub { font-size:clamp(1rem, 2vw, 1.2rem); color:var(--text-sec); max-width:600px; margin:0 auto 36px; line-height:1.7; }
+.hero-sub { font-size:clamp(0.8rem, 1.5vw, 0.95rem); color:var(--text-sec); max-width:520px; margin:0 auto 24px; line-height:1.6; }
 .hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
 .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:100px; font-size:0.9rem; font-weight:600; transition:all 0.25s; cursor:pointer; border:none; }
 .btn-pri { background:var(--primary); color:#fff; }
@@ -128,29 +128,15 @@ a { text-decoration:none; color:inherit; }
 .commission-card p { font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; }
 
 /* ===== INTEGRATION ===== */
-.integration-section { background:var(--bg); }
-.integration-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
-.integration-visual { background:linear-gradient(135deg, var(--accent-light), rgba(184,146,106,0.15)); border-radius:var(--radius); min-height:400px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); }
-.integration-visual-inner { text-align:center; padding:40px; }
-.integration-visual-inner h3 { font-family:var(--font-head); font-size:1.8rem; color:var(--accent-dark); margin-bottom:16px; }
-.integration-visual-inner p { color:var(--text-sec); font-size:0.95rem; line-height:1.6; }
-.integration-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:20px; }
-.integration-content h2 em { font-style:italic; color:var(--accent-dark); }
-.integration-content p { color:var(--text-sec); line-height:1.8; margin-bottom:20px; font-size:1rem; }
-.integration-list { list-style:none; }
-.integration-list li { font-size:0.9rem; color:var(--text-sec); padding:10px 0; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:10px; }
-.integration-list li:last-child { border-bottom:none; }
-.integration-list li::before { content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0; }
-
 /* ===== CTA ===== */
 .cta-section { background:var(--bg-warm); padding:80px 0; text-align:center; }
 .cta-section h2 { font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.2rem); font-weight:400; margin-bottom:12px; }
 .cta-section p { color:var(--text-sec); max-width:520px; margin:0 auto 32px; font-size:1rem; line-height:1.7; }
 
 /* ===== FOOTER ===== */
-.footer { background:var(--primary); color:rgba(255,255,255,0.55); padding:56px 0 32px; }
+.footer { background:var(--primary); color:rgba(255,255,255,0.55); padding:36px 0 24px; }
 .footer-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
-.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:32px; margin-bottom:28px; }
 .footer-brand { font-family:var(--font-head); font-size:1.3rem; color:#fff; margin-bottom:12px; }
 .footer-brand span { color:var(--accent-light); }
 .footer-desc { font-size:0.9rem; line-height:1.6; margin-bottom:20px; max-width:320px; }
@@ -276,6 +262,7 @@ a { text-decoration:none; color:inherit; }
   color: var(--accent-dark); z-index: 0; line-height: 1;
 }
 </style>
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -326,7 +313,8 @@ a { text-decoration:none; color:inherit; }
   <div class="blob blob-2"></div>
   <div class="hero-inner">
 
-    <h1 data-id="Distribusi Kopi, Didorong AI" data-en="Coffee Distribution, Powered by AI">Distribusi Kopi,<br><em>Didorong AI</em></h1>
+    <h1 data-id="Distribusi Kopi, Berbasis AI" data-en="Coffee Distribution, Powered by AI">Distribusi Kopi,<br><em>Berbasis AI</em></h1>
+    <img src="https://i.imgur.com/6GscD34.png" alt="QAffiliator" style="max-width:600px;width:95%;height:auto;margin:10px auto 14px;display:block;border-radius:var(--radius);box-shadow:var(--shadow);">
     <p class="hero-sub">
       QAffiliator adalah jaringan distribusi berbasis AI yang mengubah cara kopi Indonesia 
       sampai ke meja konsumen. Chatbot WhatsApp, pembayaran otomatis, pengiriman terintegrasi, 
@@ -451,32 +439,6 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
-<!-- INTEGRATION -->
-<section class="section integration-section" id="integration">
-  <div class="section-wrap">
-    <div class="integration-grid">
-      <div class="integration-visual">
-        <div class="integration-visual-inner">
-          <h3>Q.co Ecosystem</h3>
-          <p>QAffiliator tidak berdiri sendiri.<br>Terintegrasi penuh dengan Q.co Coffee Lab,<br>QBridge, QFinance, QSales, dan QTask.</p>
-        </div>
-      </div>
-      <div class="integration-content">
-        <div class="section-label">Integrasi Penuh</div>
-        <h2 data-id="Bagian dari Ekosistem yang Lebih Besar" data-en="Part of a Bigger Ecosystem">Bagian dari <em>Ekosistem yang Lebih Besar</em></h2>
-        <p data-id="QAffiliator bukan platform terpisah. Ia adalah distribusi arm dari ekosistem Q.co yang lebih besar — terhubung dengan roastery, traceability, finance, sales, dan operations." data-en="QAffiliator is not a standalone platform. It is the distribution arm of the larger Q.co ecosystem — connected to roastery, traceability, finance, sales, and operations.">QAffiliator bukan platform terpisah. Ia adalah distribusi arm dari ekosistem Q.co yang lebih besar — terhubung dengan roastery, traceability, finance, sales, dan operations.</p>
-        <ul class="integration-list">
-          <li><strong>Q.co Coffee Lab</strong> — Stok produk diambil langsung dari inventory roastery. Tidak ada duplikasi data.</li>
-          <li><strong>QBridge</strong> — Produk yang dijual melalui QAffiliator dapat ditrace ke processor terverifikasi.</li>
-          <li><strong>QFinance</strong> — Setiap transaksi masuk ke sistem akuntansi otomatis. Revenue, COGS, dan komisi tercatat real-time.</li>
-          <li><strong>QSales</strong> — Leads dari QAffiliator masuk ke CRM yang sama dengan leads dari channel lain.</li>
-          <li><strong>QTask</strong> — Task fulfillment (packing, shipping) masuk ke sistem operasional tim.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CTA -->
 <section class="section cta-section">
   <div class="section-wrap">
@@ -507,8 +469,7 @@ a { text-decoration:none; color:inherit; }
         <a href="https://qbridge-id.com/" target="_blank" rel="noopener noreferrer">QBridge Live</a>
         <a href="https://affiliate.qcoid.com/" target="_blank" rel="noopener noreferrer">QAffiliator Live</a>
   <a href="investors.html">Investor Portal</a>
-        <a href="investors.html">Pitch Deck</a>
-        <a href="investors.html">Data Room</a>
+
       </div>
       <div class="footer-col">
         <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
