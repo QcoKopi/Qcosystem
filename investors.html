@@ -383,6 +383,7 @@ a { color: inherit; text-decoration: none; }
 }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -532,7 +533,7 @@ a { color: inherit; text-decoration: none; }
         <div class="card-icon">🏛️</div>
         <h3 data-id="Ruang Data" data-en="Data Room">Data Room</h3>
         <p data-id="Dokumen due diligence: sertifikat entitas legal, laporan keuangan Q.co Lab, arsitektur teknis QBridge, dokumen sistem QAffiliator, dan perjanjian kemitraan." data-en="Due diligence documents: legal entity certificates, Q.co Lab financials, QBridge technical architecture, QAffiliator system docs, and partnership agreements.">Due diligence documents: legal entity certificates, Q.co Lab financials, QBridge technical architecture, QAffiliator system docs, and partnership agreements.</p>
-        <span class="card-action" onclick="alert(document.documentElement.lang === 'id' ? 'Akses ruang data memerlukan NDA. Hubungi investor@qco.coffee' : 'Data room access requires NDA. Contact investor@qco.coffee')">
+        <span class="card-action" onclick="alert(document.documentElement.lang === 'id' ? 'Akses ruang data memerlukan NDA. Hubungi info@qcoid.com' : 'Data room access requires NDA. Contact info@qcoid.com')">
           <span data-id="Minta Akses" data-en="Request Access">Request Access</span> →
         </span>
         <div class="card-meta">
@@ -569,7 +570,7 @@ a { color: inherit; text-decoration: none; }
           <div class="contact-item">
             <div class="contact-item-icon">📧</div>
             <div class="contact-item-text">
-              <strong>investor@qco.coffee</strong>
+              <strong>info@qcoid.com</strong>
               <span data-id="Hubungan investor utama" data-en="Primary investor relations">Primary investor relations</span>
             </div>
           </div>
@@ -597,7 +598,8 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
       <div class="contact-form">
-        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+        <form id="contactForm" method="POST" target="contact_iframe" onsubmit="submitContactForm()">
+          <input type="hidden" name="action" value="submitContact">
           <div class="form-group">
             <label data-id="Nama" data-en="Name">Name</label>
             <input type="text" name="name" placeholder="Your name" data-id="Nama Anda" data-en="Your name" required>
@@ -614,8 +616,9 @@ a { color: inherit; text-decoration: none; }
             <label data-id="Pesan" data-en="Message">Message</label>
             <textarea name="message" rows="3" placeholder="What would you like to discuss?" data-id="Apa yang ingin Anda diskusikan?" data-en="What would you like to discuss?"></textarea>
           </div>
-          <button type="submit" class="form-submit" data-id="Kirim Pesan" data-en="Send Message">Send Message</button>
+          <button type="submit" class="form-submit" id="contactSubmitBtn" data-id="Kirim Pesan" data-en="Send Message">Send Message</button>
         </form>
+        <iframe name="contact_iframe" style="display:none;" onload="contactFormSubmitted()"></iframe>
       </div>
     </div>
   </div>
@@ -788,27 +791,45 @@ function trackDownload(type) {
   alert(msg);
 }
 
-function handleContactSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
+let contactFormSubmitting = false;
+
+function submitContactForm() {
+  contactFormSubmitting = true;
+  const btn = document.getElementById('contactSubmitBtn');
+  if (btn) {
+    btn.textContent = currentLang === 'id' ? 'Mengirim...' : 'Sending...';
+    btn.disabled = true;
+  }
   if (typeof gtag !== 'undefined') {
     gtag('event', 'generate_lead', {
       'event_category': 'investor_portal',
       'event_label': 'contact_form'
     });
   }
+}
+
+function contactFormSubmitted() {
+  if (!contactFormSubmitting) return;
+  contactFormSubmitting = false;
+  const form = document.getElementById('contactForm');
   const title = currentLang === 'id' ? 'Pesan Terkirim' : 'Message Sent';
   const subtitle = currentLang === 'id' ? 'Kami akan merespons dalam 24 jam.' : 'We will respond within 24 hours.';
-  const note = currentLang === 'id' ? 'Hubungkan form ini ke backend GAS atau layanan email Anda.' : 'Connect this form to your GAS backend or email service.';
   form.innerHTML = `
     <div style="text-align:center; padding: 32px 0;">
       <div style="font-size: 2.5rem; margin-bottom: 12px;">✓</div>
       <h3 style="font-family: var(--font-heading); margin-bottom: 8px; color: #fff;">${title}</h3>
       <p style="color: rgba(255,255,255,0.7);">${subtitle}</p>
-      <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 16px;">${note}</p>
     </div>
   `;
 }
+
+// Set form action ke GAS URL saat DOM ready
+(function setContactFormAction() {
+  const form = document.getElementById('contactForm');
+  if (form && typeof GATE_API_URL !== 'undefined') {
+    form.action = GATE_API_URL;
+  }
+})();
 
 function toggleMobile() {
   document.getElementById('mobileMenu').classList.toggle('active');
