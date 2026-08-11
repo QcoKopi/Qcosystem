@@ -1618,26 +1618,17 @@ function productionProductCard(product) {
       : `<span class="prod-batch-stock out">Sold Out</span>`;
 
     // QR data = text batch tracking info (what gets scanned)
-    let qrText = 'Q.co Coffee Lab — Batch Tracking
+    let qrText = `Q.co Coffee Lab — Batch Tracking
 ─────────────────────────
-';
-    qrText += 'Batch: ' + batch.batchNo + '
-';
-    qrText += 'Date: ' + batch.dateDisplay + '
-';
-    qrText += 'Product: ' + product.name + '
-';
-    qrText += 'Weight: ' + batch.weight + ' kg
-';
-    if (batch.rawMaterial) qrText += 'Material: ' + batch.rawMaterial + '
-';
-    qrText += 'Cluster: ' + batch.clusterLabel + '
-';
-    qrText += '─────────────────────────
+Batch: ${batch.batchNo}
+Date: ${batch.dateDisplay}
+Product: ${product.name}
+Weight: ${batch.weight} kg
+${batch.rawMaterial ? 'Material: ' + batch.rawMaterial + '
+' : ''}Cluster: ${batch.clusterLabel}
+─────────────────────────
 Update Roasting:
-https://qcoid.com/roasting.html';
-
-    // Display QR = small 70x70
+https://qcoid.com/roasting.html`;    // Display QR = small 70x70
     const qrUrlDisplay = 'https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=' + encodeURIComponent(qrText);
     // Download QR = large 200x200
     const qrUrlDownload = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrText);
