@@ -506,6 +506,15 @@ a { text-decoration:none; color:inherit; }
   transition: all 0.2s;
 }
 .prod-batch-row:hover { background: #e8e4da; }
+.prod-batch-row.batch-focus {
+  outline: 3px solid #b5651d;
+  outline-offset: 2px;
+  animation: batchFocusPulse 1.4s ease-in-out 3;
+}
+@keyframes batchFocusPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(181, 101, 29, 0.18); }
+  50% { box-shadow: 0 0 0 10px rgba(181, 101, 29, 0.32); }
+}
 
 /* Top row: date + badge/stock */
 .prod-batch-top {
@@ -1526,6 +1535,23 @@ function productionRender(data) {
     console.error('productionRender error:', err);
     productionRenderError(err.message || 'Render error');
   }
+  focusBatchFromUrl();
+}
+
+// Buka lewat https://qcoid.com/roasting.html?batch=0808-RB01 (dari QR invoice):
+// kartu produk dibuka, baris batch di-highlight, dan di-scroll ke tengah layar.
+function focusBatchFromUrl() {
+  try {
+    var batchNo = new URLSearchParams(window.location.search).get('batch');
+    if (!batchNo) return;
+    var safe = (window.CSS && CSS.escape) ? CSS.escape(batchNo) : batchNo.replace(/[^\w\-]/g, '');
+    var row = document.querySelector('.prod-batch-row[data-batch="' + safe + '"]');
+    if (!row) return;
+    var card = row.closest('.prod-day');
+    if (card) { card.classList.remove('collapsed'); card.classList.add('expanded'); }
+    row.classList.add('batch-focus');
+    setTimeout(function() { row.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
+  } catch (e) { console.warn('focusBatchFromUrl:', e); }
 }
 
 function groupByProduct(calendar, stock) {
@@ -1623,7 +1649,7 @@ function productionProductCard(product) {
     var qrUrlDisplay = 'https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=' + encodeURIComponent(qrText);
     var qrUrlDownload = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrText);
 
-    return '<div class="prod-batch-row">' +
+    return '<div class="prod-batch-row" data-batch="' + escapeHtml(batch.batchNo) + '">' +
       '<div class="prod-batch-top">' +
         '<div class="prod-batch-main">' +
           '<div class="prod-batch-date">' + batch.dateDisplay + '</div>' +
