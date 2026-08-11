@@ -1548,31 +1548,36 @@ function sanitizeText(text) {
 }
 
 function productionRender(data) {
-  if (!data || !data.success) {
-    productionRenderError(data && data.error ? data.error : 'Unknown error');
-    return;
-  }
+  try {
+    if (!data || !data.success) {
+      productionRenderError(data && data.error ? data.error : 'Unknown error');
+      return;
+    }
 
-  const sumRB = document.getElementById('sumTotalRB');
-  const sumHB = document.getElementById('sumTotalHB');
-  const sumBest = document.getElementById('sumBest');
-  const sumPeak = document.getElementById('sumPeak');
-  if (sumRB) sumRB.textContent = data.summary.totalRB || 0;
-  if (sumHB) sumHB.textContent = data.summary.totalHB || 0;
-  if (sumBest) sumBest.textContent = data.summary.optimum || 0;
-  if (sumPeak) sumPeak.textContent = data.summary.peak || 0;
+    const sumRB = document.getElementById('sumTotalRB');
+    const sumHB = document.getElementById('sumTotalHB');
+    const sumBest = document.getElementById('sumBest');
+    const sumPeak = document.getElementById('sumPeak');
+    if (sumRB) sumRB.textContent = data.summary.totalRB || 0;
+    if (sumHB) sumHB.textContent = data.summary.totalHB || 0;
+    if (sumBest) sumBest.textContent = data.summary.optimum || 0;
+    if (sumPeak) sumPeak.textContent = data.summary.peak || 0;
 
-  const container = document.getElementById('prodCalendar');
-  const products = groupByProduct(data.calendar || [], data.stock);
-  if (products.length === 0) {
-    container.innerHTML = `
-      <div class="prod-empty">
-        <div style="font-size:3rem; margin-bottom:12px;">☕</div>
-        <p>${currentLang === 'id' ? 'Tidak ada produksi dalam 30 hari terakhir.' : 'No production in the last 30 days.'}</p>
-      </div>
-    `;
-  } else {
-    container.innerHTML = '<div class="prod-calendar">' + products.map(p => productionProductCard(p)).join('') + '</div>';
+    const container = document.getElementById('prodCalendar');
+    const products = groupByProduct(data.calendar || [], data.stock);
+    if (products.length === 0) {
+      container.innerHTML = `
+        <div class="prod-empty">
+          <div style="font-size:3rem; margin-bottom:12px;">☕</div>
+          <p>${currentLang === 'id' ? 'Tidak ada produksi dalam 30 hari terakhir.' : 'No production in the last 30 days.'}</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = '<div class="prod-calendar">' + products.map(p => productionProductCard(p)).join('') + '</div>';
+    }
+  } catch (err) {
+    console.error('productionRender error:', err);
+    productionRenderError(err.message || 'Render error');
   }
 }
 
@@ -1658,14 +1663,16 @@ function productionProductCard(product) {
       : `<span class="prod-batch-stock out">Sold Out</span>`;
 
     // QR data = text batch tracking info (what gets scanned)
-    const qrText = `Q.co Coffee Lab — Batch Tracking
+    let qrText = `Q.co Coffee Lab — Batch Tracking
 ─────────────────────────
 Batch: ${batch.batchNo}
 Date: ${batch.dateDisplay}
 Product: ${product.name}
-Weight: ${batch.weight} kg
-${batch.rawMaterial ? 'Material: ' + batch.rawMaterial + '
-' : ''}Cluster: ${batch.clusterLabel}
+Weight: ${batch.weight} kg`;
+    if (batch.rawMaterial) {
+      qrText += '\nMaterial: ' + batch.rawMaterial;
+    }
+    qrText += `\nCluster: ${batch.clusterLabel}
 ─────────────────────────
 Update Roasting:
 https://qcoid.com/roasting.html`;
