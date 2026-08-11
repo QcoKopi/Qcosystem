@@ -1502,13 +1502,11 @@ function sanitizeText(text) {
 
 function productionRender(data) {
   try {
-    // Fallback: kalau data invalid, langsung mock
     if (!data || !data.success) {
       console.log('Invalid data, using mock:', data);
       productionRenderMock();
       return;
     }
-
     const sumRB = document.getElementById('sumTotalRB');
     const sumHB = document.getElementById('sumTotalHB');
     const sumBest = document.getElementById('sumBest');
@@ -1517,7 +1515,6 @@ function productionRender(data) {
     if (sumHB) sumHB.textContent = (data.summary && data.summary.totalHB) || 0;
     if (sumBest) sumBest.textContent = (data.summary && data.summary.optimum) || 0;
     if (sumPeak) sumPeak.textContent = (data.summary && data.summary.peak) || 0;
-
     const container = document.getElementById('prodCalendar');
     const products = groupByProduct((data.calendar || []), data.stock);
     if (products.length === 0) {
@@ -1600,7 +1597,7 @@ function productionProductCard(product) {
   const clusterClass = product.overallCluster;
   const badgeClass = 'badge-' + product.overallCluster;
   const clusterLabel = escapeHtml(product.batches[0] ? product.batches[0].clusterLabel : 'Resting');
-  const typeIcon = product.type === 'HB' ? '🫘' : '☕';
+  const typeIcon = product.type === 'HB' ? '\ud83e\uded8' : '\u2615';
   const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';
 
   const batchesHtml = product.batches.map(batch => {
@@ -1612,86 +1609,72 @@ function productionProductCard(product) {
       ? '<span class="prod-batch-stock in">' + batch.stock + ' kg</span>'
       : '<span class="prod-batch-stock out">Sold Out</span>';
 
-    // Build QR text using string concatenation (no template literal to avoid nesting issues)
-    var qrText = 'Q.co Coffee Lab — Batch Tracking';
-    qrText += '
-─────────────────────────
-';
-    qrText += 'Batch: ' + batch.batchNo + '
-';
-    qrText += 'Date: ' + batch.dateDisplay + '
-';
-    qrText += 'Product: ' + product.name + '
-';
-    qrText += 'Weight: ' + batch.weight + ' kg
-';
-    if (batch.rawMaterial) qrText += 'Material: ' + batch.rawMaterial + '
-';
-    qrText += 'Cluster: ' + batch.clusterLabel + '
-';
-    qrText += '─────────────────────────
-Update Roasting:
-https://qcoid.com/roasting.html';
+    var qrText = 'Q.co Coffee Lab \u2014 Batch Tracking\n';
+    qrText += '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n';
+    qrText += 'Batch: ' + batch.batchNo + '\n';
+    qrText += 'Date: ' + batch.dateDisplay + '\n';
+    qrText += 'Product: ' + product.name + '\n';
+    qrText += 'Weight: ' + batch.weight + ' kg\n';
+    if (batch.rawMaterial) qrText += 'Material: ' + batch.rawMaterial + '\n';
+    qrText += 'Cluster: ' + batch.clusterLabel + '\n';
+    qrText += '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n';
+    qrText += 'Update Roasting:\nhttps://qcoid.com/roasting.html';
 
     var qrUrlDisplay = 'https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=' + encodeURIComponent(qrText);
     var qrUrlDownload = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrText);
 
-    return '' +
-      '<div class="prod-batch-row">' +
-        '<div class="prod-batch-top">' +
-          '<div class="prod-batch-main">' +
-            '<div class="prod-batch-date">' + batch.dateDisplay + '</div>' +
-            '<div class="prod-batch-age">' + ageText + '</div>' +
-          '</div>' +
-          '<div class="prod-batch-right">' +
-            '<span class="prod-batch-badge ' + batchClusterClass + '">' + batch.clusterLabel + '</span>' +
-            stockHtml +
-          '</div>' +
+    return '<div class="prod-batch-row">' +
+      '<div class="prod-batch-top">' +
+        '<div class="prod-batch-main">' +
+          '<div class="prod-batch-date">' + batch.dateDisplay + '</div>' +
+          '<div class="prod-batch-age">' + ageText + '</div>' +
         '</div>' +
-        '<div class="prod-batch-middle">' +
-          '<div class="prod-batch-detail">' +
-            '<div class="prod-batch-line">' +
-              '<span class="prod-batch-label">Batch:</span>' +
-              '<span class="prod-batch-val">' + escapeHtml(batch.batchNo) + '</span>' +
-            '</div>' +
-            '<div class="prod-batch-line">' +
-              '<span class="prod-batch-label">' + (currentLang === 'id' ? 'Berat' : 'Weight') + ':</span>' +
-              '<span class="prod-batch-val">' + batch.weight + ' kg</span>' +
-            '</div>' +
-            (batch.rawMaterial ?
-              '<div class="prod-batch-line">' +
-                '<span class="prod-batch-label">' + (currentLang === 'id' ? 'Bahan' : 'Material') + ':</span>' +
-                '<span class="prod-batch-val">' + escapeHtml(batch.rawMaterial) + '</span>' +
-              '</div>' : '') +
-          '</div>' +
-          '<div class="prod-batch-qr">' +
-            '<img src="' + qrUrlDisplay + '" alt="QR" width="70" height="70">' +
-            '<button type="button" class="qr-download" onclick="window.open('' + qrUrlDownload + '','_blank')">' + (currentLang === 'id' ? 'Unduh QR' : 'Download QR') + '</button>' +
-            '<div class="qr-meta">' + batch.weight + 'kg · ' + batch.clusterLabel + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="prod-batch-link">' +
-          '<a href="https://qcoid.com/roasting.html" target="_blank">' + (currentLang === 'id' ? 'Update Roasting →' : 'Update Roasting →') + '</a>' +
-        '</div>' +
-      '</div>';
-  }).join('');
-
-  return '' +
-    '<div class="prod-day ' + clusterClass + ' expanded" onclick="toggleProductCard(this)">' +
-      '<div class="prod-day-header">' +
-        '<div style="flex:1; min-width:0;">' +
-          '<div class="prod-day-date">' + typeIcon + ' ' + escapeHtml(product.name) + '</div>' +
-          '<div class="prod-day-age">' + typeLabel + ' · ' + product.batches.length + ' ' + (currentLang === 'id' ? 'batch' : 'batches') + '</div>' +
-        '</div>' +
-        '<div style="display:flex; align-items:center; gap:8px;">' +
-          '<span class="prod-day-badge ' + badgeClass + '">' + clusterLabel + '</span>' +
-          '<span class="prod-toggle-icon">▶</span>' +
+        '<div class="prod-batch-right">' +
+          '<span class="prod-batch-badge ' + batchClusterClass + '">' + batch.clusterLabel + '</span>' +
+          stockHtml +
         '</div>' +
       '</div>' +
-      '<div class="prod-day-body">' +
-        batchesHtml +
+      '<div class="prod-batch-middle">' +
+        '<div class="prod-batch-detail">' +
+          '<div class="prod-batch-line">' +
+            '<span class="prod-batch-label">Batch:</span>' +
+            '<span class="prod-batch-val">' + escapeHtml(batch.batchNo) + '</span>' +
+          '</div>' +
+          '<div class="prod-batch-line">' +
+            '<span class="prod-batch-label">' + (currentLang === 'id' ? 'Berat' : 'Weight') + ':</span>' +
+            '<span class="prod-batch-val">' + batch.weight + ' kg</span>' +
+          '</div>' +
+          (batch.rawMaterial ?
+            '<div class="prod-batch-line">' +
+              '<span class="prod-batch-label">' + (currentLang === 'id' ? 'Bahan' : 'Material') + ':</span>' +
+              '<span class="prod-batch-val">' + escapeHtml(batch.rawMaterial) + '</span>' +
+            '</div>' : '') +
+        '</div>' +
+        '<div class="prod-batch-qr">' +
+          '<img src="' + qrUrlDisplay + '" alt="QR" width="70" height="70">' +
+          '<button type="button" class="qr-download" onclick="window.open(\'' + qrUrlDownload + '\',\'_blank\')">' + (currentLang === 'id' ? 'Unduh QR' : 'Download QR') + '</button>' +
+          '<div class="qr-meta">' + batch.weight + 'kg \u00b7 ' + batch.clusterLabel + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="prod-batch-link">' +
+        '<a href="https://qcoid.com/roasting.html" target="_blank">' + (currentLang === 'id' ? 'Update Roasting \u2192' : 'Update Roasting \u2192') + '</a>' +
       '</div>' +
     '</div>';
+  }).join('');
+
+  return '<div class="prod-day ' + clusterClass + ' expanded" onclick="toggleProductCard(this)">' +
+    '<div class="prod-day-header">' +
+      '<div style="flex:1; min-width:0;">' +
+        '<div class="prod-day-date">' + typeIcon + ' ' + escapeHtml(product.name) + '</div>' +
+        '<div class="prod-day-age">' + typeLabel + ' \u2022 ' + product.batches.length + ' ' + (currentLang === 'id' ? 'batch' : 'batches') + '</div>' +
+      '</div>' +
+      '<div style="display:flex; align-items:center; gap:8px;">' +
+        '<span class="prod-day-badge ' + badgeClass + '">' + clusterLabel + '</span>' +
+        '<span class="prod-toggle-icon">\u25b6</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="prod-day-body">' + batchesHtml + '</div>' +
+  '</div>';
 }
 
 function toggleProductCard(card) {
