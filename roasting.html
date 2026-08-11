@@ -184,10 +184,8 @@ a { text-decoration:none; color:inherit; }
   .dna-stats-bar { font-size:0.75rem; gap:8px; }
   .dna-values-inline { gap:12px; font-size:0.75rem; }
   .prod-calendar { grid-template-columns: 1fr; }
-  .prod-batch-row { flex-wrap: wrap; gap: 10px; }
-  .prod-batch-qr { order: 5; flex-direction: row; align-items: center; gap: 8px; min-width: auto; }
-  .prod-batch-qr img { width: 50px; height: 50px; }
-  .prod-batch-right { order: 4; }
+  .prod-batch-middle { gap: 10px; }
+  .prod-batch-qr img { width: 60px; height: 60px; }
 }
 
 .mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
@@ -470,54 +468,48 @@ a { text-decoration:none; color:inherit; }
   }
 }
 
+/* ===== BATCH ROW — vertical block layout, QR never overlaps text ===== */
 .prod-batch-row {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 12px 14px; background: var(--bg-warm, #f5f3ee);
-  border-radius: 8px; margin-bottom: 8px;
-  border: 1px solid var(--border, #e8e6e1); transition: all 0.2s;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--bg-warm, #f5f3ee);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border, #e8e6e1);
+  transition: all 0.2s;
 }
 .prod-batch-row:hover { background: #e8e4da; }
 
+/* Top row: date + badge/stock */
+.prod-batch-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
 .prod-batch-main {
-  min-width: 90px; flex-shrink: 0;
+  flex-shrink: 0;
 }
 .prod-batch-date {
-  font-family: var(--font-head, Georgia, serif); font-size: 0.8rem;
+  font-family: var(--font-head, Georgia, serif); font-size: 0.9rem;
   color: var(--text, #1a1a1a); font-weight: 600;
 }
 .prod-batch-age {
-  font-size: 0.7rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
+  font-size: 0.75rem; color: var(--text-muted, #9a9a9a); margin-top: 2px;
 }
-
-.prod-batch-detail {
-  flex: 1; display: flex; flex-direction: column; gap: 3px;
-  min-width: 0; overflow: hidden;
-}
-.prod-batch-line {
-  display: flex; gap: 6px; font-size: 0.78rem; line-height: 1.4;
-}
-.prod-batch-label {
-  color: var(--text-muted, #9a9a9a); min-width: 55px; flex-shrink: 0;
-  font-size: 0.72rem;
-}
-.prod-batch-val {
-  color: var(--text-sec, #5c5c5c); font-weight: 500;
-  font-family: monospace; font-size: 0.75rem;
-  overflow-wrap: break-word; word-break: normal;
-}
-
 .prod-batch-right {
-  display: flex; flex-direction: column;
-  align-items: flex-end; gap: 4px;
-  flex-shrink: 0; min-width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
 }
-
 .prod-batch-badge {
-  font-size: 0.6rem; font-weight: 700; padding: 2px 7px; border-radius: 100px;
+  font-size: 0.6rem; font-weight: 700; padding: 3px 8px; border-radius: 100px;
   text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
 }
-
 .prod-batch-stock {
   display: inline-block; padding: 2px 8px; border-radius: 100px;
   font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
@@ -528,6 +520,98 @@ a { text-decoration:none; color:inherit; }
 }
 .prod-batch-stock.out {
   background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a;
+}
+
+/* Middle row: detail + QR side by side */
+.prod-batch-middle {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.prod-batch-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.prod-batch-line {
+  display: flex;
+  gap: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.prod-batch-label {
+  color: var(--text-muted, #9a9a9a);
+  min-width: 55px;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+}
+.prod-batch-val {
+  color: var(--text-sec, #5c5c5c);
+  font-weight: 500;
+  font-family: monospace;
+  font-size: 0.78rem;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* QR area */
+.prod-batch-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  min-width: 70px;
+}
+.prod-batch-qr img {
+  display: block;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  padding: 3px;
+}
+.prod-batch-qr .qr-download {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  background: var(--accent-light);
+  padding: 3px 10px;
+  border-radius: 100px;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.prod-batch-qr .qr-download:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.prod-batch-qr .qr-meta {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Bottom link */
+.prod-batch-link {
+  font-size: 0.78rem;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+.prod-batch-link a {
+  color: var(--accent-dark);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+.prod-batch-link a:hover {
+  color: var(--accent);
 }
 
 /* ===== COFFEE SCORE BARS ===== */
@@ -654,45 +738,7 @@ a { text-decoration:none; color:inherit; }
 .product-card.expanded .product-info .coffee-scores { transition-delay: 0.15s; }
 .product-card.expanded .product-info .product-meta { transition-delay: 0.2s; }
 
-/* ===== QR CODE ===== */
-.prod-batch-qr {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-  min-width: 70px;
-}
-.prod-batch-qr img {
-  display: block;
-  border-radius: 6px;
-  border: 1.5px solid var(--border);
-  background: #fff;
-  padding: 3px;
-}
-.prod-batch-qr .qr-download {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: var(--accent-dark);
-  background: var(--accent-light);
-  padding: 3px 10px;
-  border-radius: 100px;
-  transition: all 0.2s;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  white-space: nowrap;
-}
-.prod-batch-qr .qr-download:hover {
-  background: var(--accent);
-  color: #fff;
-}
-.prod-batch-qr .qr-meta {
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  text-align: center;
-  line-height: 1.3;
-}
+
 </style>
 <base target="_blank">
 <base target="_blank">
@@ -1611,39 +1657,61 @@ function productionProductCard(product) {
       ? `<span class="prod-batch-stock in">${batch.stock} kg</span>`
       : `<span class="prod-batch-stock out">Sold Out</span>`;
 
-    const qrData = 'https://qcoid.com/roasting.html';
-    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrData);
+    // QR data = text batch tracking info (what gets scanned)
+    const qrText = `Q.co Coffee Lab — Batch Tracking
+─────────────────────────
+Batch: ${batch.batchNo}
+Date: ${batch.dateDisplay}
+Product: ${product.name}
+Weight: ${batch.weight} kg
+${batch.rawMaterial ? 'Material: ' + batch.rawMaterial + '
+' : ''}Cluster: ${batch.clusterLabel}
+─────────────────────────
+Update Roasting:
+https://qcoid.com/roasting.html`;
+
+    // Display QR = small 70x70
+    const qrUrlDisplay = 'https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=' + encodeURIComponent(qrText);
+    // Download QR = large 200x200
+    const qrUrlDownload = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrText);
 
     return `
       <div class="prod-batch-row">
-        <div class="prod-batch-main">
-          <div class="prod-batch-date">${batch.dateDisplay}</div>
-          <div class="prod-batch-age">${ageText}</div>
+        <div class="prod-batch-top">
+          <div class="prod-batch-main">
+            <div class="prod-batch-date">${batch.dateDisplay}</div>
+            <div class="prod-batch-age">${ageText}</div>
+          </div>
+          <div class="prod-batch-right">
+            <span class="prod-batch-badge ${batchClusterClass}">${batch.clusterLabel}</span>
+            ${stockHtml}
+          </div>
         </div>
-        <div class="prod-batch-detail">
-          <div class="prod-batch-line">
-            <span class="prod-batch-label">Batch:</span>
-            <span class="prod-batch-val">${escapeHtml(batch.batchNo)}</span>
-          </div>
-          <div class="prod-batch-line">
-            <span class="prod-batch-label">${currentLang === 'id' ? 'Berat' : 'Weight'}:</span>
-            <span class="prod-batch-val">${batch.weight} kg</span>
-          </div>
-          ${batch.rawMaterial ? `
+        <div class="prod-batch-middle">
+          <div class="prod-batch-detail">
             <div class="prod-batch-line">
-              <span class="prod-batch-label">${currentLang === 'id' ? 'Bahan' : 'Material'}:</span>
-              <span class="prod-batch-val">${escapeHtml(batch.rawMaterial)}</span>
+              <span class="prod-batch-label">Batch:</span>
+              <span class="prod-batch-val">${escapeHtml(batch.batchNo)}</span>
             </div>
-          ` : ''}
+            <div class="prod-batch-line">
+              <span class="prod-batch-label">${currentLang === 'id' ? 'Berat' : 'Weight'}:</span>
+              <span class="prod-batch-val">${batch.weight} kg</span>
+            </div>
+            ${batch.rawMaterial ? `
+              <div class="prod-batch-line">
+                <span class="prod-batch-label">${currentLang === 'id' ? 'Bahan' : 'Material'}:</span>
+                <span class="prod-batch-val">${escapeHtml(batch.rawMaterial)}</span>
+              </div>
+            ` : ''}
+          </div>
+          <div class="prod-batch-qr">
+            <img src="${qrUrlDisplay}" alt="QR" width="70" height="70">
+            <button type="button" class="qr-download" onclick="window.open('${qrUrlDownload}','_blank')">${currentLang === 'id' ? 'Unduh QR' : 'Download QR'}</button>
+            <div class="qr-meta">${batch.weight}kg · ${batch.clusterLabel}</div>
+          </div>
         </div>
-        <div class="prod-batch-qr">
-          <img src="${qrUrl}" alt="QR" width="70" height="70">
-          <button type="button" class="qr-download" onclick="window.open('${qrUrl}','_blank')">${currentLang === 'id' ? 'Unduh QR' : 'Download QR'}</button>
-          <div class="qr-meta">${batch.weight}kg · ${batch.clusterLabel}</div>
-        </div>
-        <div class="prod-batch-right">
-          <span class="prod-batch-badge ${batchClusterClass}">${batch.clusterLabel}</span>
-          ${stockHtml}
+        <div class="prod-batch-link">
+          <a href="https://qcoid.com/roasting.html" target="_blank">${currentLang === 'id' ? 'Update Roasting →' : 'Update Roasting →'}</a>
         </div>
       </div>
     `;
