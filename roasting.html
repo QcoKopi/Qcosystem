@@ -771,27 +771,6 @@ a { text-decoration:none; color:inherit; }
 .product-card.expanded .product-info p { transition-delay: 0.1s; }
 .product-card.expanded .product-info .coffee-scores { transition-delay: 0.15s; }
 .product-card.expanded .product-info .product-meta { transition-delay: 0.2s; }
-
-/* ===== PRODUCTION LIVE — RINGKAS ===== */
-.prod-item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  background: var(--bg-warm);
-  border-radius: 8px;
-  margin-bottom: 6px;
-  border: 1px solid var(--border);
-}
-.prod-item-row:hover { background: #e8e4da; }
-.prod-item-info { flex: 1; min-width: 0; }
-.prod-item-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
-.prod-item-batch { font-size: 0.7rem; color: var(--text-muted); font-family: monospace; margin-top: 2px; }
-.prod-item-status { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.prod-item-badge { font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; text-transform: uppercase; }
-.prod-item-badge.status-in { background: #e8f5e9; color: #2e7d32; }
-.prod-item-badge.status-out { background: #ffebee; color: #c62828; }
-.prod-item-type { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; }
 </style>
 <base target="_blank">
 <base target="_blank">
@@ -1489,7 +1468,7 @@ function productionRefresh() {
 function productionFetch() {
   const container = document.getElementById('prodCalendar');
   if (!container) return;
-  container.innerHTML = '<div class="prod-loading"><div class="prod-loading-spinner"></div><p>Memuat data produksi...</p></div>';
+  container.innerHTML = '<div class="prod-loading"><div class="prod-loading-spinner"></div><p>' + (currentLang === 'id' ? 'Memuat data produksi...' : 'Loading production data...') + '</p></div>';
 
   if (window._prodTimeout) clearTimeout(window._prodTimeout);
   if (window._prodScript && window._prodScript.parentNode) {
@@ -1531,78 +1510,195 @@ function cleanupJsonp(script, cbName) {
 function productionRender(data) {
   try {
     if (!data || !data.success) {
+      console.log('Invalid data, using mock:', data);
       productionRenderMock();
       return;
     }
-
     const sumRB = document.getElementById('sumTotalRB');
     const sumHB = document.getElementById('sumTotalHB');
     const sumBest = document.getElementById('sumBest');
     const sumPeak = document.getElementById('sumPeak');
-    if (sumRB) sumRB.textContent = data.summary.totalRB || 0;
-    if (sumHB) sumHB.textContent = data.summary.totalHB || 0;
-    if (sumBest) sumBest.textContent = data.summary.optimum || 0;
-    if (sumPeak) sumPeak.textContent = data.summary.peak || 0;
-
+    if (sumRB) sumRB.textContent = (data.summary && data.summary.totalRB) || 0;
+    if (sumHB) sumHB.textContent = (data.summary && data.summary.totalHB) || 0;
+    if (sumBest) sumBest.textContent = (data.summary && data.summary.optimum) || 0;
+    if (sumPeak) sumPeak.textContent = (data.summary && data.summary.peak) || 0;
     const container = document.getElementById('prodCalendar');
-    const calendar = data.calendar || [];
-    if (calendar.length === 0) {
-      container.innerHTML = '<div class="prod-empty"><div style="font-size:3rem; margin-bottom:12px;">☕</div><p>Tidak ada produksi dalam 30 hari terakhir.</p></div>';
-      return;
+    const products = groupByProduct((data.calendar || []), data.stock);
+    if (products.length === 0) {
+      container.innerHTML = '<div class="prod-empty"><div style="font-size:3rem; margin-bottom:12px;">☕</div><p>' + (currentLang === 'id' ? 'Tidak ada produksi dalam 30 hari terakhir.' : 'No production in the last 30 days.') + '</p></div>';
+    } else {
+      container.innerHTML = '<div class="prod-calendar">' + products.map(p => productionProductCard(p)).join('') + '</div>';
     }
-
-    container.innerHTML = '<div class="prod-calendar">' + calendar.map(day => renderDayCard(day)).join('') + '</div>';
-    focusBatchFromUrl();
   } catch (err) {
-    console.error('Render error:', err);
-    productionRenderMock();
+    console.error('productionRender error:', err);
+    productionRenderError(err.message || 'Render error');
   }
+  focusBatchFromUrl();
 }
 
-function renderDayCard(day) {
-  const clusterClass = day.cluster;
-  const badgeClass = 'badge-' + day.cluster;
-  const allItems = (day.rb || []).concat(day.hb || []);
-
-  const itemsHtml = allItems.map(item => {
-    const statusClass = item.status === 'Tersedia' ? 'status-in' : 'status-out';
-    const typeLabel = item.batchNo.toLowerCase().includes('-hb') ? 'HB' : 'RB';
-    return '<div class="prod-item-row">' +
-      '<div class="prod-item-info">' +
-        '<div class="prod-item-name">' + escapeHtml(item.name) + '</div>' +
-        '<div class="prod-item-batch">' + escapeHtml(item.batchNo) + ' · ' + item.weight + 'kg</div>' +
-      '</div>' +
-      '<div class="prod-item-status">' +
-        '<span class="prod-item-badge ' + statusClass + '">' + escapeHtml(item.status) + '</span>' +
-        '<span class="prod-item-type">' + typeLabel + '</span>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-
-  return '<div class="prod-day ' + clusterClass + '">' +
-    '<div class="prod-day-header">' +
-      '<div>' +
-        '<div class="prod-day-date">' + escapeHtml(day.dateDisplay) + '</div>' +
-        '<div class="prod-day-age">' + day.ageDays + ' hari yang lalu · ' + allItems.length + ' batch</div>' +
-      '</div>' +
-      '<span class="prod-day-badge ' + badgeClass + '">' + day.clusterLabel + '</span>' +
-    '</div>' +
-    '<div class="prod-day-body">' + itemsHtml + '</div>' +
-  '</div>';
-}
-
+// Buka lewat https://qcoid.com/roasting.html?batch=0808-RB01 (dari QR invoice):
+// kartu produk dibuka, baris batch di-highlight, dan di-scroll ke tengah layar.
 function focusBatchFromUrl() {
   try {
     var batchNo = new URLSearchParams(window.location.search).get('batch');
     if (!batchNo) return;
-    // Highlight logic if needed
+    var safe = (window.CSS && CSS.escape) ? CSS.escape(batchNo) : batchNo.replace(/[^\w\-]/g, '');
+    var row = document.querySelector('.prod-batch-row[data-batch="' + safe + '"]');
+    if (!row) return;
+    var card = row.closest('.prod-day');
+    if (card) { card.classList.remove('collapsed'); card.classList.add('expanded'); }
+    row.classList.add('batch-focus');
+    setTimeout(function() { row.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
   } catch (e) { console.warn('focusBatchFromUrl:', e); }
+}
+
+function groupByProduct(calendar, stock) {
+  const map = {};
+  calendar.forEach(day => {
+    const dayMeta = { date: day.date, dateDisplay: day.dateDisplay, ageDays: day.ageDays, cluster: day.cluster, clusterLabel: day.clusterLabel };
+    (day.rb || []).forEach(item => {
+      const key = sanitizeText(item.name);
+      if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'RB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || ''), status: item.status || '' });
+    });
+    (day.hb || []).forEach(item => {
+      const key = sanitizeText(item.name);
+      if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'HB', batches: [] };
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || ''), status: item.status || '' });
+    });
+  });
+
+  const stockMap = {};
+  if (stock) {
+    (stock.rb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+    (stock.hb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+    (stock.gb || []).forEach(s => { stockMap[s.batchNo] = s.sisa; });
+  }
+
+  const products = Object.values(map).map(p => {
+    const batchMap = {};
+    p.batches.forEach(b => {
+      if (batchMap[b.batchNo]) {
+        const existing = batchMap[b.batchNo];
+        if (b.rawMaterial && b.rawMaterial !== existing.rawMaterial) {
+          const mats = new Set([existing.rawMaterial, b.rawMaterial].filter(Boolean));
+          existing.rawMaterial = sanitizeText(Array.from(mats).join(', '));
+        }
+        if (new Date(b.date) > new Date(existing.date)) {
+          existing.date = b.date;
+          existing.dateDisplay = b.dateDisplay;
+          existing.ageDays = b.ageDays;
+          existing.cluster = b.cluster;
+          existing.clusterLabel = b.clusterLabel;
+        }
+      } else {
+        batchMap[b.batchNo] = { ...b };
+      }
+    });
+    p.batches = Object.values(batchMap);
+
+    p.batches.forEach(b => {
+      if (b.sisa !== undefined && b.sisa > 0) {
+        // Mode Batch_live: stok langsung dari kolom sisa
+        b.stock = b.sisa;
+        b.hasStock = true;
+      } else if (stock) {
+        // Fallback mode lama: stock dari object terpisah (mock data / backward compat)
+        const sisa = stockMap[b.batchNo];
+        b.stock = (sisa !== undefined && sisa > 0) ? sisa : 0;
+        b.hasStock = sisa !== undefined && sisa > 0;
+      } else {
+        // Fallback: status string
+        b.stock = b.weight || 0;
+        b.hasStock = b.status === 'Tersedia';
+      }
+    });
+    p.batches.sort((a, b) => new Date(b.date) - new Date(a.date));
+    p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'resting';
+    return p;
+  });
+
+  products.sort((a, b) => {
+    const dateA = a.batches[0] ? new Date(a.batches[0].date) : new Date(0);
+    const dateB = b.batches[0] ? new Date(b.batches[0].date) : new Date(0);
+    if (dateB - dateA !== 0) return dateB - dateA;
+    return a.name.localeCompare(b.name);
+  });
+
+  return products;
+}
+
+function productionProductCard(product) {
+  const clusterClass = product.overallCluster;
+  const badgeClass = 'badge-' + product.overallCluster;
+  const clusterLabel = escapeHtml(product.batches[0] ? product.batches[0].clusterLabel : 'Resting');
+  const typeIcon = product.type === 'HB' ? '' : '☕';
+  const typeLabel = product.type === 'HB' ? 'Houseblend' : 'Roasted Beans';
+
+  const batchesHtml = product.batches.map(batch => {
+    const ageText = currentLang === 'id'
+      ? (batch.ageDays === 0 ? 'Hari ini' : batch.ageDays + ' hari yang lalu')
+      : (batch.ageDays === 0 ? 'Today' : batch.ageDays + ' days ago');
+    const batchClusterClass = 'badge-' + batch.cluster;
+    const stockHtml = batch.hasStock
+      ? '<span class="prod-batch-stock in">' + batch.stock + ' kg</span>'
+      : '<span class="prod-batch-stock out">Sold Out</span>';
+
+    return '<div class="prod-batch-row" data-batch="' + escapeHtml(batch.batchNo) + '">' +
+      '<div class="prod-batch-top">' +
+        '<div class="prod-batch-main">' +
+          '<div class="prod-batch-date">' + batch.dateDisplay + '</div>' +
+          '<div class="prod-batch-age">' + ageText + '</div>' +
+        '</div>' +
+        '<div class="prod-batch-right">' +
+          '<span class="prod-batch-badge ' + batchClusterClass + '">' + batch.clusterLabel + '</span>' +
+          stockHtml +
+        '</div>' +
+      '</div>' +
+      '<div class="prod-batch-middle">' +
+        '<div class="prod-batch-detail">' +
+          '<div class="prod-batch-line">' +
+            '<span class="prod-batch-label">Batch:</span>' +
+            '<span class="prod-batch-val">' + escapeHtml(batch.batchNo) + '</span>' +
+          '</div>' +
+          '<div class="prod-batch-line">' +
+            '<span class="prod-batch-label">' + (currentLang === 'id' ? 'Berat' : 'Weight') + ':</span>' +
+            '<span class="prod-batch-val">' + batch.weight + ' kg</span>' +
+          '</div>' +
+          (batch.rawMaterial ?
+            '<div class="prod-batch-line">' +
+              '<span class="prod-batch-label">' + (currentLang === 'id' ? 'Bahan' : 'Material') + ':</span>' +
+              '<span class="prod-batch-val">' + escapeHtml(batch.rawMaterial) + '</span>' +
+            '</div>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  return '<div class="prod-day ' + clusterClass + ' expanded" onclick="toggleProductCard(this)">' +
+    '<div class="prod-day-header">' +
+      '<div style="flex:1; min-width:0;">' +
+        '<div class="prod-day-date">' + typeIcon + ' ' + escapeHtml(product.name) + '</div>' +
+        '<div class="prod-day-age">' + typeLabel + ' • ' + product.batches.length + ' ' + (currentLang === 'id' ? 'batch' : 'batches') + '</div>' +
+      '</div>' +
+      '<div style="display:flex; align-items:center; gap:8px;">' +
+        '<span class="prod-day-badge ' + badgeClass + '">' + clusterLabel + '</span>' +
+        '<span class="prod-toggle-icon">▶</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="prod-day-body">' + batchesHtml + '</div>' +
+  '</div>';
+}
+
+function toggleProductCard(card) {
+  card.classList.toggle('collapsed');
+  card.classList.toggle('expanded');
 }
 
 function productionRenderError(msg) {
   const container = document.getElementById('prodCalendar');
   if (!container) return;
-  container.innerHTML = '<div class="prod-error"><strong>Error</strong><br>' + escapeHtml(msg) + '<br><br><button class="prod-refresh" onclick="productionRefresh()"><span>↻</span> Coba Lagi</button></div>';
+  container.innerHTML = '<div class="prod-error"><strong>Error</strong><br>' + escapeHtml(msg) + '<br><br><button class="prod-refresh" onclick="productionRefresh()"><span>↻</span> ' + (currentLang === 'id' ? 'Coba Lagi' : 'Retry') + '</button></div>';
 }
 
 function productionRenderMock() {
@@ -1611,16 +1707,65 @@ function productionRenderMock() {
     calendar: [
       {
         date: '2026-08-08', dateDisplay: '08 Agu 2026', ageDays: 0, cluster: 'resting', clusterLabel: 'Resting',
-        rb: [{ batchNo: '0808-RB01', name: 'RB Robusta Temanggung', weight: 26.3, status: 'Tersedia' }],
+        rb: [{ batchNo: '0808-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung', status: 'Tersedia', sisa: 12.5 }],
         hb: []
       },
       {
         date: '2026-08-06', dateDisplay: '06 Agu 2026', ageDays: 2, cluster: 'resting', clusterLabel: 'Resting',
-        rb: [{ batchNo: '0608-RB01', name: 'RB Robusta Temanggung', weight: 26.3, status: 'Tersedia' }],
-        hb: [{ batchNo: '0608-HB01', name: 'Houseblend 40/60', weight: 20, status: 'Sold Out' }]
+        rb: [{ batchNo: '0608-RB01', name: 'RB Robusta Temanggung', weight: 26.3, rawMaterial: 'GB Robusta Temanggung', status: 'Tersedia', sisa: 26.6 }],
+        hb: [{ batchNo: '0608-MAS594793938', name: 'Houseblend 40% Robusta Temanggung 60% Arabika Gayo Premium', weight: 20, rawMaterial: 'RB Robusta Temanggung', status: 'Tersedia', sisa: 18.0 }]
+      },
+      {
+        date: '2026-08-04', dateDisplay: '04 Agu 2026', ageDays: 4, cluster: 'resting', clusterLabel: 'Resting',
+        rb: [{ batchNo: '0408-RB05', name: 'RB Gayo', weight: 25.8, rawMaterial: 'GB Gayo', status: 'Tersedia', sisa: 13.25 }],
+        hb: [{ batchNo: '0408-HB01207030C', name: 'RB Houseblend 70% Robusta 30% Arabika Classic', weight: 2, rawMaterial: 'RB Robusta Temanggung', status: 'Sold Out', sisa: 0 }]
+      },
+      {
+        date: '2026-08-03', dateDisplay: '03 Agu 2026', ageDays: 5, cluster: 'optimum', clusterLabel: 'Optimum',
+        rb: [],
+        hb: [{ batchNo: '0308-MAS192093463', name: 'Houseblend 70% Arabika Jawa Barat 30% Arabika Bali Natural', weight: 1, rawMaterial: 'RB Arabika Jawa Barat105', status: 'Tersedia', sisa: 0.8 }]
+      },
+      {
+        date: '2026-07-24', dateDisplay: '24 Jul 2026', ageDays: 15, cluster: 'peak', clusterLabel: 'Peak',
+        rb: [
+          { batchNo: '2407-RB20', name: 'RB Arabika Jawa Barat105', weight: 13.3, rawMaterial: 'GB Arabika Jawa Barat105', status: 'Tersedia', sisa: 39.1 },
+          { batchNo: '2407-RB01', name: 'RB Robusta Temanggung', weight: 25.4, rawMaterial: 'GB Robusta Temanggung', status: 'Tersedia', sisa: 25.4 }
+        ],
+        hb: [
+          { batchNo: '2407-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural', status: 'Sold Out', sisa: 0 }
+        ]
+      },
+      {
+        date: '2026-07-21', dateDisplay: '21 Jul 2026', ageDays: 18, cluster: 'peak', clusterLabel: 'Peak',
+        rb: [{ batchNo: '2107-RB01', name: 'RB Robusta Temanggung', weight: 13.3, rawMaterial: 'GB Robusta Temanggung', status: 'Tersedia', sisa: 13.3 }],
+        hb: [
+          { batchNo: '2107-HB01205050C', name: 'RB Houseblend 50% Robusta 50% Arabika Classic', weight: 5, rawMaterial: 'RB Robusta Temanggung', status: 'Sold Out', sisa: 0 },
+          { batchNo: '2107-HB20144060', name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', weight: 5, rawMaterial: 'RB Arabica Ciwidey Natural', status: 'Sold Out', sisa: 0 }
+        ]
       }
     ],
-    summary: { totalRB: 2, totalHB: 1, resting: 2, optimum: 0, peak: 0 }
+    stock: {
+      rb: [
+        { name: 'RB Arabika Jawa Barat', batchNo: '0808-RB01', sisa: 12.5 },
+        { name: 'RB Robusta Temanggung', batchNo: '0608-RB01', sisa: 26.6 },
+        { name: 'RB Gayo', batchNo: '0408-RB05', sisa: 13.25 },
+        { name: 'RB Arabika Jawa Barat105', batchNo: '2407-RB20', sisa: 39.1 },
+        { name: 'RB Arabica Ciwidey Natural', batchNo: '2407-HB20144060', sisa: 5 }
+      ],
+      hb: [
+        { name: 'RB Houseblend 70% Robusta 30% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 10 },
+        { name: 'RB Houseblend 50% Robusta 50% Arabika Classic', batchNo: '2107-HB01205050C', sisa: 0.5 },
+        { name: 'RB Houseblend 40% Robusta 60% Arabika NEW', batchNo: '2907-HB01074060RNEW', sisa: 3 },
+        { name: 'RB Houseblend Arabika Jabar 40% Arabika Natural Ciwidey 60% E*C', batchNo: '2407-HB20144060', sisa: 5 }
+      ],
+      gb: [
+        { name: 'GB Arabika Jawa Barat Asalan', batchNo: 'GB001', sisa: 54.7 },
+        { name: 'GB Robusta Temanggung', batchNo: 'GB002', sisa: 87.4 },
+        { name: 'GB Gayo', batchNo: 'GB003', sisa: 100.65 },
+        { name: 'GB Arabika Jawa Barat105', batchNo: 'GB004', sisa: 10 }
+      ]
+    },
+    summary: { totalRB: 4, totalHB: 5, optimum: 1, peak: 2 }
   };
   productionRender(mockData);
 }
@@ -1633,6 +1778,7 @@ function escapeHtml(text) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
-}</script>
+}
+</script>
 </body>
 </html>
