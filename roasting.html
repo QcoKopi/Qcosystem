@@ -777,6 +777,7 @@ a { text-decoration:none; color:inherit; }
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -1472,30 +1473,44 @@ function productionFetch() {
     </div>
   `;
 
-  // Clear any previous timeout
-  if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
+  // Bersihkan timeout & callback sebelumnya
+  if (window._prodTimeout) { clearTimeout(window._prodTimeout); }
+  if (window._prodScript && window._prodScript.parentNode) {
+    window._prodScript.parentNode.removeChild(window._prodScript);
+  }
 
-  // Safety timeout: fallback to mock if fetch hangs > 10s
-  window._prodTimeout = setTimeout(() => {
-    console.log('Fetch timeout, using mock data');
+  const cbName = 'prodCb_' + Date.now();
+  const script = document.createElement('script');
+  window._prodScript = script;
+
+  window[cbName] = function(data) {
+    if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
+    prodDataCache = data;
+    productionRender(data);
+    cleanupJsonp(script, cbName);
+  };
+
+  script.src = PROD_API_URL + '&callback=' + cbName;
+  script.onerror = function() {
+    console.log('JSONP failed, using mock data');
+    if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
     productionRenderMock();
-  }, 10000);
+    cleanupJsonp(script, cbName);
+  };
 
-  fetch(PROD_API_URL)
-    .then(r => {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(data => {
-      prodDataCache = data;
-      if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
-      productionRender(data);
-    })
-    .catch(err => {
-      console.log('Fetch failed, using mock data:', err.message);
-      if (window._prodTimeout) { clearTimeout(window._prodTimeout); window._prodTimeout = null; }
-      productionRenderMock();
-    });
+  document.head.appendChild(script);
+
+  window._prodTimeout = setTimeout(() => {
+    console.log('JSONP timeout, using mock data');
+    productionRenderMock();
+    cleanupJsonp(script, cbName);
+  }, 8000);
+}
+
+function cleanupJsonp(script, cbName) {
+  if (script && script.parentNode) { script.parentNode.removeChild(script); }
+  delete window[cbName];
+  delete window._prodScript;
 }
 
 
