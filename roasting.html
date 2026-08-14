@@ -1552,6 +1552,14 @@ function focusBatchFromUrl() {
   } catch (e) { console.warn('focusBatchFromUrl:', e); }
 }
 
+function sanitizeText(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/EDC/gi, 'E*C')
+    .replace(/Kembali ke Alam/gi, 'Kembali ke A***m');
+}
+
+
 function groupByProduct(calendar, stock) {
   const map = {};
   calendar.forEach(day => {
@@ -1559,12 +1567,12 @@ function groupByProduct(calendar, stock) {
     (day.rb || []).forEach(item => {
       const key = sanitizeText(item.name);
       if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'RB', batches: [] };
-      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || ''), status: item.status || '' });
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || ''), status: item.status || '', sisa: item.sisa || 0 });
     });
     (day.hb || []).forEach(item => {
       const key = sanitizeText(item.name);
       if (!map[key]) map[key] = { name: sanitizeText(item.name), type: 'HB', batches: [] };
-      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || ''), status: item.status || '' });
+      map[key].batches.push({ ...dayMeta, batchNo: item.batchNo, weight: item.weight || 0, rawMaterial: sanitizeText(item.rawMaterial || ''), status: item.status || '', sisa: item.sisa || 0 });
     });
   });
 
@@ -1598,20 +1606,8 @@ function groupByProduct(calendar, stock) {
     p.batches = Object.values(batchMap);
 
     p.batches.forEach(b => {
-      if (b.sisa !== undefined && b.sisa > 0) {
-        // Mode Batch_live: stok langsung dari kolom sisa
-        b.stock = b.sisa;
-        b.hasStock = true;
-      } else if (stock) {
-        // Fallback mode lama: stock dari object terpisah (mock data / backward compat)
-        const sisa = stockMap[b.batchNo];
-        b.stock = (sisa !== undefined && sisa > 0) ? sisa : 0;
-        b.hasStock = sisa !== undefined && sisa > 0;
-      } else {
-        // Fallback: status string
-        b.stock = b.weight || 0;
-        b.hasStock = b.status === 'Tersedia';
-      }
+      b.stock = b.sisa || 0;
+      b.hasStock = (b.sisa || 0) > 0;
     });
     p.batches.sort((a, b) => new Date(b.date) - new Date(a.date));
     p.overallCluster = p.batches[0] ? p.batches[0].cluster : 'resting';
