@@ -162,8 +162,10 @@ a { text-decoration:none; color:inherit; }
 }
 .eco-header p { color:var(--text-sec); max-width:500px; margin:0 auto; font-size:1rem; }
 .eco-grid {
-  display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;
 }
+@media (max-width: 1024px) { .eco-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .eco-grid { grid-template-columns: 1fr; } }
 .eco-card {
   background:var(--card); border-radius:var(--radius); padding:40px 32px;
   border:1px solid var(--border); transition:all 0.35s; cursor:pointer;
@@ -178,6 +180,7 @@ a { text-decoration:none; color:inherit; }
 .eco-card.lab::before { background:#2d8a4e; }
 .eco-card.bridge::before { background:var(--accent); }
 .eco-card.aff::before { background:#8b7bb5; }
+.eco-card.academy::before { background:#c8553d; }
 .eco-badge {
   display:inline-flex; align-items:center; gap:6px; font-size:0.65rem; font-weight:700;
   text-transform:uppercase; letter-spacing:0.06em; padding:4px 10px; border-radius:100px; margin-bottom:20px;
@@ -185,6 +188,7 @@ a { text-decoration:none; color:inherit; }
 .eco-badge.lab { background:rgba(45,138,78,0.1); color:#2d8a4e; }
 .eco-badge.bridge { background:rgba(184,146,106,0.12); color:var(--accent-dark); }
 .eco-badge.aff { background:rgba(139,123,181,0.12); color:#8b7bb5; }
+.eco-badge.academy { background:rgba(200,85,61,0.12); color:#c8553d; }
 .eco-card h3 {
   font-family:var(--font-head); font-size:1.3rem; font-weight:500; margin-bottom:10px;
 }
@@ -397,6 +401,8 @@ a { text-decoration:none; color:inherit; }
   <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
       <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
       <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog" rel="noopener noreferrer">Blog</a>
+  <a href="#kontak" data-id="Kontak" data-en="Contact">Kontak</a>
+      <a href="#kontak" data-id="Kontak" data-en="Contact">Kontak</a>
       <!-- Language Switcher -->
       <div class="lang-switch" onclick="toggleLang()">
         <span class="active" id="lang-id">ID</span>
@@ -421,6 +427,7 @@ a { text-decoration:none; color:inherit; }
   <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
   <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
   <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog" rel="noopener noreferrer">Blog</a>
+  <a href="#kontak" data-id="Kontak" data-en="Contact">Kontak</a>
   <a href="investors.html" data-id="Investor Portal" data-en="Investor Portal">Investor Portal</a>
 </div>
 
@@ -445,9 +452,9 @@ a { text-decoration:none; color:inherit; }
   <div class="eco-wrap">
     <div class="eco-header">
       <div class="accent-line"></div>
-      <h2 data-id="Tiga Platform, Satu Ekosistem" data-en="Three Platforms, One Ecosystem">Tiga Platform, Satu Ekosistem</h2>
-      <p data-id="Setiap platform memiliki peran unik, namun saling terhubung untuk menciptakan nilai yang lebih besar."
-         data-en="Each platform has a unique role, yet they are interconnected to create greater value.">
+      <h2 data-id="Empat Platform, Satu Ekosistem" data-en="Four Platforms, One Ecosystem">Empat Platform, Satu Ekosistem</h2>
+      <p data-id="Empat platform yang saling menguatkan. Satu visi: membangun infrastruktur kopi Indonesia yang transparan, terpercaya, dan berkelanjutan — dari petani di kebun hingga cangkir di meja konsumen."
+         data-en="Four interconnected platforms. One vision: building Indonesia's coffee infrastructure that is transparent, trustworthy, and sustainable — from farmers in the field to cups on consumers' tables.">
         Setiap platform memiliki peran unik, namun saling terhubung untuk menciptakan nilai yang lebih besar.
       </p>
     </div>
@@ -476,6 +483,15 @@ a { text-decoration:none; color:inherit; }
         <p data-id="Jaringan distribusi berbasis AI dengan chatbot WhatsApp, pembayaran otomatis, pengiriman, dan komisi — terintegrasi penuh."
            data-en="An AI-powered distribution network with WhatsApp chatbot, automated payment, shipping, and commission — fully integrated.">
           Jaringan distribusi berbasis AI dengan chatbot WhatsApp, pembayaran otomatis, pengiriman, dan komisi — terintegrasi penuh.
+        </p>
+        <span class="link" data-id="Kunjungi Halaman →" data-en="Visit Page →">Kunjungi Halaman →</span>
+      </a>
+      <a href="kemari-coffee-academy.html" class="eco-card academy">
+        <div class="eco-badge academy">● <span data-id="Beroperasi" data-en="Operating">Beroperasi</span></div>
+        <h3>Kemari Kopi Akademi</h3>
+        <p data-id="LPK resmi Kemnaker RI. Pusat pelatihan Barista Profesional & Coffee Roasting dengan instruktur tersertifikasi dan fasilitas standar industri."
+           data-en="Official LPK Kemnaker RI. Professional Barista & Coffee Roasting training center with certified instructors and industry-standard facilities.">
+          LPK resmi Kemnaker RI. Pusat pelatihan Barista Profesional & Coffee Roasting dengan instruktur tersertifikasi dan fasilitas standar industri.
         </p>
         <span class="link" data-id="Kunjungi Halaman →" data-en="Visit Page →">Kunjungi Halaman →</span>
       </a>
