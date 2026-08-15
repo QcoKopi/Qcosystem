@@ -371,7 +371,14 @@ a { text-decoration:none; color:inherit; }
   position: absolute; font-size: 15rem; opacity: 0.02; pointer-events: none;
   color: var(--accent-dark); z-index: 0; line-height: 1;
 }
+
+/* Contact section responsive */
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns:1fr; gap:32px; }
+}
 </style>
+<base target="_blank">
 <base target="_blank">
 <base target="_blank">
 </head>
@@ -385,7 +392,9 @@ a { text-decoration:none; color:inherit; }
     <div class="nav-links">
       <a href="coffee-lab.html" data-id="Q.co Lab" data-en="Q.co Lab">Q.co Lab</a>
       <a href="roasting.html" data-id="Q.co Roasting" data-en="Q.co Roasting">Q.co Roasting</a>
-      <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+      <a href="kemari-coffee-academy.html" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
+      <a href="kemari-coffee-academy.html" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
+  <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
       <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
       <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog" rel="noopener noreferrer">Blog</a>
       <!-- Language Switcher -->
@@ -408,6 +417,7 @@ a { text-decoration:none; color:inherit; }
   </div>
   <a href="coffee-lab.html" data-id="Q.co Lab" data-en="Q.co Lab">Q.co Lab</a>
       <a href="roasting.html" data-id="Q.co Roasting" data-en="Q.co Roasting">Q.co Roasting</a>
+  <a href="kemari-coffee-academy.html" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
   <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
   <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
   <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog" rel="noopener noreferrer">Blog</a>
@@ -477,6 +487,52 @@ a { text-decoration:none; color:inherit; }
 
 
 <!-- Footer -->
+
+<!-- CONTACT US -->
+<section class="contact-section" id="kontak" style="background:var(--primary); color:#fff; padding:80px 0;">
+  <div class="section-wrap" style="max-width:1200px; margin:0 auto; padding:0 24px;">
+    <div style="text-align:center; margin-bottom:48px;">
+      <h2 style="font-family:var(--font-head); font-size:2rem; margin-bottom:12px;" data-id="Hubungi Kami" data-en="Contact Us">Hubungi Kami</h2>
+      <p style="color:rgba(255,255,255,0.7); max-width:500px; margin:0 auto;" data-id="Punya pertanyaan atau ingin berkolaborasi? Kirimkan pesan kepada kami." data-en="Have questions or want to collaborate? Send us a message.">Punya pertanyaan atau ingin berkolaborasi? Kirimkan pesan kepada kami.</p>
+    </div>
+    <div class="contact-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:40px; height:40px; border-radius:var(--radius); background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:1px solid rgba(255,255,255,0.1); flex-shrink:0;">📧</div>
+          <div><strong style="display:block; color:#fff; font-size:0.9rem;">info@qcoid.com</strong><span style="font-size:0.8rem; color:rgba(255,255,255,0.5);" data-id="Email utama" data-en="Primary email">Email utama</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:40px; height:40px; border-radius:var(--radius); background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:1px solid rgba(255,255,255,0.1); flex-shrink:0;">📍</div>
+          <div><strong style="display:block; color:#fff; font-size:0.9rem;">Depok, Jawa Barat, Indonesia</strong><span style="font-size:0.8rem; color:rgba(255,255,255,0.5);" data-id="Kantor Pusat" data-en="Headquarters">Kantor Pusat</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:40px; height:40px; border-radius:var(--radius); background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:1px solid rgba(255,255,255,0.1); flex-shrink:0;">📱</div>
+          <div><strong style="display:block; color:#fff; font-size:0.9rem;">@qkopi.co</strong><span style="font-size:0.8rem; color:rgba(255,255,255,0.5);" data-id="Instagram" data-en="Instagram">Instagram</span></div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05); border-radius:var(--radius); padding:32px; border:1px solid rgba(255,255,255,0.1);">
+        <form id="contactForm" method="POST" target="contact_iframe" onsubmit="submitContactForm()">
+          <input type="hidden" name="action" value="submitContact">
+          <div style="margin-bottom:14px;">
+            <label style="display:block; font-size:0.75rem; font-weight:600; margin-bottom:5px; color:rgba(255,255,255,0.8); text-transform:uppercase; letter-spacing:0.04em;" data-id="Nama" data-en="Name">Nama</label>
+            <input type="text" name="name" placeholder="Nama lengkap Anda" style="width:100%; padding:10px 14px; border-radius:var(--radius); border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff; font-size:0.9rem; font-family:inherit;" required>
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="display:block; font-size:0.75rem; font-weight:600; margin-bottom:5px; color:rgba(255,255,255,0.8); text-transform:uppercase; letter-spacing:0.04em;">Email</label>
+            <input type="email" name="email" placeholder="email@anda.com" style="width:100%; padding:10px 14px; border-radius:var(--radius); border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff; font-size:0.9rem; font-family:inherit;" required>
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="display:block; font-size:0.75rem; font-weight:600; margin-bottom:5px; color:rgba(255,255,255,0.8); text-transform:uppercase; letter-spacing:0.04em;" data-id="Pesan" data-en="Message">Pesan</label>
+            <textarea name="message" rows="3" placeholder="Tulis pesan atau pertanyaan Anda..." style="width:100%; padding:10px 14px; border-radius:var(--radius); border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff; font-size:0.9rem; font-family:inherit; resize:vertical;"></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="contactSubmitBtn" style="width:100%; padding:12px; background:var(--accent); color:var(--primary); border:none; border-radius:var(--radius); font-size:0.9rem; font-weight:600; cursor:pointer; transition:all 0.2s;" data-id="Kirim Pesan" data-en="Send Message">Kirim Pesan</button>
+        </form>
+        <iframe name="contact_iframe" style="display:none;" onload="contactFormSubmitted()"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer-wrap">
     <div class="footer-grid">
@@ -557,6 +613,36 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleMobile() {
   document.getElementById('mobileMenu').classList.toggle('active');
 }
+
+// ===== CONTACT FORM =====
+const CONTACT_API_URL = 'https://script.google.com/macros/s/AKfycbz1KfZDPsWCpRSI39Ylqbs0DchguLFVfgcVMTCa3h8yQD9ocd7kDqfoAuE2I7ooSWU/exec';
+
+let contactFormSubmitting = false;
+
+function submitContactForm() {
+  contactFormSubmitting = true;
+  const btn = document.getElementById('contactSubmitBtn');
+  if (btn) {
+    btn.textContent = currentLang === 'id' ? 'Mengirim...' : 'Sending...';
+    btn.disabled = true;
+  }
+}
+
+function contactFormSubmitted() {
+  if (!contactFormSubmitting) return;
+  contactFormSubmitting = false;
+  const form = document.getElementById('contactForm');
+  const title = currentLang === 'id' ? 'Pesan Terkirim' : 'Message Sent';
+  const subtitle = currentLang === 'id' ? 'Kami akan merespons dalam 24 jam.' : 'We will respond within 24 hours.';
+  form.innerHTML = '<div style="text-align:center; padding:32px 0;"><div style="font-size:2.5rem; margin-bottom:12px;">✓</div><h3 style="font-family: var(--font-head); margin-bottom:8px; color:#fff;">' + title + '</h3><p style="color: rgba(255,255,255,0.7);">' + subtitle + '</p></div>';
+}
+
+(function setContactFormAction() {
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.action = CONTACT_API_URL;
+  }
+})();
 </script>
 </body>
 </html>
