@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.imgur.com https://*.googleusercontent.com data: blob:; connect-src 'self' https://script.google.com;">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kemari Kopi Akademi — LPK Resmi Kemnaker RI</title>
+<meta name="description" content="Kemari Kopi Akademi adalah LPK resmi Kemnaker RI yang menyediakan pelatihan Barista Profesional dan Coffee Roasting di Depok, Jawa Barat.">
+<style>
+:root {
+  --bg: #faf9f6;
+  --bg-warm: #f5f3ee;
+  --bg-cream: #f0ebe3;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --text-sec: #5c5c5c;
+  --text-muted: #9a9a9a;
+  --primary: #2c2c2c;
+  --accent: #b8926a;
+  --accent-light: #e8d5b5;
+  --accent-dark: #8b6f4e;
+  --border: #e8e6e1;
+  --font-head: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-body); background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; }
+a { text-decoration:none; color:inherit; }
+
+/* ===== NAV ===== */
+.nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(250,249,246,0.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-wrap { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:68px; }
+.nav-logo { font-family:var(--font-head); font-size:1.3rem; font-weight:600; }
+.nav-logo span { color:var(--accent); font-weight:400; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { font-size:0.85rem; font-weight:500; color:var(--text-sec); transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a.active { color:var(--accent-dark); font-weight:600; }
+.nav-cta { font-size:0.8rem; font-weight:600; color:var(--accent-dark); padding:8px 18px; border-radius:100px; border:1.5px solid var(--accent-light); background:transparent; transition:all 0.25s; cursor:pointer; }
+.nav-cta:hover { background:var(--accent-light); color:var(--primary); border-color:var(--accent); }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; font-size:1.5rem; }
+
+/* ===== HERO ===== */
+.hero { min-height:calc(100vh - 68px); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; position:relative; overflow:hidden; padding-top:68px; background: linear-gradient(160deg, #faf9f6 0%, #f5f0e8 40%, #ede6d8 100%); }
+.hero::before { content:''; position:absolute; top:-10%; right:-5%; width:600px; height:600px; background:radial-gradient(circle, rgba(184,146,106,0.08) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+.hero::after { content:''; position:absolute; bottom:-15%; left:-10%; width:500px; height:500px; background:radial-gradient(circle, rgba(184,146,106,0.06) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+.hero-inner { max-width:800px; text-align:center; padding:10px 24px 14px; position:relative; z-index:1; }
+.hero-tag { display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:6px 18px; border-radius:100px; margin-bottom:28px; }
+.hero h1 { font-family:var(--font-head); font-size:clamp(2rem, 4vw, 3.2rem); line-height:1.1; font-weight:400; color:var(--primary); margin-bottom:4px; letter-spacing:-0.02em; }
+.hero h1 em { font-style:italic; color:var(--accent-dark); }
+.hero-tagline { font-family:var(--font-head); font-size:clamp(0.85rem, 1.4vw, 1.05rem); font-style:italic; color:var(--accent-dark); line-height:1.4; max-width:560px; margin:0 auto 8px; }
+.hero-desc { font-size:clamp(0.75rem, 1.1vw, 0.88rem); color:var(--text-sec); max-width:520px; margin:0 auto 10px; line-height:1.55; }
+
+/* Hero Image */
+.hero-img { display:block; max-width:92%; width:auto; max-height:clamp(340px, 48vh, 540px); height:auto; margin:0 auto 8px; border-radius:var(--radius); object-fit:contain; box-shadow:0 8px 28px rgba(0,0,0,0.08); transition:transform 0.3s ease, box-shadow 0.3s ease; }
+.hero-img:hover { transform:scale(1.01); box-shadow:0 12px 36px rgba(0,0,0,0.12); }
+@media (max-width:768px) { .hero-img { max-width:96%; max-height:clamp(260px, 40vh, 380px); margin-bottom:6px; } }
+
+/* ===== SECTIONS ===== */
+.section { padding:64px 0; }
+.section-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.section-header { text-align:center; margin-bottom:56px; }
+.section-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-dark); margin-bottom:12px; display:inline-block; background:rgba(184,146,106,0.1); padding:4px 14px; border-radius:100px; }
+.section-title { font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.4rem); font-weight:400; margin-bottom:12px; line-height:1.2; }
+.section-title em { font-style:italic; color:var(--accent-dark); }
+.section-desc { color:var(--text-sec); max-width:560px; margin:0 auto; font-size:1rem; line-height:1.7; }
+.accent-line { width:60px; height:3px; background:var(--accent); border-radius:3px; margin:20px auto; }
+
+/* ===== ABOUT ===== */
+.about-section { background:var(--bg-warm); padding:64px 0; }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+.about-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:20px; line-height:1.3; }
+.about-content h2 em { font-style:italic; color:var(--accent-dark); }
+.about-content p { color:var(--text-sec); line-height:1.8; margin-bottom:20px; font-size:1rem; }
+.about-badge { display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px 20px; font-size:0.85rem; color:var(--text-sec); margin-top:16px; }
+.about-badge strong { color:var(--primary); }
+.about-visual img { width:100%; height:auto; border-radius:var(--radius); object-fit:cover; box-shadow:var(--shadow); }
+
+/* ===== ADVANTAGES ===== */
+.advantages-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; }
+.advantage-card { background:var(--card); border-radius:var(--radius); padding:32px 24px; border:1px solid var(--border); text-align:center; transition:all 0.3s; }
+.advantage-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.advantage-icon { font-size:2.5rem; margin-bottom:16px; }
+.advantage-card h4 { font-family:var(--font-head); font-size:1rem; font-weight:600; margin-bottom:8px; }
+.advantage-card p { font-size:0.8rem; color:var(--text-sec); line-height:1.6; }
+
+/* ===== PROGRAMS ===== */
+.programs-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+.program-card { background:var(--card); border-radius:var(--radius); padding:40px; border:1px solid var(--border); transition:all 0.35s; }
+.program-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--accent-light); }
+.program-badge { display:inline-block; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-dark); background:rgba(184,146,106,0.1); padding:4px 12px; border-radius:100px; margin-bottom:16px; }
+.program-card h3 { font-family:var(--font-head); font-size:1.3rem; font-weight:400; margin-bottom:16px; }
+.program-card ul { list-style:none; }
+.program-card li { font-size:0.85rem; color:var(--text-sec); padding:8px 0; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:10px; }
+.program-card li:last-child { border-bottom:none; }
+.program-card li::before { content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0; }
+
+/* ===== COLLABORATION ===== */
+.collab-section { background:var(--bg-warm); padding:64px 0; }
+.collab-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+.collab-content h2 { font-family:var(--font-head); font-size:clamp(1.5rem, 3vw, 2rem); font-weight:400; margin-bottom:20px; }
+.collab-content p { color:var(--text-sec); line-height:1.8; margin-bottom:16px; font-size:1rem; }
+.collab-partners { display:flex; gap:16px; flex-wrap:wrap; margin-top:24px; }
+.collab-partner { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px 20px; font-size:0.8rem; color:var(--text-sec); display:flex; align-items:center; gap:8px; }
+.collab-visual img { width:100%; height:auto; border-radius:var(--radius); object-fit:cover; box-shadow:var(--shadow); }
+
+/* ===== CONTACT ===== */
+.contact-section { background:var(--primary); color:#fff; padding:80px 0; }
+.contact-section h2 { font-family:var(--font-head); font-size:2rem; margin-bottom:12px; }
+.contact-section p { color:rgba(255,255,255,0.7); margin-bottom:32px; max-width:500px; }
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+.contact-info { display:flex; flex-direction:column; gap:20px; }
+.contact-item { display:flex; align-items:center; gap:14px; }
+.contact-item-icon { width:40px; height:40px; border-radius:var(--radius); background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:1px solid rgba(255,255,255,0.1); flex-shrink:0; }
+.contact-item-text strong { display:block; color:#fff; font-size:0.9rem; }
+.contact-item-text span { font-size:0.8rem; color:rgba(255,255,255,0.5); }
+.contact-form { background:rgba(255,255,255,0.05); border-radius:var(--radius); padding:32px; border:1px solid rgba(255,255,255,0.1); }
+.form-group { margin-bottom:14px; }
+.form-group label { display:block; font-size:0.75rem; font-weight:600; margin-bottom:5px; color:rgba(255,255,255,0.8); text-transform:uppercase; letter-spacing:0.04em; }
+.form-group input, .form-group textarea { width:100%; padding:10px 14px; border-radius:var(--radius); border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff; font-size:0.9rem; font-family:inherit; transition:all 0.2s; }
+.form-group input:focus, .form-group textarea:focus { outline:none; border-color:var(--accent); background:rgba(255,255,255,0.12); }
+.form-group input::placeholder { color:rgba(255,255,255,0.4); }
+.form-submit { width:100%; padding:12px; background:var(--accent); color:var(--primary); border:none; border-radius:var(--radius); font-size:0.9rem; font-weight:600; cursor:pointer; transition:all 0.2s; }
+.form-submit:hover { background:var(--accent-light); }
+.form-submit:disabled { opacity:0.6; cursor:not-allowed; }
+
+/* ===== FOOTER ===== */
+.footer { background:var(--primary); color:rgba(255,255,255,0.55); padding:32px 0 20px; }
+.footer-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:28px; margin-bottom:24px; }
+.footer-brand { font-family:var(--font-head); font-size:1.1rem; color:#fff; margin-bottom:8px; }
+.footer-brand span { color:var(--accent-light); }
+.footer-desc { font-size:0.75rem; line-height:1.5; margin-bottom:0; max-width:280px; }
+.footer-col h4 { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#fff; margin-bottom:10px; }
+.footer-col a { display:block; font-size:0.72rem; color:rgba(255,255,255,0.55); padding:4px 0; transition:color 0.2s; }
+.footer-col a:hover { color:var(--accent-light); }
+.footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:0.7rem; }
+
+/* ===== MOBILE ===== */
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+  .about-grid { grid-template-columns:1fr; gap:40px; }
+  .advantages-grid { grid-template-columns:1fr 1fr; }
+  .programs-grid { grid-template-columns:1fr; }
+  .collab-grid { grid-template-columns:1fr; gap:40px; }
+  .contact-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+}
+
+.mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:var(--bg); z-index:999; padding:24px; flex-direction:column; gap:12px; }
+.mobile-menu.active { display:flex; }
+.mobile-menu a { font-size:1.1rem; font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); }
+
+.lang-switch { display:flex; align-items:center; gap:4px; font-size:0.75rem; font-weight:600; color:var(--text-muted); background:var(--bg-warm); border:1px solid var(--border); border-radius:100px; padding:3px; cursor:pointer; transition:all 0.2s; }
+.lang-switch span { padding:4px 10px; border-radius:100px; transition:all 0.2s; }
+.lang-switch span.active { background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+.lang-switch span:not(.active):hover { color:var(--text); }
+
+.lang-switch-mobile { display:flex; align-items:center; gap:4px; font-size:0.8rem; font-weight:600; color:var(--text-muted); background:var(--bg-warm); border:1px solid var(--border); border-radius:100px; padding:3px; margin-bottom:16px; width:fit-content; }
+.lang-switch-mobile span { padding:5px 12px; border-radius:100px; transition:all 0.2s; }
+.lang-switch-mobile span.active { background:var(--card); color:var(--primary); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+
+.grain-overlay { position:fixed; inset:0; pointer-events:none; z-index:9998; opacity:0.03; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); background-repeat:repeat; }
+</style>
+</head>
+<body>
+<div class="grain-overlay"></div>
+
+<nav class="nav">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">Q.co <span>Coffee Lab</span></a>
+    <div class="nav-links">
+      <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
+      <a href="coffee-lab.html">Q.co Lab</a>
+      <a href="roasting.html">Q.co Roasting</a>
+      <a href="kemari-coffee-academy.html" class="active" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
+      <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+      <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
+      <a href="https://blog.qcoid.com/" target="_blank" rel="noopener noreferrer">Blog</a>
+      <div class="lang-switch" onclick="toggleLang()">
+        <span class="active" id="lang-id">ID</span>
+        <span id="lang-en">EN</span>
+      </div>
+      <a href="investors.html" class="nav-cta" data-id="Investor" data-en="Investor">Investor</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMobile()">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="lang-switch-mobile" onclick="toggleLang()">
+    <span class="active" id="lang-id-m">ID</span>
+    <span id="lang-en-m">EN</span>
+  </div>
+  <a href="index.html" data-id="Beranda" data-en="Home">Beranda</a>
+  <a href="coffee-lab.html">Q.co Lab</a>
+  <a href="roasting.html">Q.co Roasting</a>
+  <a href="kemari-coffee-academy.html" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
+  <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+  <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
+  <a href="https://blog.qcoid.com/" target="_blank" rel="noopener noreferrer">Blog</a>
+  <a href="investors.html" data-id="Investor Portal" data-en="Investor Portal">Investor Portal</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-tag" data-id="LPK Resmi Kemnaker RI" data-en="Official LPK Kemnaker RI">LPK Resmi Kemnaker RI</div>
+    <h1>Kemari <em>Kopi Akademi</em></h1>
+    <img src="https://i.imgur.com/placeholder-academy.png" alt="Kemari Kopi Akademi" class="hero-img" loading="eager" onerror="this.style.display='none'">
+    <p class="hero-tagline" data-id="Mencetak barista dan sangrai profesional yang kompeten, siap kerja, dan berjiwa wirausaha."
+       data-en="Training competent, job-ready, and entrepreneurial baristas and roasters.">
+      Mencetak barista dan sangrai profesional yang kompeten, siap kerja, dan berjiwa wirausaha.
+    </p>
+    <p class="hero-desc" data-id="Pusat pelatihan kerja resmi di Depok, Jawa Barat. Program Barista Profesional & Coffee Roasting dengan instruktur tersertifikasi dan fasilitas standar industri."
+       data-en="Official vocational training center in Depok, West Java. Professional Barista & Coffee Roasting programs with certified instructors and industry-standard facilities.">
+      Pusat pelatihan kerja resmi di Depok, Jawa Barat. Program Barista Profesional & Coffee Roasting dengan instruktur tersertifikasi dan fasilitas standar industri.
+    </p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about-section" id="tentang">
+  <div class="section-wrap">
+    <div class="about-grid">
+      <div class="about-content">
+        <div class="section-label" data-id="Tentang Kami" data-en="About Us">Tentang Kami</div>
+        <h2 data-id="Lembaga Pelatihan Kerja Resmi untuk Industri Kopi" data-en="Official Vocational Training Institute for the Coffee Industry">Lembaga Pelatihan Kerja Resmi untuk <em>Industri Kopi</em></h2>
+        <p data-id="Kemari Kopi Akademi adalah LPK yang telah teregistrasi secara resmi di Kementerian Ketenagakerjaan Republik Indonesia. Kami hadir sebagai pusat pengembangan kompetensi profesional di industri kopi yang menjembatani minat masyarakat dengan kebutuhan industri kerja yang terus berkembang."
+           data-en="Kemari Kopi Akademi is an LPK officially registered with the Indonesian Ministry of Manpower. We serve as a professional competency development center in the coffee industry, bridging public interest with growing workforce demands.">
+          Kemari Kopi Akademi adalah LPK yang telah teregistrasi secara resmi di Kementerian Ketenagakerjaan Republik Indonesia. Kami hadir sebagai pusat pengembangan kompetensi profesional di industri kopi yang menjembatani minat masyarakat dengan kebutuhan industri kerja yang terus berkembang.
+        </p>
+        <p data-id="Berkomitmen untuk mencetak SDM yang kompeten, siap kerja, dan berjiwa wirausaha, Kemari Kopi Akademi memadukan kurikulum berbasis standar industri dengan praktik langsung menggunakan perangkat berstandar komersial tinggi."
+           data-en="Committed to producing competent, job-ready, and entrepreneurial human resources, Kemari Kopi Akademi combines industry-standard curriculum with hands-on practice using high-grade commercial equipment.">
+          Berkomitmen untuk mencetak SDM yang kompeten, siap kerja, dan berjiwa wirausaha, Kemari Kopi Akademi memadukan kurikulum berbasis standar industri dengan praktik langsung menggunakan perangkat berstandar komersial tinggi.
+        </p>
+        <div class="about-badge">
+          <span>🏛️</span>
+          <span><strong data-id="Terdaftar di Kemnaker RI" data-en="Registered with Kemnaker RI">Terdaftar di Kemnaker RI</strong> — <span data-id="Legalitas resmi nasional" data-en="National legal certification">Legalitas resmi nasional</span></span>
+        </div>
+      </div>
+      <div class="about-visual">
+        <img src="https://i.imgur.com/placeholder-about.png" alt="Fasilitas Kemari Kopi Akademi" loading="lazy" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="section" id="keunggulan">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Keunggulan" data-en="Advantages">Keunggulan</div>
+      <h2 class="section-title" data-id="Mengapa Memilih Kemari Kopi Akademi?" data-en="Why Choose Kemari Kopi Akademi?">Mengapa Memilih <em>Kemari Kopi Akademi?</em></h2>
+    </div>
+    <div class="advantages-grid">
+      <div class="advantage-card">
+        <div class="advantage-icon">🏛️</div>
+        <h4 data-id="Legalitas Resmi" data-en="Official Legal Status">Legalitas Resmi</h4>
+        <p data-id="Terdaftar secara resmi di Kementerian Ketenagakerjaan (Kemnaker), memberikan rasa aman dan sertifikasi yang diakui secara nasional."
+           data-en="Officially registered with the Ministry of Manpower (Kemnaker), providing security and nationally recognized certification.">Terdaftar secara resmi di Kementerian Ketenagakerjaan (Kemnaker), memberikan rasa aman dan sertifikasi yang diakui secara nasional.</p>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon">⚙️</div>
+        <h4 data-id="Fasilitas Standar Industri" data-en="Industry-Standard Facilities">Fasilitas Standar Industri</h4>
+        <p data-id="Mesin espresso komersial, alat seduh manual, mesin sangrai modern, dan laboratorium kopi yang representatif."
+           data-en="Commercial espresso machines, manual brewing equipment, modern roasting machines, and representative coffee laboratories.">Mesin espresso komersial, alat seduh manual, mesin sangrai modern, dan laboratorium kopi yang representatif.</p>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon">👨‍🏫</div>
+        <h4 data-id="Instruktur Tersertifikasi" data-en="Certified Instructors">Instruktur Tersertifikasi</h4>
+        <p data-id="Seluruh sesi pelatihan dibimbing oleh instruktur profesional dengan sertifikasi resmi nasional maupun internasional."
+           data-en="All training sessions are guided by professional instructors with official national and international certifications.">Seluruh sesi pelatihan dibimbing oleh instruktur profesional dengan sertifikasi resmi nasional maupun internasional.</p>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon">📚</div>
+        <h4 data-id="Kurikulum Komprehensif" data-en="Comprehensive Curriculum">Kurikulum Komprehensif</h4>
+        <p data-id="Menggabungkan teori mendalam mengenai ilmu kopi (dari hulu ke hilir) dengan porsi praktik lapangan yang besar."
+           data-en="Combining in-depth coffee theory (from farm to cup) with extensive hands-on field practice.">Menggabungkan teori mendalam mengenai ilmu kopi (dari hulu ke hilir) dengan porsi praktik lapangan yang besar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section" id="program" style="background:var(--bg-warm);">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="accent-line"></div>
+      <div class="section-label" data-id="Program Pelatihan" data-en="Training Programs">Program Pelatihan</div>
+      <h2 class="section-title" data-id="Dua Bidang Keahlian Utama" data-en="Two Core Expertise Areas">Dua Bidang <em>Keahlian Utama</em></h2>
+      <p class="section-desc" data-id="Program unggulan yang paling dicari di industri kopi saat ini, dirancang untuk pemula hingga praktisi."
+         data-en="Flagship programs most in-demand in today's coffee industry, designed for beginners to practitioners.">Program unggulan yang paling dicari di industri kopi saat ini, dirancang untuk pemula hingga praktisi.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="program-badge" data-id="Program Unggulan" data-en="Flagship Program">Program Unggulan</div>
+        <h3 data-id="Pelatihan Barista Profesional" data-en="Professional Barista Training">Pelatihan Barista Profesional</h3>
+        <p data-id="Program ini dirancang bagi pemula maupun praktisi yang ingin menguasai seni dan teknik penyajian kopi di kedai kopi."
+           data-en="This program is designed for beginners and practitioners who want to master the art and technique of coffee service in coffee shops.">Program ini dirancang bagi pemula maupun praktisi yang ingin menguasai seni dan teknik penyajian kopi di kedai kopi.</p>
+        <ul>
+          <li data-id="Pengenalan biji kopi (Arabika & Robusta) dan karakteristiknya" data-en="Introduction to coffee beans (Arabica & Robusta) and their characteristics">Pengenalan biji kopi (Arabika & Robusta) dan karakteristiknya</li>
+          <li data-id="Teknik ekstraksi espresso yang presisi dan kalibrasi grinder" data-en="Precision espresso extraction techniques and grinder calibration">Teknik ekstraksi espresso yang presisi dan kalibrasi grinder</li>
+          <li data-id="Teknik manual brewing (V60, French Press, Aeropress, dll.)" data-en="Manual brewing techniques (V60, French Press, Aeropress, etc.)">Teknik manual brewing (V60, French Press, Aeropress, dll.)</li>
+          <li data-id="Dasar milk steaming dan seni menuang Latte Art" data-en="Milk steaming basics and Latte Art pouring">Dasar milk steaming dan seni menuang Latte Art</li>
+          <li data-id="Standar operasional prosedur (SOP) bar, kebersihan, dan pelayanan pelanggan" data-en="Standard operating procedures (SOP) for bar, hygiene, and customer service">Standar operasional prosedur (SOP) bar, kebersihan, dan pelayanan pelanggan</li>
+        </ul>
+      </div>
+      <div class="program-card">
+        <div class="program-badge" data-id="Program Unggulan" data-en="Flagship Program">Program Unggulan</div>
+        <h3 data-id="Pelatihan Sangrai Biji Kopi" data-en="Coffee Roasting Training">Pelatihan Sangrai Biji Kopi</h3>
+        <p data-id="Program khusus bagi Anda yang ingin mendalami dunia pengolahan pascapanen hingga profil sangrai untuk skala kedai kopi maupun industri komersial."
+           data-en="A specialized program for those who want to delve into post-harvest processing to roast profiles for coffee shop or commercial scale.">Program khusus bagi Anda yang ingin mendalami dunia pengolahan pascapanen hingga profil sangrai untuk skala kedai kopi maupun industri komersial.</p>
+        <ul>
+          <li data-id="Fisika dan kimia biji kopi selama proses penyangraian" data-en="Physics and chemistry of coffee beans during roasting">Fisika dan kimia biji kopi selama proses penyangraian</li>
+          <li data-id="Pengoperasian mesin sangrai (Roasting Machine)" data-en="Operation of roasting machines">Pengoperasian mesin sangrai (Roasting Machine)</li>
+          <li data-id="Membaca kurva sangrai, charge temperature, turning point, dan first/second crack" data-en="Reading roast curves, charge temperature, turning point, and first/second crack">Membaca kurva sangrai, charge temperature, turning point, dan first/second crack</li>
+          <li data-id="Teknik cupping untuk mengevaluasi hasil sangrai" data-en="Cupping techniques to evaluate roast results">Teknik cupping untuk mengevaluasi hasil sangrai</li>
+          <li data-id="Manajemen kualitas dan penyimpanan biji kopi matang" data-en="Quality management and storage of roasted coffee beans">Manajemen kualitas dan penyimpanan biji kopi matang</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLABORATION -->
+<section class="section collab-section" id="kolaborasi">
+  <div class="section-wrap">
+    <div class="collab-grid">
+      <div class="collab-content">
+        <div class="section-label" data-id="Kolaborasi" data-en="Collaboration">Kolaborasi</div>
+        <h2 data-id="Bekerja Sama untuk Meningkatkan Penyerapan Tenaga Kerja" data-en="Working Together to Increase Workforce Absorption">Bekerja Sama untuk Meningkatkan <em>Penyerapan Tenaga Kerja</em></h2>
+        <p data-id="Sebagai wujud komitmen dalam meningkatkan penyerapan tenaga kerja dan menekan angka pengangguran, Kemari Kopi Akademi saat ini aktif bekerja sama dengan Dinas Tenaga Kerja Kota Depok, Jawa Barat, dalam menyelenggarakan rangkaian program pelatihan vokasi berskala kota."
+           data-en="As a commitment to increasing workforce absorption and reducing unemployment, Kemari Kopi Akademi is actively collaborating with the Depok City Manpower Office, West Java, in organizing city-scale vocational training programs.">
+          Sebagai wujud komitmen dalam meningkatkan penyerapan tenaga kerja dan menekan angka pengangguran, Kemari Kopi Akademi saat ini aktif bekerja sama dengan Dinas Tenaga Kerja Kota Depok, Jawa Barat, dalam menyelenggarakan rangkaian program pelatihan vokasi berskala kota.
+        </p>
+        <p data-id="Kami juga membuka pintu seluas-luasnya bagi masyarakat umum, pelaku usaha baru (start-up kedai kopi), serta korporasi yang ingin meningkatkan keahlian di bidang kopi."
+           data-en="We also widely welcome the general public, new coffee shop startups, and corporations looking to enhance their coffee expertise.">
+          Kami juga membuka pintu seluas-luasnya bagi masyarakat umum, pelaku usaha baru (start-up kedai kopi), serta korporasi yang ingin meningkatkan keahlian di bidang kopi.
+        </p>
+        <div class="collab-partners">
+          <div class="collab-partner">🏛️ <span data-id="Dinas Tenaga Kerja Kota Depok" data-en="Depok City Manpower Office">Dinas Tenaga Kerja Kota Depok</span></div>
+          <div class="collab-partner">☕ <span data-id="Q.co Coffee Lab" data-en="Q.co Coffee Lab">Q.co Coffee Lab</span></div>
+          <div class="collab-partner">🤝 <span data-id="Masyarakat Umum & Korporasi" data-en="Public & Corporations">Masyarakat Umum & Korporasi</span></div>
+        </div>
+      </div>
+      <div class="collab-visual">
+        <img src="https://i.imgur.com/placeholder-collab.png" alt="Kolaborasi Kemari Kopi Akademi" loading="lazy" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="kontak">
+  <div class="section-wrap">
+    <div class="contact-grid">
+      <div>
+        <h2 data-id="Hubungi Kami" data-en="Contact Us">Hubungi Kami</h2>
+        <p data-id="Siap memulai perjalanan profesional Anda di dunia kopi bersama Kemari Kopi Akademi? Hubungi kami untuk informasi pendaftaran dan jadwal pelatihan."
+           data-en="Ready to start your professional journey in the world of coffee with Kemari Kopi Akademi? Contact us for registration information and training schedules.">Siap memulai perjalanan profesional Anda di dunia kopi bersama Kemari Kopi Akademi? Hubungi kami untuk informasi pendaftaran dan jadwal pelatihan.</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text">
+              <strong data-id="Lokasi Pelatihan & Lab" data-en="Training & Lab Location">Lokasi Pelatihan & Lab</strong>
+              <span>Kota Depok, Jawa Barat, Indonesia</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div class="contact-item-text">
+              <strong>hello@qco.coffee</strong>
+              <span data-id="Email utama" data-en="Primary email">Email utama</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📱</div>
+            <div class="contact-item-text">
+              <strong>@qkopi.co</strong>
+              <span data-id="Instagram resmi" data-en="Official Instagram">Instagram resmi</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🌐</div>
+            <div class="contact-item-text">
+              <strong>qcoid.com</strong>
+              <span data-id="Website resmi" data-en="Official website">Website resmi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form id="contactForm" method="POST" target="contact_iframe" onsubmit="submitContactForm()">
+          <input type="hidden" name="action" value="submitContact">
+          <div class="form-group">
+            <label data-id="Nama" data-en="Name">Nama</label>
+            <input type="text" name="name" placeholder="Nama lengkap Anda" data-id="Nama lengkap Anda" data-en="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="email@anda.com" required>
+          </div>
+          <div class="form-group">
+            <label data-id="Program yang Diminati" data-en="Program of Interest">Program yang Diminati</label>
+            <select name="program" style="width:100%; padding:10px 14px; border-radius:var(--radius); border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff; font-size:0.9rem; font-family:inherit;">
+              <option value="" data-id="Pilih program..." data-en="Select program...">Pilih program...</option>
+              <option value="barista" data-id="Pelatihan Barista Profesional" data-en="Professional Barista Training">Pelatihan Barista Profesional</option>
+              <option value="roasting" data-id="Pelatihan Sangrai Biji Kopi" data-en="Coffee Roasting Training">Pelatihan Sangrai Biji Kopi</option>
+              <option value="both" data-id="Keduanya" data-en="Both">Keduanya</option>
+              <option value="other" data-id="Lainnya / Informasi Umum" data-en="Other / General Inquiry">Lainnya / Informasi Umum</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-id="Pesan" data-en="Message">Pesan</label>
+            <textarea name="message" rows="3" placeholder="Tulis pesan atau pertanyaan Anda..." data-id="Tulis pesan atau pertanyaan Anda..." data-en="Write your message or question..."></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="contactSubmitBtn" data-id="Kirim Pesan" data-en="Send Message">Kirim Pesan</button>
+        </form>
+        <iframe name="contact_iframe" style="display:none;" onload="contactFormSubmitted()"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Kemari <span>Kopi Akademi</span></div>
+        <p class="footer-desc" data-id="LPK resmi Kemnaker RI. Pusat pelatihan Barista & Coffee Roasting di Depok, Jawa Barat."
+           data-en="Official LPK Kemnaker RI. Barista & Coffee Roasting training center in Depok, West Java.">LPK resmi Kemnaker RI. Pusat pelatihan Barista & Coffee Roasting di Depok, Jawa Barat.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-id="Platform" data-en="Platforms">Platform</h4>
+        <a href="index.html">Q.co Ecosystem</a>
+        <a href="coffee-lab.html">Q.co Lab</a>
+        <a href="roasting.html">Q.co Roasting</a>
+        <a href="qbridge.html">QBridge</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-id="Program" data-en="Programs">Program</h4>
+        <a href="kemari-coffee-academy.html#program" data-id="Barista Profesional" data-en="Professional Barista">Barista Profesional</a>
+        <a href="kemari-coffee-academy.html#program" data-id="Coffee Roasting" data-en="Coffee Roasting">Coffee Roasting</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-id="Kontak" data-en="Contact">Kontak</h4>
+        <a href="mailto:hello@qco.coffee">hello@qco.coffee</a>
+        <a href="https://instagram.com/qkopi.co" target="_blank" rel="noopener noreferrer">@qkopi.co</a>
+        <a href="investors.html">Investor Relations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kemari Kopi Akademi — LPK Resmi Kemnaker RI</span>
+      <span>Depok, Jawa Barat, Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== LANGUAGE SWITCHER =====
+let currentLang = localStorage.getItem('qco-lang') || 'id';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('qco-lang', lang);
+  document.querySelectorAll('[data-id][data-en]').forEach(el => {
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+      const ph = el.getAttribute('data-' + lang);
+      if (ph) el.setAttribute('placeholder', ph);
+      // Update option texts for select
+      if (el.tagName === 'SELECT') {
+        el.querySelectorAll('option').forEach(opt => {
+          const txt = opt.getAttribute('data-' + lang);
+          if (txt) opt.textContent = txt;
+        });
+      }
+    } else {
+      const txt = el.getAttribute('data-' + lang);
+      if (txt) el.textContent = txt;
+    }
+  });
+  document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
+    el.classList.toggle('active', lang === 'id');
+  });
+  document.querySelectorAll('#lang-en, #lang-en-m').forEach(el => {
+    el.classList.toggle('active', lang === 'en');
+  });
+  document.documentElement.lang = lang === 'id' ? 'id' : 'en';
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'id' ? 'en' : 'id');
+}
+
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+
+// ===== CONTACT FORM =====
+const CONTACT_API_URL = 'https://script.google.com/macros/s/AKfycbz1KfZDPsWCpRSI39Ylqbs0DchguLFVfgcVMTCa3h8yQD9ocd7kDqfoAuE2I7ooSWU/exec';
+
+let contactFormSubmitting = false;
+
+function submitContactForm() {
+  contactFormSubmitting = true;
+  const btn = document.getElementById('contactSubmitBtn');
+  if (btn) {
+    btn.textContent = currentLang === 'id' ? 'Mengirim...' : 'Sending...';
+    btn.disabled = true;
+  }
+}
+
+function contactFormSubmitted() {
+  if (!contactFormSubmitting) return;
+  contactFormSubmitting = false;
+  const form = document.getElementById('contactForm');
+  const title = currentLang === 'id' ? 'Pesan Terkirim' : 'Message Sent';
+  const subtitle = currentLang === 'id' ? 'Kami akan merespons dalam 24 jam.' : 'We will respond within 24 hours.';
+  form.innerHTML = '<div style="text-align:center; padding:32px 0;"><div style="font-size:2.5rem; margin-bottom:12px;">✓</div><h3 style="font-family: var(--font-head); margin-bottom:8px; color:#fff;">' + title + '</h3><p style="color: rgba(255,255,255,0.7);">' + subtitle + '</p></div>';
+}
+
+// Set form action ke GAS URL
+(function setContactFormAction() {
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.action = CONTACT_API_URL;
+  }
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang(currentLang);
+});
+</script>
+</body>
+</html>
