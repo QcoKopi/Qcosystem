@@ -1,8 +1,25 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1498535007132214');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1498535007132214&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.imgur.com https://*.googleusercontent.com data: blob:; connect-src *;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.imgur.com https://*.googleusercontent.com https://www.facebook.com data: blob:; connect-src *;">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Q.co — Sahabat Kedai Kopi & Infrastruktur Kopi Indonesia</title>
@@ -199,24 +216,6 @@ a { text-decoration:none; color:inherit; }
 }
 .eco-card:hover .link { gap:10px; color:var(--accent-dark); }
 
-/* ===== DNA / PHILOSOPHY ===== */
-.dna-section { background:var(--bg-warm); padding:100px 0; }
-.dna-wrap { max-width:1200px; margin:0 auto; padding:0 24px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
-.dna-visual {
-  background:linear-gradient(135deg, var(--accent-light), rgba(184,146,106,0.2));
-  border-radius:var(--radius); height:400px; display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:3rem; color:var(--accent-dark); border:1px solid var(--border);
-}
-.dna-content h2 {
-  font-family:var(--font-head); font-size:clamp(1.6rem, 3vw, 2.2rem); font-weight:400; margin-bottom:16px;
-}
-.dna-content h2 em { font-style:italic; color:var(--accent-dark); }
-.dna-content p { color:var(--text-sec); line-height:1.8; margin-bottom:20px; font-size:1rem; }
-.dna-quote {
-  border-left:3px solid var(--accent); padding-left:20px; font-family:var(--font-head);
-  font-size:1.1rem; color:var(--text-sec); font-style:italic; line-height:1.6;
-}
-
 /* ===== FOOTER ===== */
 .footer { background:var(--primary); color:rgba(255,255,255,0.55); padding:56px 0 32px; }
 .footer-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
@@ -285,8 +284,6 @@ a { text-decoration:none; color:inherit; }
 }
 
 /* ===== VISUAL ENHANCEMENTS ===== */
-
-/* Subtle grain texture overlay */
 .grain-overlay {
   position: fixed; inset: 0; pointer-events: none; z-index: 9998;
   opacity: 0.03;
@@ -294,7 +291,6 @@ a { text-decoration:none; color:inherit; }
   background-repeat: repeat;
 }
 
-/* Decorative blob shapes */
 .blob {
   position: absolute; border-radius: 50%; pointer-events: none; z-index: 0;
   filter: blur(80px); opacity: 0.08;
@@ -309,13 +305,7 @@ a { text-decoration:none; color:inherit; }
   background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
   bottom: 10%; left: -5%;
 }
-.blob-3 {
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, #8b7bb5 0%, transparent 70%);
-  top: 40%; right: 5%; opacity: 0.05;
-}
 
-/* Section divider - organic wave */
 .section-divider {
   position: relative; height: 80px; overflow: hidden;
 }
@@ -323,45 +313,11 @@ a { text-decoration:none; color:inherit; }
   position: absolute; bottom: 0; width: 100%; height: 80px;
 }
 
-/* Image placeholder with elegant styling */
-.img-placeholder {
-  background: linear-gradient(135deg, var(--bg-warm), var(--accent-light));
-  border-radius: var(--radius); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-}
-.img-placeholder::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8926a' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  opacity: 0.5;
-}
-.img-placeholder .placeholder-icon {
-  font-size: 3rem; opacity: 0.3; color: var(--accent-dark);
-  z-index: 1;
-}
-.img-placeholder .placeholder-label {
-  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
-  font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;
-  letter-spacing: 0.08em; z-index: 1; background: rgba(255,255,255,0.8);
-  padding: 4px 12px; border-radius: 100px;
-}
-
-/* Floating accent line */
 .accent-line {
   width: 60px; height: 3px; background: var(--accent);
   border-radius: 3px; margin: 20px auto;
 }
 
-/* Card hover lift with shadow */
-.card-lift {
-  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.card-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-}
-
-/* Subtle parallax background for hero */
 .hero-bg-pattern {
   position: absolute; inset: 0; pointer-events: none; z-index: 0;
   opacity: 0.04;
@@ -370,20 +326,11 @@ a { text-decoration:none; color:inherit; }
   background-size: 60px 60px;
 }
 
-/* Coffee bean silhouette watermark */
-.watermark {
-  position: absolute; font-size: 15rem; opacity: 0.02; pointer-events: none;
-  color: var(--accent-dark); z-index: 0; line-height: 1;
-}
-
-/* Contact section responsive */
 .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
 @media (max-width: 768px) {
   .contact-grid { grid-template-columns:1fr; gap:32px; }
 }
 </style>
-<base target="_blank">
-<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -397,18 +344,16 @@ a { text-decoration:none; color:inherit; }
       <a href="coffee-lab.html" data-id="Q.co Lab" data-en="Q.co Lab">Q.co Lab</a>
       <a href="roasting.html" data-id="Q.co Roasting" data-en="Q.co Roasting">Q.co Roasting</a>
       <a href="kemari-coffee-academy.html" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
-      <a href="kemari-coffee-academy.html" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
-  <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
+      <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
       <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
       <a href="https://blog.qcoid.com/" target="_blank" data-id="Blog" data-en="Blog" rel="noopener noreferrer">Blog</a>
-  <a href="#kontak" data-id="Kontak" data-en="Contact">Kontak</a>
       <a href="#kontak" data-id="Kontak" data-en="Contact">Kontak</a>
       <!-- Language Switcher -->
       <div class="lang-switch" onclick="toggleLang()">
         <span class="active" id="lang-id">ID</span>
         <span id="lang-en">EN</span>
       </div>
-      <!-- Investor CTA - subtle, not black -->
+      <!-- Investor CTA -->
       <a href="investors.html" class="nav-cta" data-id="Investor" data-en="Investor">Investor</a>
     </div>
     <button class="nav-toggle" onclick="toggleMobile()" aria-label="Menu">☰</button>
@@ -422,7 +367,7 @@ a { text-decoration:none; color:inherit; }
     <span id="lang-en-m">EN</span>
   </div>
   <a href="coffee-lab.html" data-id="Q.co Lab" data-en="Q.co Lab">Q.co Lab</a>
-      <a href="roasting.html" data-id="Q.co Roasting" data-en="Q.co Roasting">Q.co Roasting</a>
+  <a href="roasting.html" data-id="Q.co Roasting" data-en="Q.co Roasting">Q.co Roasting</a>
   <a href="kemari-coffee-academy.html" data-id="Kemari Academy" data-en="Kemari Academy">Kemari Academy</a>
   <a href="qbridge.html" data-id="QBridge" data-en="QBridge">QBridge</a>
   <a href="qaffiliator.html" data-id="QAffiliator" data-en="QAffiliator">QAffiliator</a>
@@ -499,11 +444,6 @@ a { text-decoration:none; color:inherit; }
   </div>
 </section>
 
-<!-- DNA -->
-
-
-<!-- Footer -->
-
 <!-- CONTACT US -->
 <section class="contact-section" id="kontak" style="background:var(--primary); color:#fff; padding:80px 0;">
   <div class="section-wrap" style="max-width:1200px; margin:0 auto; padding:0 24px;">
@@ -511,7 +451,7 @@ a { text-decoration:none; color:inherit; }
       <h2 style="font-family:var(--font-head); font-size:2rem; margin-bottom:12px;" data-id="Hubungi Kami" data-en="Contact Us">Hubungi Kami</h2>
       <p style="color:rgba(255,255,255,0.7); max-width:500px; margin:0 auto;" data-id="Punya pertanyaan atau ingin berkolaborasi? Kirimkan pesan kepada kami." data-en="Have questions or want to collaborate? Send us a message.">Punya pertanyaan atau ingin berkolaborasi? Kirimkan pesan kepada kami.</p>
     </div>
-    <div class="contact-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;">
+    <div class="contact-grid">
       <div style="display:flex; flex-direction:column; gap:20px;">
         <div style="display:flex; align-items:center; gap:14px;">
           <div style="width:40px; height:40px; border-radius:var(--radius); background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:1px solid rgba(255,255,255,0.1); flex-shrink:0;">📧</div>
@@ -558,7 +498,6 @@ a { text-decoration:none; color:inherit; }
            data-en="Building Indonesia's coffee infrastructure for the global market. Verification, traceability, and technology-driven distribution.">
           Membangun infrastruktur kopi Indonesia untuk pasar global. Verifikasi, traceability, dan distribusi berbasis teknologi.
         </p>
-        
       </div>
       <div class="footer-col">
         <h4 data-id="Platform" data-en="Platforms">Platform</h4>
@@ -595,7 +534,6 @@ function applyLang(lang) {
   currentLang = lang;
   localStorage.setItem('qco-lang', lang);
 
-  // Update all elements with data-id and data-en
   document.querySelectorAll('[data-id][data-en]').forEach(el => {
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
       el.placeholder = el.getAttribute('data-' + lang);
@@ -604,7 +542,6 @@ function applyLang(lang) {
     }
   });
 
-  // Update lang switcher UI
   document.querySelectorAll('#lang-id, #lang-id-m').forEach(el => {
     el.classList.toggle('active', lang === 'id');
   });
@@ -612,7 +549,6 @@ function applyLang(lang) {
     el.classList.toggle('active', lang === 'en');
   });
 
-  // Update html lang attribute
   document.documentElement.lang = lang === 'id' ? 'id' : 'en';
 }
 
@@ -620,12 +556,10 @@ function toggleLang() {
   applyLang(currentLang === 'id' ? 'en' : 'id');
 }
 
-// Apply on load
 document.addEventListener('DOMContentLoaded', () => {
   applyLang(currentLang);
 });
 
-// Mobile menu
 function toggleMobile() {
   document.getElementById('mobileMenu').classList.toggle('active');
 }
