@@ -2,7 +2,25 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.imgur.com https://*.googleusercontent.com https://api.qrserver.com data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.google-analytics.com;">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1498535007132214');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1498535007132214&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.imgur.com https://*.googleusercontent.com https://api.qrserver.com https://www.facebook.com data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.google-analytics.com https://connect.facebook.net;">
 
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -779,6 +797,7 @@ a { text-decoration:none; color:inherit; }
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="grain-overlay"></div>
@@ -1509,6 +1528,13 @@ function cleanupJsonp(script, cbName) {
 
 function productionRender(data) {
   try {
+    // Meta Pixel: track content view when production data loads
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'ViewContent', {
+        content_name: 'Q.co Production Dashboard',
+        content_category: 'roasting'
+      });
+    }
     if (!data || !data.success) {
       console.log('Invalid data, using mock:', data);
       productionRenderMock();
